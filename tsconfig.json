@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "lib": [ "es6" ],
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include":[
+    "src/**/*"
+, "tests/set.spec.ts"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
