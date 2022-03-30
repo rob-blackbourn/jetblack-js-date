@@ -58,4 +58,18 @@ describe('Duration', () => {
       expect(actual.toString()).toBe(expected)
     })
   })
+
+  describe('spread', () => {
+    it('should spread the properties of a duration', () => {
+      const { years, months, weeks, days, hours, minutes, seconds } =
+        Duration.parse('P1Y2M3W4DT5H6M7S')
+      expect(years).toBe(1)
+      expect(months).toBe(2)
+      expect(weeks).toBe(3)
+      expect(days).toBe(4)
+      expect(hours).toBe(5)
+      expect(minutes).toBe(6)
+      expect(seconds).toBe(7)
+    })
+  })
 })
