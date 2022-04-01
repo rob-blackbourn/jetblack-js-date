@@ -1,9 +1,14 @@
-import { tzUtc } from './timezone'
+import { Timezone, tzLocal } from './timezone'
 
-export function addSeconds(date: Date, amount: number): Date {
+export function addSeconds(
+  date: Date,
+  amount: number,
+  tz: Timezone = tzLocal
+): Date {
   const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-    tzUtc.dateParts(date)
-  return tzUtc.makeDate(
+    tz.dateParts(date)
+
+  return tz.makeDate(
     year,
     monthIndex,
     day,

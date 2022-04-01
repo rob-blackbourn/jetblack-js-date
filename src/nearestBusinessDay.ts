@@ -1,16 +1,18 @@
 import { Calendar, calWeekends } from './calendar'
 import { addDays } from './addDays'
+import { Timezone, tzLocal } from './timezone'
 
 export function nearestBusinessDay(
   date: Date,
   preferForward: boolean = true,
-  cal: Calendar = calWeekends
+  cal: Calendar = calWeekends,
+  tz: Timezone = tzLocal
 ): Date {
   if (!cal.isHoliday(date)) {
     return date
   }
-  let forwardDate = addDays(date, 1)
-  let backwardDate = addDays(date, -1)
+  let forwardDate = addDays(date, 1, tz)
+  let backwardDate = addDays(date, -1, tz)
 
   while (true) {
     const isForwardHoliday = cal.isHoliday(forwardDate)
@@ -20,7 +22,7 @@ export function nearestBusinessDay(
     } else if (!isBackwardHoliday) {
       return backwardDate
     }
-    forwardDate = addDays(forwardDate, 1)
-    backwardDate = addDays(backwardDate, -1)
+    forwardDate = addDays(forwardDate, 1, tz)
+    backwardDate = addDays(backwardDate, -1, tz)
   }
 }

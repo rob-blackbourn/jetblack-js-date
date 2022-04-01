@@ -1,11 +1,15 @@
-import { tzUtc } from './timezone'
+import { Timezone, tzLocal, tzUtc } from './timezone'
 import { Duration } from './duration'
 
-export function subDuration(date: Date, duration: Duration): Date {
+export function subDuration(
+  date: Date,
+  duration: Duration,
+  tz: Timezone = tzLocal
+): Date {
   const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-    tzUtc.dateParts(date)
+    tz.dateParts(date)
 
-  return tzUtc.makeDate(
+  return tz.makeDate(
     year - duration.years,
     monthIndex - duration.months,
     day - (duration.days + duration.weeks * 7),
