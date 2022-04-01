@@ -155,13 +155,13 @@ export class CustomTimezone extends Timezone {
       milliseconds
     )
     const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const local = subDuration(date, delta.offset)
     return local
   }
 
   dateParts(date: Date): DateParts {
     const delta = this.#findDelta(date)
-    const local = subDuration(date, delta.offset)
+    const local = addDuration(date, delta.offset)
     return tzUtc.dateParts(local)
   }
 
