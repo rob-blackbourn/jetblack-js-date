@@ -41,3 +41,4 @@ export {
   CustomTimezone,
   TimezoneDelta
 } from './timezone'
+export { tzDataReviver, objectToTimezoneDelta } from './tzdata'

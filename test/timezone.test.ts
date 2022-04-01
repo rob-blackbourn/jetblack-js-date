@@ -1,16 +1,10 @@
-import { Duration, CustomTimezone, TimezoneDelta } from '../src'
+import { CustomTimezone, objectToTimezoneDelta } from '../src'
 import timezones from './timezones.json'
 
 const BRUSSELS_TZNAME = 'Europe/Brussels'
 const tzBrussels = new CustomTimezone(
   BRUSSELS_TZNAME,
-  timezones['Europe/Brussels'].map(delta => ({
-    utc: new Date(delta.utc),
-    local: new Date(delta.local),
-    offset: new Duration(delta.offset),
-    abbr: delta.abbr,
-    isDst: delta.isDst
-  }))
+  timezones['Europe/Brussels'].map(objectToTimezoneDelta)
 )
 
 describe('timezone', () => {
@@ -22,7 +16,6 @@ describe('timezone', () => {
     })
 
     it('should destruct a date', () => {
-      const expected = new Date('1999-12-31T23:00:00Z')
       const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
         tzBrussels.dateParts(new Date('1999-12-31T23:00:00Z'))
       expect(year).toBe(2000)

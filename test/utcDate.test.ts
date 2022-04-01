@@ -13,5 +13,11 @@ describe('utcDate', () => {
       const expected = new Date('2000-01-01T12:30:15.250Z')
       expect(actual.getTime()).toBe(expected.getTime())
     })
+
+    it('should have no timezone offset', () => {
+      const date = tzUtc.makeDate(2000, 0, 1, 12, 30, 15, 250)
+      const actual = tzUtc.offset(date)
+      expect(actual).toBe(0)
+    })
   })
 })
