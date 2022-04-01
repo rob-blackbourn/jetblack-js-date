@@ -1,3 +1,5 @@
+import { Duration } from './duration'
+
 export type Year = number
 export type MonthIndex = number
 export type Day = number

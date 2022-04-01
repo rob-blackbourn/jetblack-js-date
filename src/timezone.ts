@@ -1,4 +1,16 @@
 import { DateParts } from './types'
+import { Duration } from './duration'
+import { getClosestValues } from './utils'
+import { addDuration } from './addDuration'
+import { subDuration } from './subDuration'
+
+export interface TimezoneDelta {
+  utc: Date
+  local: Date
+  offset: Duration
+  abbr: string
+  isDst: boolean
+}
 
 export abstract class Timezone {
   #name: string
@@ -22,6 +34,8 @@ export abstract class Timezone {
   ): Date
 
   abstract dateParts(date: Date): DateParts
+
+  abstract offset(date: Date): number
 }
 
 export class UtcTimezone extends Timezone {
@@ -53,6 +67,10 @@ export class UtcTimezone extends Timezone {
       date.getUTCSeconds(),
       date.getUTCMilliseconds()
     ]
+  }
+
+  offset(date: Date): number {
+    return 0
   }
 }
 
@@ -92,7 +110,63 @@ export class LocalTimezone extends Timezone {
       date.getMilliseconds()
     ]
   }
+
+  offset(date: Date): number {
+    return date.getTimezoneOffset()
+  }
 }
 
 export const tzUtc = new UtcTimezone()
 export const tzLocal = new LocalTimezone()
+
+export class CustomTimezone extends Timezone {
+  #deltas: TimezoneDelta[]
+
+  constructor(name: string, deltas: TimezoneDelta[]) {
+    super(name)
+    this.#deltas = deltas
+  }
+
+  #findDelta(date: Date): TimezoneDelta {
+    const [lo, hi] = getClosestValues(
+      this.#deltas,
+      date,
+      (a, b) => b.utc.getTime() - a.getTime()
+    )
+    return lo
+  }
+
+  makeDate(
+    year: number,
+    monthIndex: number,
+    day?: number,
+    hours?: number,
+    minutes?: number,
+    seconds?: number,
+    milliseconds?: number
+  ): Date {
+    const date = tzUtc.makeDate(
+      year,
+      monthIndex,
+      day,
+      hours,
+      minutes,
+      seconds,
+      milliseconds
+    )
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return local
+  }
+
+  dateParts(date: Date): DateParts {
+    const delta = this.#findDelta(date)
+    const local = subDuration(date, delta.offset)
+    return tzUtc.dateParts(local)
+  }
+
+  offset(date: Date): number {
+    const delta = this.#findDelta(date)
+    return delta.offset.hours * 60 + delta.offset.minutes
+  }
+}

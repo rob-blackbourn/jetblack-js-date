@@ -31,10 +31,13 @@ export { isLeapYear } from './isLeapYear'
 export { quarterOfYear } from './quarterOfYear'
 export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
+export { subDuration } from './subDuration'
 export {
   Timezone,
   UtcTimezone,
   LocalTimezone,
   tzLocal,
-  tzUtc
+  tzUtc,
+  CustomTimezone,
+  TimezoneDelta
 } from './timezone'
