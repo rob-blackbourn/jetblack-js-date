@@ -1,5 +1,5 @@
-import { Timezone, tzLocal } from './timezone'
 import { daysInMonth } from './daysInMonth'
+import { Timezone, tzLocal } from './timezone'
 
 export function isEndOfMonth(date: Date, tz: Timezone = tzLocal): boolean {
   const [year, monthIndex, day, _hours, _minutes, _seconds, _milliseconds] =

@@ -1,8 +1,8 @@
-import { DateParts } from './types'
-import { Duration } from './duration'
-import { getClosestValues } from './utils'
 import { addDuration } from './addDuration'
+import { Duration } from './duration'
 import { subDuration } from './subDuration'
+import { DateParts } from './types'
+import { getClosestValues } from './utils'
 
 export interface TimezoneDelta {
   utc: Date

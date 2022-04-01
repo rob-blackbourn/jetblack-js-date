@@ -1,5 +1,5 @@
-import { Timezone, tzLocal } from './timezone'
 import { daysInMonth } from './daysInMonth'
+import { Timezone, tzLocal } from './timezone'
 
 export const endOfMonth = (
   year: number,

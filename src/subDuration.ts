@@ -1,5 +1,5 @@
-import { Timezone, tzLocal, tzUtc } from './timezone'
 import { Duration } from './duration'
+import { Timezone, tzLocal, tzUtc } from './timezone'
 
 export function subDuration(
   date: Date,

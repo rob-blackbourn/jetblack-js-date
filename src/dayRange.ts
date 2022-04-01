@@ -1,6 +1,6 @@
-import { Timezone, tzLocal } from './timezone'
-import { startOfDay } from './startOfDay'
 import { addDays } from './addDays'
+import { startOfDay } from './startOfDay'
+import { Timezone, tzLocal } from './timezone'
 
 export function dayRange(
   startDate: Date,

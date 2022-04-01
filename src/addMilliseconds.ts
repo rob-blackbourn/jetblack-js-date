@@ -1,4 +1,4 @@
-import { Timezone, tzLocal, tzUtc } from './timezone'
+import { Timezone, tzLocal } from './timezone'
 
 export function addMilliseconds(
   date: Date,
