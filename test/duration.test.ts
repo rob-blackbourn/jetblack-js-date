@@ -52,8 +52,33 @@ describe('Duration', () => {
   })
 
   describe('parse', () => {
-    it('should parse a duration', () => {
+    it('should parse an unsigned duration', () => {
       const expected = 'P1Y2M3W4DT5H6M7S'
+      const actual = Duration.parse(expected)
+      expect(actual.toString()).toBe(expected)
+    })
+    it('should parse a positive duration', () => {
+      const expected = 'P1Y2M3W4DT5H6M7S'
+      const actual = Duration.parse('+' + expected)
+      expect(actual.toString()).toBe(expected)
+    })
+    it('should parse a negative duration', () => {
+      const expected = '-P1Y2M3W4DT5H6M7S'
+      const actual = Duration.parse(expected)
+      expect(actual.toString()).toBe(expected)
+    })
+    it('should parse a wholely negative duration', () => {
+      const expected = '-P1Y2M3W4DT5H6M7S'
+      const actual = Duration.parse('P-1Y-2M-3W-4DT-5H-6M-7S')
+      expect(actual.toString()).toBe(expected)
+    })
+    it('should parse a largely negative duration', () => {
+      const expected = '-P-1Y2M3W4DT5H6M7S'
+      const actual = Duration.parse('P1Y-2M-3W-4DT-5H-6M-7S')
+      expect(actual.toString()).toBe(expected)
+    })
+    it('should parse a largely positive duration', () => {
+      const expected = 'P-1Y2M3W4DT5H6M7S'
       const actual = Duration.parse(expected)
       expect(actual.toString()).toBe(expected)
     })

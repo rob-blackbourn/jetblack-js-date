@@ -2,7 +2,7 @@ import { tzUtc } from './timezone'
 
 export class Duration {
   static readonly #DURATION_PATTERN =
-    /^P((?<years>-?\d+)Y)?((?<months>-?\d+)M)?((?<weeks>-?\d+)W)?((?<days>-?\d+)D)?(T((?<hours>-?\d+)H)?((?<minutes>-?\d+)M)?((?<seconds>-?\d+)S)?)?$/
+    /^(?<sign>-?[+-])?P((?<years>-?[+-]?\d+([.]\d+)?)Y)?((?<months>-?[+-]?\d+([.]\d+)?)M)?((?<weeks>-?[+-]?\d+([.]\d+)?)W)?((?<days>-?[+-]?\d+([.]\d+)?)D)?(T((?<hours>-?[+-]?\d+([.]\d+)?)H)?((?<minutes>-?[+-]?\d+([.]\d+)?)M)?((?<seconds>-?[+-]?\d+([.]\d+)?)S)?)?$/
   static readonly #ZERO_STRING = 'PT0S'
 
   #years: number
@@ -16,32 +16,12 @@ export class Duration {
   constructor(
     years: number,
     months: number,
-    weeks: number,
-    days: number,
-    hours: number,
-    minutes: number,
-    seconds: number
+    weeks: number = 0,
+    days: number = 0,
+    hours: number = 0,
+    minutes: number = 0,
+    seconds: number = 0
   ) {
-    if (
-      years < 0 ||
-      months < 0 ||
-      weeks < 0 ||
-      days < 0 ||
-      hours < 0 ||
-      minutes < 0 ||
-      seconds < 0
-    ) {
-      throw new RangeError('Values cannot be negative')
-    }
-
-    years = Math.trunc(years)
-    months = Math.trunc(months)
-    weeks = Math.trunc(weeks)
-    days = Math.trunc(days)
-    hours = Math.trunc(hours)
-    minutes = Math.trunc(minutes)
-    seconds = Math.trunc(seconds)
-
     const totalMinutes = minutes + Math.trunc(seconds / 60)
     const totalHours = hours + Math.trunc(totalMinutes / 60)
     const totalDays = days + Math.trunc(totalHours / 24)
@@ -55,39 +35,70 @@ export class Duration {
     this.#years = years + Math.trunc(months / 12)
   }
 
+  #countSigns(): [number, number] {
+    let positiveCount = 0,
+      negativeCount = 0
+    const values = [
+      this.#years,
+      this.#months,
+      this.#weeks,
+      this.#days,
+      this.#hours,
+      this.#minutes,
+      this.#seconds
+    ]
+    for (const value of values) {
+      if (value > 0) {
+        ++positiveCount
+      } else if (value < 0) {
+        ++negativeCount
+      }
+    }
+    return [positiveCount, negativeCount]
+  }
+
   toString(): string {
+    const [positiveCount, negativeCount] = this.#countSigns()
+    if (positiveCount === 0 && negativeCount === 0) {
+      return Duration.#ZERO_STRING
+    }
+
+    const sign = negativeCount > positiveCount ? -1 : 1
+
     let datePart = 'P'
     if (this.#years !== 0) {
-      datePart += this.#years + 'Y'
+      datePart += sign * this.#years + 'Y'
     }
     if (this.#months !== 0) {
-      datePart += this.#months + 'M'
+      datePart += sign * this.#months + 'M'
     }
     if (this.#weeks !== 0) {
-      datePart += this.#weeks + 'W'
+      datePart += sign * this.#weeks + 'W'
     }
     if (this.#days !== 0) {
-      datePart += this.#days + 'D'
+      datePart += sign * this.#days + 'D'
     }
 
     let timePart = 'T'
     if (this.#hours !== 0) {
-      timePart += this.#hours + 'H'
+      timePart += sign * this.#hours + 'H'
     }
     if (this.#minutes !== 0) {
-      timePart += this.#minutes + 'M'
+      timePart += sign * this.#minutes + 'M'
     }
     if (this.#seconds !== 0) {
-      timePart += this.#seconds + 'S'
+      timePart += sign * this.#seconds + 'S'
     }
 
     if (timePart !== 'T') {
-      return datePart + timePart
-    } else if (datePart !== 'P') {
-      return datePart
-    } else {
-      return Duration.#ZERO_STRING
+      datePart += timePart
     }
+
+    if (sign === -1) {
+      datePart = '-' + datePart
+    }
+
+    return datePart
   }
 
   get years(): number {
@@ -172,36 +183,6 @@ export class Duration {
     this.minutes += Math.trunc(value / 60)
   }
 
-  addDate(date: Date): Date {
-    const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-      tzUtc.dateParts(date)
-
-    return tzUtc.makeDate(
-      year + this.#years,
-      monthIndex + this.#months,
-      day + this.#days + this.#weeks * 7,
-      hours + this.#hours,
-      minutes + this.#minutes,
-      seconds + this.#seconds,
-      milliseconds
-    )
-  }
-
-  subtractDate(date: Date): Date {
-    const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-      tzUtc.dateParts(date)
-
-    return tzUtc.makeDate(
-      year - this.#years,
-      monthIndex - this.#months,
-      day - (this.#days + this.#weeks * 7),
-      hours - this.#hours,
-      minutes - this.#minutes,
-      seconds - this.#seconds,
-      milliseconds
-    )
-  }
-
   valueOf(): number {
     const totalDays =
       this.#years * 360 + this.#months * 30 * this.#weeks * 7 + this.#days
@@ -215,14 +196,15 @@ export class Duration {
     if (match == null || match.groups == null) {
       throw new Error('Failed to parse duration')
     }
-    return new Duration(
-      parseInt(match.groups.years || '0'),
-      parseInt(match.groups.months || '0'),
-      parseInt(match.groups.weeks || '0'),
-      parseInt(match.groups.days || '0'),
-      parseInt(match.groups.hours || '0'),
-      parseInt(match.groups.minutes || '0'),
-      parseInt(match.groups.seconds || '0')
-    )
+    const sign = match.groups.sign === '-' ? -1 : 1
+    const years = sign * parseFloat(match.groups.years || '0'),
+      months = sign * parseFloat(match.groups.months || '0'),
+      weeks = sign * parseFloat(match.groups.weeks || '0'),
+      days = sign * parseFloat(match.groups.days || '0'),
+      hours = sign * parseFloat(match.groups.hours || '0'),
+      minutes = sign * parseFloat(match.groups.minutes || '0'),
+      seconds = sign * parseFloat(match.groups.seconds || '0')
+
+    return new Duration(years, months, weeks, days, hours, minutes, seconds)
   }
 }
