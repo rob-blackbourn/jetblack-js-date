@@ -54,40 +54,40 @@ describe('Duration', () => {
   describe('parse', () => {
     it('should parse an unsigned duration', () => {
       const expected = 'P1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse(expected)
+      const actual = new Duration(expected)
       expect(actual.toString()).toBe(expected)
     })
     it('should parse a positive duration', () => {
       const expected = 'P1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse('+' + expected)
+      const actual = new Duration('+' + expected)
       expect(actual.toString()).toBe(expected)
     })
     it('should parse a negative duration', () => {
       const expected = '-P1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse(expected)
+      const actual = new Duration(expected)
       expect(actual.toString()).toBe(expected)
     })
     it('should parse a wholely negative duration', () => {
       const expected = '-P1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse('P-1Y-2M-3W-4DT-5H-6M-7S')
+      const actual = new Duration('P-1Y-2M-3W-4DT-5H-6M-7S')
       expect(actual.toString()).toBe(expected)
     })
     it('should parse a largely negative duration', () => {
-      const expected = '-P-1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse('P1Y-2M-3W-4DT-5H-6M-7S')
+      const expected = '-P-10M3W4DT5H6M7S'
+      const actual = new Duration('P1Y-2M-3W-4DT-5H-6M-7S')
       expect(actual.toString()).toBe(expected)
     })
     it('should parse a largely positive duration', () => {
-      const expected = 'P-1Y2M3W4DT5H6M7S'
-      const actual = Duration.parse(expected)
+      const expected = 'P-10M3W4DT5H6M7S'
+      const actual = new Duration(expected)
       expect(actual.toString()).toBe(expected)
     })
   })
 
   describe('spread', () => {
     it('should spread the properties of a duration', () => {
-      const { years, months, weeks, days, hours, minutes, seconds } =
-        Duration.parse('P1Y2M3W4DT5H6M7S')
+      const duration = new Duration('P1Y2M3W4DT5H6M7S')
+      const { years, months, weeks, days, hours, minutes, seconds } = duration
       expect(years).toBe(1)
       expect(months).toBe(2)
       expect(weeks).toBe(3)
@@ -95,6 +95,27 @@ describe('Duration', () => {
       expect(hours).toBe(5)
       expect(minutes).toBe(6)
       expect(seconds).toBe(7)
+    })
+  })
+
+  describe('valueOf', () => {
+    it('should roundtrip', () => {
+      const expected = new Duration('P1Y2M3W4DT5H6M7S')
+      const value = expected.valueOf()
+      const actual = new Duration(value)
+      expect(actual.toString()).toBe(expected.toString())
+    })
+    it('should roundtrip negative', () => {
+      const expected = new Duration('-P1Y2M3W4DT5H6M7S')
+      const value = expected.valueOf()
+      const actual = new Duration(value)
+      expect(actual.toString()).toBe(expected.toString())
+    })
+    it('should roundtrip mixed', () => {
+      const expected = new Duration('P-1Y2M3W4DT5H6M7S')
+      const value = expected.valueOf()
+      const actual = new Duration(value)
+      expect(actual.valueOf()).toBe(expected.valueOf())
     })
   })
 })
