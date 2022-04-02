@@ -2,7 +2,7 @@ import { addDuration } from './addDuration'
 import { Duration } from './duration'
 import { subDuration } from './subDuration'
 import { DateParts } from './types'
-import { getClosestValues } from './utils'
+import { getClosestValues, padNumber } from './utils'
 
 export interface TimezoneDelta {
   utc: Date
@@ -148,6 +148,43 @@ export abstract class Timezone {
     ] = this.dateParts(date)
     return milliseconds
   }
+
+  toISOString(date: Date) {
+    const [
+      year,
+      monthIndex,
+      _weekDay,
+      day,
+      hours,
+      minutes,
+      seconds,
+      milliseconds
+    ] = this.dateParts(date)
+    const offset = this.offset(date)
+    const offsetSign = Math.sign(offset)
+    const offsetHours = offsetSign * Math.trunc(offset / 60)
+    const offsetMinutes = offsetSign * (offset % 60)
+
+    const datePart =
+      padNumber(year, 4) +
+      '-' +
+      padNumber(monthIndex + 1, 2) +
+      '-' +
+      padNumber(day, 2)
+    const timePart =
+      padNumber(hours, 2) +
+      ':' +
+      padNumber(minutes, 2) +
+      ':' +
+      padNumber(seconds, 2) +
+      (milliseconds !== 0 ? '.' + padNumber(milliseconds, 3) : '')
+    const offsetPart =
+      (offsetSign === -1 ? '-' : '+') +
+      padNumber(offsetHours, 2) +
+      ':' +
+      padNumber(offsetMinutes, 2)
+    return datePart + 'T' + timePart + offsetPart
+  }
 }
 
 export class UtcTimezone extends Timezone {
@@ -184,6 +221,10 @@ export class UtcTimezone extends Timezone {
 
   offset(date: Date): number {
     return 0
+  }
+
+  toISOString(date: Date): string {
+    return date.toISOString()
   }
 }
 

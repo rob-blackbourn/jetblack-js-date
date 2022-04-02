@@ -23,3 +23,6 @@ export function getClosestValues<T, I>(
   // key wasn't found
   return [array[end], array[start]]
 }
+
+export const padNumber = (value: number, maxLength: number): string =>
+  String(value).padStart(maxLength, '0')

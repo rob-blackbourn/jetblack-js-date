@@ -41,5 +41,11 @@ describe('timezone', () => {
       const expected = 60
       expect(actual).toBe(expected)
     })
+
+    it('should get the offset', () => {
+      const date = new Date('2000-01-01T12:00:00Z')
+      const actual = tzBrussels.toISOString(date)
+      expect(actual).toBe('2000-01-01T13:00:00+01:00')
+    })
   })
 })
