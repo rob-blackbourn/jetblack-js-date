@@ -10,7 +10,12 @@ export { addMonths } from './addMonths'
 export { addSeconds } from './addSeconds'
 export { addYears } from './addYears'
 export { areInSameQuarter } from './areInSameQuarter'
-export { Calendar, WeekendCalendar, calWeekends } from './calendar'
+export {
+  Calendar,
+  WeekendCalendar,
+  HolidayCalendar,
+  calWeekends
+} from './calendar'
 export {
   dateEquals,
   dateNotEquals,

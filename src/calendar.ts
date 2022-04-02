@@ -15,8 +15,8 @@ export abstract class Calendar {
 export class WeekendCalendar extends Calendar {
   weekends: number[]
 
-  constructor(weekends: number[] = [0, 6]) {
-    super('WeekendCalendar')
+  constructor(name: string = 'WeekendCalendar', weekends: number[] = [0, 6]) {
+    super(name)
     this.weekends = weekends
   }
 
@@ -31,3 +31,16 @@ export class WeekendCalendar extends Calendar {
 }
 
 export const calWeekends = new WeekendCalendar()
+
+export class HolidayCalendar extends WeekendCalendar {
+  #holidays: Set<number>
+
+  constructor(name: string, weekends: number[] = [0, 6], holidays: Date[]) {
+    super(name, weekends)
+    this.#holidays = new Set(holidays.map(x => x.getTime()))
+  }
+
+  isHoliday(date: Date): boolean {
+    return this.isWeekend(date) || this.#holidays.has(date.getTime())
+  }
+}
