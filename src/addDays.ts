@@ -5,8 +5,16 @@ export function addDays(
   amount: number,
   tz: Timezone = tzLocal
 ): Date {
-  const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-    tz.dateParts(date)
+  const [
+    year,
+    monthIndex,
+    _weekDay,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  ] = tz.dateParts(date)
 
   return tz.makeDate(
     year,

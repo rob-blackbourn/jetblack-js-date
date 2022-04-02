@@ -36,6 +36,118 @@ export abstract class Timezone {
   abstract dateParts(date: Date): DateParts
 
   abstract offset(date: Date): number
+
+  year(date: Date): number {
+    const [
+      year,
+      _monthIndex,
+      _weekDay,
+      _day,
+      _hours,
+      _minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return year
+  }
+
+  monthIndex(date: Date): number {
+    const [
+      _year,
+      monthIndex,
+      _weekDay,
+      _day,
+      _hours,
+      _minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return monthIndex
+  }
+
+  weekDay(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      weekDay,
+      _day,
+      _hours,
+      _minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return weekDay
+  }
+
+  day(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      _weekDay,
+      day,
+      _hours,
+      _minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return day
+  }
+
+  hours(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      _weekDay,
+      _day,
+      hours,
+      _minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return hours
+  }
+
+  minutes(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      _weekDay,
+      _day,
+      _hours,
+      minutes,
+      _seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return minutes
+  }
+
+  seconds(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      _weekDay,
+      _day,
+      _hours,
+      _minutes,
+      seconds,
+      _milliseconds
+    ] = this.dateParts(date)
+    return seconds
+  }
+
+  milliseconds(date: Date): number {
+    const [
+      _year,
+      _monthIndex,
+      _weekDay,
+      _day,
+      _hours,
+      _minutes,
+      _seconds,
+      milliseconds
+    ] = this.dateParts(date)
+    return milliseconds
+  }
 }
 
 export class UtcTimezone extends Timezone {
@@ -61,6 +173,7 @@ export class UtcTimezone extends Timezone {
     return [
       date.getUTCFullYear(),
       date.getUTCMonth(),
+      date.getUTCDay(),
       date.getUTCDate(),
       date.getUTCHours(),
       date.getUTCMinutes(),
@@ -103,6 +216,7 @@ export class LocalTimezone extends Timezone {
     return [
       date.getFullYear(),
       date.getMonth(),
+      date.getDay(),
       date.getDate(),
       date.getHours(),
       date.getMinutes(),

@@ -34,6 +34,8 @@ export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
 export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
+export { startOfWeek } from './startOfWeek'
+export { startOfWeekYear } from './startOfWeekYear'
 export { subDuration } from './subDuration'
 export {
   Timezone,
@@ -45,3 +47,5 @@ export {
   TimezoneDelta
 } from './timezone'
 export { tzDataReviver, objectToTimezoneDelta } from './tzdata'
+export { weekOfDate } from './weekOfDate'
+export { weekYear } from './weekYear'
