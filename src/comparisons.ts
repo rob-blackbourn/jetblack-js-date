@@ -1,17 +1,31 @@
-export const dateEquals = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() === rhs.getTime()
+export function dateEquals(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() === rhs.getTime()
+}
 
-export const dateNotEquals = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() !== rhs.getTime()
+export function dateNotEquals(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() !== rhs.getTime()
+}
 
-export const dateBefore = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() < rhs.getTime()
+export function dateBefore(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() < rhs.getTime()
+}
 
-export const dateOnOrBefore = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() <= rhs.getTime()
+export function dateOnOrBefore(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() <= rhs.getTime()
+}
 
-export const dateOnOrAfter = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() >= rhs.getTime()
+export function dateOnOrAfter(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() >= rhs.getTime()
+}
 
-export const dateAfter = (lhs: Date, rhs: Date): boolean =>
-  lhs.getTime() > rhs.getTime()
+export function dateAfter(lhs: Date, rhs: Date): boolean {
+  return lhs.getTime() > rhs.getTime()
+}
+
+export function compareDateAsc(a: Date, b: Date): number {
+  return Math.sign(b.getTime() - a.getTime())
+}
+
+export function compareDateDesc(a: Date, b: Date): number {
+  return Math.sign(a.getTime() - b.getTime())
+}

@@ -22,7 +22,9 @@ export {
   dateBefore,
   dateOnOrBefore,
   dateOnOrAfter,
-  dateAfter
+  dateAfter,
+  compareDateAsc,
+  compareDateDesc
 } from './comparisons'
 export { dayRange } from './dayRange'
 export { daysInMonth } from './daysInMonth'
