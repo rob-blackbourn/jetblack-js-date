@@ -1,4 +1,4 @@
-import { addDuration } from './addDuration'
+import { addDuration } from './arithmetic'
 import { Duration } from './duration'
 import { subDuration } from './subDuration'
 import { DateParts } from './types'

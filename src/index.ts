@@ -1,14 +1,14 @@
-import { quarterOfYear } from './quarterOfYear'
-
-export { addBusinessDays } from './addBusinessDays'
-export { addDays } from './addDays'
-export { addDuration } from './addDuration'
-export { addHours } from './addHours'
-export { addMilliseconds } from './addMilliseconds'
-export { addMinutes } from './addMinutes'
-export { addMonths } from './addMonths'
-export { addSeconds } from './addSeconds'
-export { addYears } from './addYears'
+export {
+  addBusinessDays,
+  addDays,
+  addDuration,
+  addHours,
+  addMilliseconds,
+  addMinutes,
+  addMonths,
+  addSeconds,
+  addYears
+} from './arithmetic'
 export { areInSameQuarter } from './areInSameQuarter'
 export {
   Calendar,
