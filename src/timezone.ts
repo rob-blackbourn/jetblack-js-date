@@ -1,6 +1,4 @@
-import { addDuration } from './arithmetic'
-import { Duration } from './duration'
-import { subDuration } from './subDuration'
+import { Duration, addDuration, subDuration } from './duration'
 import { DateParts } from './types'
 import { getClosestValues, padNumber } from './utils'
 

@@ -1,3 +1,5 @@
+import { Timezone, tzLocal } from './timezone'
+
 const SECONDS_IN_DAY = 24 * 60 * 60
 
 export class Duration {
@@ -305,4 +307,58 @@ export class Duration {
       seconds % 60
     ]
   }
+}
+
+export function addDuration(
+  date: Date,
+  duration: Duration,
+  tz: Timezone = tzLocal
+): Date {
+  const [
+    year,
+    monthIndex,
+    _weekDay,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  ] = tz.dateParts(date)
+
+  return tz.makeDate(
+    year + duration.years,
+    monthIndex + duration.months,
+    day + (duration.days + duration.weeks * 7),
+    hours + duration.hours,
+    minutes + duration.minutes,
+    seconds + duration.seconds,
+    milliseconds
+  )
+}
+
+export function subDuration(
+  date: Date,
+  duration: Duration,
+  tz: Timezone = tzLocal
+): Date {
+  const [
+    year,
+    monthIndex,
+    _weekDay,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  ] = tz.dateParts(date)
+
+  return tz.makeDate(
+    year - duration.years,
+    monthIndex - duration.months,
+    day - (duration.days + duration.weeks * 7),
+    hours - duration.hours,
+    minutes - duration.minutes,
+    seconds - duration.seconds,
+    milliseconds
+  )
 }

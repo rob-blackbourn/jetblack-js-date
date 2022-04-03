@@ -48,33 +48,6 @@ export function addDays(
   )
 }
 
-export function addDuration(
-  date: Date,
-  duration: Duration,
-  tz: Timezone = tzLocal
-): Date {
-  const [
-    year,
-    monthIndex,
-    _weekDay,
-    day,
-    hours,
-    minutes,
-    seconds,
-    milliseconds
-  ] = tz.dateParts(date)
-
-  return tz.makeDate(
-    year + duration.years,
-    monthIndex + duration.months,
-    day + (duration.days + duration.weeks * 7),
-    hours + duration.hours,
-    minutes + duration.minutes,
-    seconds + duration.seconds,
-    milliseconds
-  )
-}
-
 export function addHours(
   date: Date,
   amount: number,

@@ -1,7 +1,6 @@
 export {
   addBusinessDays,
   addDays,
-  addDuration,
   addHours,
   addMilliseconds,
   addMinutes,
@@ -30,7 +29,7 @@ export { dayRange } from './dayRange'
 export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
 export { diffInCalDays } from './diffInCalDays'
-export { Duration } from './duration'
+export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
 export { endOfDay } from './endOfDay'
 export { endOfMonth } from './endOfMonth'
@@ -44,7 +43,6 @@ export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeek } from './startOfWeek'
 export { startOfWeekYear } from './startOfWeekYear'
-export { subDuration } from './subDuration'
 export {
   Timezone,
   UtcTimezone,
