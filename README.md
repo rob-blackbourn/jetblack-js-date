@@ -8,7 +8,8 @@ This is work in progress!
 
 This project provides utilities for working with dates and timezones.
 
-The built in Date object is a simple offset from an epoch. It provides functions
+The JavaScript built in [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+object is a simple offset from an epoch. It provides functions
 to resolve this into date components (days, months, years, etc.) in both the local
 timezone of the browser, and UTC. A browser currently has no access to the hosts
 timezone database.
@@ -16,9 +17,10 @@ timezone database.
 This library provides two things:
 
 * Convenience methods for manipulating dates in both UTC and the local timezone.
-* The ability to use custom timezones.
+* The ability to use IANA timezones (e.g. America/Chicago).
 
-The timezone database is provided by a second project [jetblack-tzdata](https://github.com/rob-blackbourn/jetblack-tzdata).
+The IANA timezone database has been made available in JSON format by
+a second project [jetblack-tzdata](https://github.com/rob-blackbourn/jetblack-tzdata).
 This allows the timezone data to be accessed statically, or dynamically through a HTTP GET (e.g. with `fetch`).
 
 ## Installation
@@ -80,3 +82,5 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
   .catch(error => console.error(error))
 }
 ```
+
+Note how the `jsdelivr` CDN can be used to access the specific timezone file.
