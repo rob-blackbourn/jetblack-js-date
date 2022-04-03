@@ -1,6 +1,6 @@
 # @jetblack/date
 
-Timezone aware date manipulation for JavaScript.
+Timezone-aware date manipulation for JavaScript.
 
 This is work in progress!
 
@@ -8,7 +8,7 @@ This is work in progress!
 
 This project provides utilities for working with dates and timezones.
 
-The JavaScript built in [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+The JavaScript built-in [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 object is a simple offset from an epoch. It provides functions
 to resolve this into date components (days, months, years, etc.) in both the local
 timezone of the browser, and UTC. A browser currently has no access to the hosts
@@ -19,7 +19,9 @@ This library provides two things:
 * Convenience methods for manipulating dates in both UTC and the local timezone.
 * The ability to use IANA timezones (e.g. America/Chicago).
 
-The IANA timezone database has been made available in JSON format by
+The
+[IANA timezone database](https://www.iana.org/time-zones)
+has been made available in JSON format by
 a second project [jetblack-tzdata](https://github.com/rob-blackbourn/jetblack-tzdata).
 This allows the timezone data to be accessed statically, or dynamically through a HTTP GET (e.g. with `fetch`).
 
@@ -47,7 +49,7 @@ const everyDayInTheYear = dayRange(start, end, step, tzUtc)
 // returns [ "2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", ..., "2000-12-31T00:00:00Z" ]
 ```
 
-### Custom Timezones
+### IANA Timezones
 
 If the required timezones are known in advance they can be installed directly.
 The IANA timezone database has been converted to JSON format and bundled into
@@ -57,8 +59,7 @@ an npm package. The following installs the package
 npm install --save @jetblack/tzdata
 ```
 
-This installs JSON files with the timezone data. Depending on the environment plugins
-you may be able to import the JSON directly.
+Depending on the environment plugins you may be able to import the JSON directly.
 
 ```js
 import { CustomTimezone, objectToTimezoneDelta } from '../src'
@@ -69,9 +70,8 @@ const tzBrussels = new CustomTimezone(
   BRUSSELS_TZDATA.map(objectToTimezoneDelta)
 )
 
-const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
-// returns 
-console.log(newYearsDay)
+const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
+// returns "2000-01-01T01:00:00Z"
 ```
 
 When the required timezones are not known at build time they may be accessed dynamically.
@@ -86,7 +86,7 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
     const zoneData = JSON.parse(zoneDataText, tzDataReviver)
     const tzBrussels = new CustomTimezone(timeZoneName, zoneData)
     const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
-    console.log(newYearsDay)        
+    // returns "2000-01-01T01:00:00Z"
   })
   .catch(error => console.error(error))
 }
