@@ -1,20 +1,19 @@
 import { Timezone, tzLocal } from './timezone'
 
 export function easter(year: number, tz: Timezone = tzLocal): Date {
-  const f = Math.floor,
-    // Golden Number - 1
-    G = year % 19,
-    C = f(year / 100),
-    // related to Epact
-    H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30,
-    // number of days from 21 March to the Paschal full moon
-    I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11)),
-    // weekday for the Paschal full moon
-    J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7,
-    // number of days from 21 March to the Sunday on or before the Paschal full moon
+  const G = year % 19,
+    C = Math.floor(year / 100),
+    H =
+      (C - Math.floor(C / 4) - Math.floor((8 * C + 13) / 25) + 19 * G + 15) %
+      30,
+    I =
+      H -
+      Math.floor(H / 28) *
+        (1 - Math.floor(29 / (H + 1)) * Math.floor((21 - G) / 11)),
+    J = (year + Math.floor(year / 4) + I + 2 - C + Math.floor(C / 4)) % 7,
     L = I - J,
-    month = 3 + f((L + 40) / 44),
-    day = L + 28 - 31 * f(month / 4)
+    month = 3 + Math.floor((L + 40) / 44),
+    day = L + 28 - 31 * Math.floor(month / 4)
 
   return tz.makeDate(year, month - 1, day)
 }
