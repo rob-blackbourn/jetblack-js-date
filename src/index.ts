@@ -1,5 +1,4 @@
 export {
-  addBusinessDays,
   addDays,
   addHours,
   addMilliseconds,
@@ -13,7 +12,9 @@ export {
   Calendar,
   WeekendCalendar,
   HolidayCalendar,
-  calWeekends
+  calWeekends,
+  addBusinessDays,
+  nearestBusinessDay
 } from './calendar'
 export {
   dateEquals,
