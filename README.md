@@ -1,6 +1,6 @@
 # @jetblack/date
 
-Date utilities for JavaScript.
+Timezone aware date manipulation for JavaScript.
 
 This is work in progress!
 
@@ -33,7 +33,7 @@ npm install --save @jetblack/date
 
 ## Usage
 
-A date range could be calculated using UTC dates in the following manner:
+A range of dates could be calculated using UTC dates in the following manner:
 
 ```js
 import { dayRange, tzUTC } from '@jetblack/date'
@@ -49,14 +49,16 @@ const everyDayInTheYear = dayRange(start, end, step, tzUtc)
 
 ### Custom Timezones
 
-If the required timezones are known in advance they can be installed as a package.
+If the required timezones are known in advance they can be installed directly.
+The IANA timezone database has been converted to JSON format and bundled into
+an npm package. The following installs the package
 
 ```bash
 npm install --save @jetblack/tzdata
 ```
 
 This installs JSON files with the timezone data. Depending on the environment plugins
-you may be able to upload the JSON directly.
+you may be able to import the JSON directly.
 
 ```js
 import { CustomTimezone, objectToTimezoneDelta } from '../src'
@@ -90,4 +92,8 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
 }
 ```
 
-Note how the `jsdelivr` CDN can be used to access the specific timezone file.
+The above example demonstrates how the [jsdelivr](https://www.jsdelivr.com/) content delivery
+network can be leveraged to serve the timezone data, through it's ability to access individual
+files.
+
+The list of all available zones is provided at `dist/latest/zones.json`.
