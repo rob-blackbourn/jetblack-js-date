@@ -1,3 +1,9 @@
+/**
+ * Find the largest date.
+ *
+ * @param dates The dates to check.
+ * @returns The largest date.
+ */
 export function maxDate(...dates: Date[]): Date {
   if (dates.length === 0) {
     throw new RangeError('no dates')

@@ -1,3 +1,9 @@
+/**
+ * Find the smallest date.
+ *
+ * @param dates The dates to check.
+ * @returns The smallest date.
+ */
 export function minDate(...dates: Date[]): Date {
   if (dates.length === 0) {
     throw new RangeError('no dates')

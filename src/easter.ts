@@ -1,5 +1,12 @@
 import { Timezone, tzLocal } from './timezone'
 
+/**
+ * Calculates Easter in the Gregorian calendar.
+ *
+ * @param year The year.
+ * @param tz An optional timezone. Defaults to tzLocal.
+ * @returns The date for easter in the given year.
+ */
 export function easter(year: number, tz: Timezone = tzLocal): Date {
   const G = year % 19,
     C = Math.floor(year / 100),

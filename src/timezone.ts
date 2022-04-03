@@ -2,6 +2,9 @@ import { Duration, addDuration, subDuration } from './duration'
 import { DateParts } from './types'
 import { getClosestValues, padNumber } from './utils'
 
+/**
+ * A line from the tzdata database.
+ */
 export interface TimezoneDelta {
   utc: Date
   local: Date
@@ -10,17 +13,40 @@ export interface TimezoneDelta {
   isDst: boolean
 }
 
+/**
+ * The base class for timezones.
+ */
 export abstract class Timezone {
   #name: string
 
+  /**
+   * Construct a new timezone.
+   *
+   * @param name The timezone name.
+   */
   constructor(name: string) {
     this.#name = name
   }
 
+  /**
+   * The name of the timezone.
+   */
   get name(): string {
     return this.#name
   }
 
+  /**
+   * Create a date from its component parts.
+   *
+   * @param year The year.
+   * @param monthIndex The month index where January is 0.
+   * @param day The day of the month.
+   * @param hours The hour of the day.
+   * @param minutes The minute of the day.
+   * @param seconds The second of the day.
+   * @param milliseconds The millisecond of the day.
+   * @returns A new date built from the parts.
+   */
   abstract makeDate(
     year: number,
     monthIndex: number,
@@ -31,10 +57,27 @@ export abstract class Timezone {
     milliseconds?: number
   ): Date
 
+  /**
+   * Extract the date parts.
+   *
+   * @param date The date.
+   * @returns The date parts.
+   */
   abstract dateParts(date: Date): DateParts
 
+  /**
+   * The signed offset in minutes from UTC for the given date.
+   *
+   * @param date The date.
+   */
   abstract offset(date: Date): number
 
+  /**
+   * The year for the date.
+   *
+   * @param date The date.
+   * @returns The year.
+   */
   year(date: Date): number {
     const [
       year,
@@ -49,6 +92,12 @@ export abstract class Timezone {
     return year
   }
 
+  /**
+   * The month index for the given date where 0 is January.
+   *
+   * @param date The date.
+   * @returns The month index of the date where 0 is January.
+   */
   monthIndex(date: Date): number {
     const [
       _year,
@@ -63,6 +112,12 @@ export abstract class Timezone {
     return monthIndex
   }
 
+  /**
+   * The day of the week for the given date where 0 is Sunday.
+   *
+   * @param date The date.
+   * @returns The day of the week where 0 is Sunday.
+   */
   weekDay(date: Date): number {
     const [
       _year,
@@ -77,6 +132,12 @@ export abstract class Timezone {
     return weekDay
   }
 
+  /**
+   * The day of the month for the given date.
+   *
+   * @param date The date.
+   * @returns The day of the month.
+   */
   day(date: Date): number {
     const [
       _year,
@@ -91,6 +152,12 @@ export abstract class Timezone {
     return day
   }
 
+  /**
+   * The hour of the day for the given date.
+   *
+   * @param date The date.
+   * @returns The hour of the day.
+   */
   hours(date: Date): number {
     const [
       _year,
@@ -105,6 +172,12 @@ export abstract class Timezone {
     return hours
   }
 
+  /**
+   * The minute of the day for the given date.
+   *
+   * @param date The date.
+   * @returns The minute of the day.
+   */
   minutes(date: Date): number {
     const [
       _year,
@@ -119,6 +192,12 @@ export abstract class Timezone {
     return minutes
   }
 
+  /**
+   * The second of the day for a given date.
+   *
+   * @param date The date.
+   * @returns The second of the day.
+   */
   seconds(date: Date): number {
     const [
       _year,
@@ -133,6 +212,12 @@ export abstract class Timezone {
     return seconds
   }
 
+  /**
+   * The millisecond of the day for a given date.
+   *
+   * @param date The date.
+   * @returns The milliseconds of the day.
+   */
   milliseconds(date: Date): number {
     const [
       _year,
@@ -147,6 +232,12 @@ export abstract class Timezone {
     return milliseconds
   }
 
+  /**
+   * The ISO 8601 date string representation for a given date.
+   *
+   * @param date The date.
+   * @returns The ISO date string.
+   */
   toISOString(date: Date) {
     const [
       year,
@@ -185,7 +276,7 @@ export abstract class Timezone {
   }
 }
 
-export class UtcTimezone extends Timezone {
+class UtcTimezone extends Timezone {
   constructor() {
     super('UTC')
   }
@@ -226,7 +317,7 @@ export class UtcTimezone extends Timezone {
   }
 }
 
-export class LocalTimezone extends Timezone {
+class LocalTimezone extends Timezone {
   constructor() {
     super(Intl.DateTimeFormat().resolvedOptions().timeZone)
   }
@@ -269,12 +360,27 @@ export class LocalTimezone extends Timezone {
   }
 }
 
+/**
+ * The local timezone.
+ */
 export const tzUtc = new UtcTimezone()
+/**
+ * The timezone for UTC.
+ */
 export const tzLocal = new LocalTimezone()
 
+/**
+ * An implementation for custom timezones.
+ */
 export class CustomTimezone extends Timezone {
   #deltas: TimezoneDelta[]
 
+  /**
+   * Construct a custom timezone.
+   *
+   * @param name The timezone name.
+   * @param deltas The timezone offsets
+   */
   constructor(name: string, deltas: TimezoneDelta[]) {
     super(name)
     this.#deltas = deltas

@@ -1,4 +1,11 @@
 import { isLeapYear } from './isLeapYear'
 
-export const daysInYear = (year: number): number =>
-  isLeapYear(year) ? 366 : 365
+/**
+ * Find the number of days in a year.
+ *
+ * @param year The year.
+ * @returns The number of days in the year.
+ */
+export function daysInYear(year: number): number {
+  return isLeapYear(year) ? 366 : 365
+}

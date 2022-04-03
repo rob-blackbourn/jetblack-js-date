@@ -2,6 +2,15 @@ import { addDays } from './arithmetic'
 import { startOfDay } from './startOfDay'
 import { Timezone, tzLocal } from './timezone'
 
+/**
+ * Creates a range of dates.
+ *
+ * @param startDate The start dat.
+ * @param endDate The end date.
+ * @param step The day step count.
+ * @param tz An optional timezone. Defaults to the local timezone.
+ * @returns The range of dates separated by step days from the start to the end date.
+ */
 export function dayRange(
   startDate: Date,
   endDate: Date,

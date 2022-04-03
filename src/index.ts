@@ -7,7 +7,6 @@ export {
   addSeconds,
   addYears
 } from './arithmetic'
-export { areInSameQuarter } from './areInSameQuarter'
 export {
   Calendar,
   WeekendCalendar,
@@ -24,7 +23,8 @@ export {
   dateOnOrAfter,
   dateAfter,
   compareDateAsc,
-  compareDateDesc
+  compareDateDesc,
+  areInSameQuarter
 } from './comparisons'
 export { dayRange } from './dayRange'
 export { daysInMonth } from './daysInMonth'
@@ -46,8 +46,6 @@ export { startOfWeek } from './startOfWeek'
 export { startOfWeekYear } from './startOfWeekYear'
 export {
   Timezone,
-  UtcTimezone,
-  LocalTimezone,
   tzLocal,
   tzUtc,
   CustomTimezone,

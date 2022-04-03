@@ -2,19 +2,41 @@ import { Timezone, tzLocal } from './timezone'
 
 const SECONDS_IN_DAY = 24 * 60 * 60
 
+/**
+ * Represents an ISO 8601 duration.
+ */
 export class Duration {
   static readonly #DURATION_PATTERN =
     /^(?<sign>-?[+-])?P((?<years>-?[+-]?\d+([.]\d+)?)Y)?((?<months>-?[+-]?\d+([.]\d+)?)M)?((?<weeks>-?[+-]?\d+([.]\d+)?)W)?((?<days>-?[+-]?\d+([.]\d+)?)D)?(T((?<hours>-?[+-]?\d+([.]\d+)?)H)?((?<minutes>-?[+-]?\d+([.]\d+)?)M)?((?<seconds>-?[+-]?\d+([.]\d+)?)S)?)?$/
   static readonly #ZERO_STRING = 'PT0S'
 
+  /** @ignore */
   #years: number
+  /** @ignore */
   #months: number
+  /** @ignore */
   #weeks: number
+  /** @ignore */
   #days: number
+  /** @ignore */
   #hours: number
+  /** @ignore */
   #minutes: number
+  /** @ignore */
   #seconds: number
 
+  /**
+   * Constructs a duration from the component values. The resulting duration
+   * will be simplified. For example 12 months will become 1 year and 0 months.
+   *
+   * @param years The years.
+   * @param months The months.
+   * @param weeks The weeks.
+   * @param days The days.
+   * @param hours The hours.
+   * @param minutes The minutes.
+   * @param seconds The seconds.
+   */
   constructor(
     years: number,
     months: number,
@@ -24,6 +46,12 @@ export class Duration {
     minutes?: number,
     seconds?: number
   )
+  /**
+   * Constructs a year from the string representation, the number of seconds,
+   * or another duration object.
+   *
+   * @param value The duration as a string, number, or duration.
+   */
   constructor(value: string | number | Duration)
 
   constructor(...args: any[]) {
@@ -38,6 +66,7 @@ export class Duration {
     ] = Duration.#argsToValues(...args)
   }
 
+  /** @ignore */
   static #argsToValues(
     ...args: any[]
   ): [number, number, number, number, number, number, number] {
@@ -75,6 +104,7 @@ export class Duration {
     }
   }
 
+  /** @ignore */
   #countSigns(): [number, number] {
     let positiveCount = 0,
       negativeCount = 0
@@ -97,6 +127,11 @@ export class Duration {
     return [positiveCount, negativeCount]
   }
 
+  /**
+   * Creates a string representation of the duration.
+   *
+   * @returns An ISO 8601 duration.
+   */
   toString(): string {
     const [positiveCount, negativeCount] = this.#countSigns()
     if (positiveCount === 0 && negativeCount === 0) {
@@ -141,10 +176,16 @@ export class Duration {
     return datePart
   }
 
+  /**
+   * Gets the years.
+   */
   get years(): number {
     return this.#years
   }
 
+  /**
+   * Sets the years.
+   */
   set years(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -152,10 +193,18 @@ export class Duration {
     this.#years = Math.trunc(value)
   }
 
+  /**
+   * Gets the months.
+   */
   get months(): number {
     return this.#months
   }
 
+  /**
+   * Sets the months.
+   *
+   * If the value is greater than or equal to 12 the duration is simplified.
+   */
   set months(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -164,10 +213,16 @@ export class Duration {
     this.years += Math.trunc(value / 12)
   }
 
+  /**
+   * Gets the weeks.
+   */
   get weeks(): number {
     return this.#weeks
   }
 
+  /**
+   * Sets the weeks.
+   */
   set weeks(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -175,10 +230,18 @@ export class Duration {
     this.#weeks = value
   }
 
+  /**
+   * Gets the days.
+   */
   get days(): number {
     return this.#days
   }
 
+  /**
+   * Sets the days.
+   *
+   * If the value is greater than or equal to 7 the duration is simplified.
+   */
   set days(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -187,10 +250,18 @@ export class Duration {
     this.weeks += Math.trunc(value / 7)
   }
 
+  /**
+   * Gets the hours.
+   */
   get hours(): number {
     return this.#hours
   }
 
+  /**
+   * Sets the hours.
+   *
+   * If the value is greater than or equal to 24 the duration is simplified.
+   */
   set hours(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -199,10 +270,18 @@ export class Duration {
     this.days += Math.trunc(value / 24)
   }
 
+  /**
+   * Gets the minutes.
+   */
   get minutes(): number {
     return this.#minutes
   }
 
+  /**
+   * Sets the minutes.
+   *
+   * If the value is greater than or equal to 60 the duration is simplified.
+   */
   set minutes(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -211,10 +290,18 @@ export class Duration {
     this.hours += Math.trunc(value / 60)
   }
 
+  /**
+   * Gets the seconds.
+   */
   get seconds(): number {
     return this.#seconds
   }
 
+  /**
+   * Sets the seconds.
+   *
+   * If the value is greater than or equal to 60 the value is simplified.
+   */
   set seconds(value: number) {
     if (value < 0) {
       throw new RangeError('Value cannot be negative')
@@ -223,6 +310,12 @@ export class Duration {
     this.minutes += Math.trunc(value / 60)
   }
 
+  /**
+   * The number of milliseconds of the duration assuming a year has 360 days
+   * and a month has 30 days.
+   *
+   * @returns The number of milliseconds to which the duration corresponds.
+   */
   valueOf(): number {
     const totalDays =
       this.#years * 360 + this.#months * 30 + this.#weeks * 7 + this.#days
@@ -231,6 +324,7 @@ export class Duration {
     return totalDays * SECONDS_IN_DAY + totalSeconds
   }
 
+  /** @ignore */
   static #fromString(
     text: string
   ): [number, number, number, number, number, number, number] {
@@ -258,6 +352,7 @@ export class Duration {
     )
   }
 
+  /** @ignore */
   static #fromNumber(
     value: number
   ): [number, number, number, number, number, number, number] {
@@ -283,6 +378,7 @@ export class Duration {
     ]
   }
 
+  /** @ignore */
   static #fromValues(
     years: number,
     months: number,
@@ -309,6 +405,14 @@ export class Duration {
   }
 }
 
+/**
+ * Add a duration to a date.
+ *
+ * @param date The start date.
+ * @param duration The duration to add.
+ * @param tz An optional timezone. Defaults to tzLocal.
+ * @returns A new date adjusted by adding the duration.
+ */
 export function addDuration(
   date: Date,
   duration: Duration,
@@ -336,6 +440,14 @@ export function addDuration(
   )
 }
 
+/**
+ * Subtract a duration from a date.
+ *
+ * @param date The start date.
+ * @param duration The duration to subtract.
+ * @param tz An optional timezone. Defaults to tzLocal.
+ * @returns A new date adjusted by subtracting the duration.
+ */
 export function subDuration(
   date: Date,
   duration: Duration,

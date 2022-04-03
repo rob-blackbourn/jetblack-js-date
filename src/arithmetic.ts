@@ -5,7 +5,7 @@ import { Timezone, tzLocal } from './timezone'
  *
  * @param date The start date.
  * @param numberOfYears The number of years to add (or subtract if negative).
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of years.
  */
 export function addYears(
@@ -40,7 +40,7 @@ export function addYears(
  *
  * @param date The start date.
  * @param numberOfMonths The number of months to add (or subtract if negative)
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of months.
  */
 export function addMonths(
@@ -75,7 +75,7 @@ export function addMonths(
  *
  * @param date The start date.
  * @param numberOfDays The number of days to add (or subtract if negative).
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of days.
  */
 export function addDays(
@@ -110,7 +110,7 @@ export function addDays(
  *
  * @param date The start date.
  * @param numberOfHours The number of hours to add (or subtract if negative).
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of hours.
  */
 export function addHours(
@@ -145,7 +145,7 @@ export function addHours(
  *
  * @param date The start date.
  * @param numberOfMinutes The number of minutes to ad (or subtract if negative).
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of minutes.
  */
 export function addMinutes(
@@ -180,7 +180,7 @@ export function addMinutes(
  *
  * @param date The start date.
  * @param numberOfSeconds The number of seconds to add.
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of seconds.
  */
 export function addSeconds(
@@ -215,7 +215,7 @@ export function addSeconds(
  *
  * @param date The start date.
  * @param numberOfMilliseconds The number of milliseconds to add (or subtract if negative).
- * @param tz An Optional timezone. Defaults to tzLocal.
+ * @param tz An Optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by the number of milliseconds.
  */
 export function addMilliseconds(

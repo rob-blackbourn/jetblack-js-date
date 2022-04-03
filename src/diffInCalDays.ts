@@ -1,8 +1,15 @@
 import { startOfDay } from './startOfDay'
 import { Timezone, tzLocal } from './timezone'
+import { MILLISECONDS_IN_DAY } from './constants'
 
-const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000
-
+/**
+ * Find the number of days between two dates.
+ *
+ * @param startDate The start date.
+ * @param endDate The end date.
+ * @param tz An optional timezone. Defaults to the local timezone.
+ * @returns The number of days between the start of day on the start and end dates.
+ */
 export function diffInCalDays(
   startDate: Date,
   endDate: Date,
