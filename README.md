@@ -38,7 +38,13 @@ A date range could be calculated using UTC dates in the following manner:
 ```js
 import { dayRange, tzUTC } from '@jetblack/date'
 
-const everyDayInTheYear = dayRange(tzUTC.makeDate(2000, 1, 1), tzUtc.makeDate(2000, 12, 31), 1 tzUtc)
+const start = tzUTC.makeDate(2000, 1, 1)
+const end = tzUtc.makeDate(2000, 12, 31)
+const step = 1 // one day
+
+const everyDayInTheYear = dayRange(start, end, step, tzUtc)
+  .map(d => d.toISOString())
+// returns [ "2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", ..., "2000-12-31T00:00:00Z" ]
 ```
 
 ### Custom Timezones
@@ -62,6 +68,7 @@ const tzBrussels = new CustomTimezone(
 )
 
 const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
+// returns 
 console.log(newYearsDay)
 ```
 
