@@ -87,7 +87,8 @@ const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
 
 When the required timezones are not known at build time they may be accessed dynamically.
 The [jsdelivr](https://www.jsdelivr.com/) content delivery network
-is capable of serving individual files from the `@jetblack/tzdata` npm package.
+is capable of serving individual files from the
+[@jetblack/tzdata](https://www.npmjs.com/package/@jetblack/tzdata) npm package.
 
 The following example shows how this can be done.
 
