@@ -62,10 +62,10 @@ npm install --save @jetblack/tzdata
 Depending on the environment plugins you may be able to import the JSON directly.
 
 ```js
-import { CustomTimezone, objectToTimezoneDelta } from '../src'
+import { IANATimezone, objectToTimezoneDelta } from '../src'
 import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
-const tzBrussels = new CustomTimezone(
+const tzBrussels = new IANATimezone(
   'Europe/Brussels',
   BRUSSELS_TZDATA.map(objectToTimezoneDelta)
 )
@@ -77,14 +77,14 @@ const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
 When the required timezones are not known at build time they may be accessed dynamically.
 
 ```js
-import { CustomTimezone, tzDataReviver } from '../src'
+import { IANATimezone, tzDataReviver } from '../src'
 
 const timezoneName = 'Europe/Brussels'
 fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.json`)
   .then(response => response.text())
   .then(zoneDataText => {
     const zoneData = JSON.parse(zoneDataText, tzDataReviver)
-    const tzBrussels = new CustomTimezone(timeZoneName, zoneData)
+    const tzBrussels = new IANATimezone(timeZoneName, zoneData)
     const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
     // returns "2000-01-01T01:00:00Z"
   })

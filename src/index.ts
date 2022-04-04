@@ -48,7 +48,7 @@ export {
   Timezone,
   tzLocal,
   tzUtc,
-  CustomTimezone,
+  IANATimezone,
   TimezoneDelta
 } from './timezone'
 export { tzDataReviver, objectToTimezoneDelta } from './tzdata'

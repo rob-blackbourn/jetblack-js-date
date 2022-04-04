@@ -1,8 +1,8 @@
-import { CustomTimezone, objectToTimezoneDelta } from '../src'
+import { IANATimezone, objectToTimezoneDelta } from '../src'
 import timezones from './timezones.json'
 
 const BRUSSELS_TZNAME = 'Europe/Brussels'
-const tzBrussels = new CustomTimezone(
+const tzBrussels = new IANATimezone(
   BRUSSELS_TZNAME,
   timezones['Europe/Brussels'].map(objectToTimezoneDelta)
 )

@@ -17,6 +17,7 @@ export interface TimezoneDelta {
  * The base class for timezones.
  */
 export abstract class Timezone {
+  /** @ignore */
   #name: string
 
   /**
@@ -29,7 +30,7 @@ export abstract class Timezone {
   }
 
   /**
-   * The name of the timezone.
+   * Get the name of the timezone.
    */
   get name(): string {
     return this.#name
@@ -370,9 +371,9 @@ export const tzUtc = new UtcTimezone()
 export const tzLocal = new LocalTimezone()
 
 /**
- * An implementation for custom timezones.
+ * An implementation for timezones using IANA data.
  */
-export class CustomTimezone extends Timezone {
+export class IANATimezone extends Timezone {
   #deltas: TimezoneDelta[]
 
   /**
