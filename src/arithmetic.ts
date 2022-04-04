@@ -3,6 +3,8 @@ import { Timezone, tzLocal } from './timezone'
 /**
  * Add years to a date (or subtract if negative).
  *
+ * @category Arithmetic
+ *
  * @param date The start date.
  * @param numberOfYears The number of years to add (or subtract if negative).
  * @param tz An optional timezone. Defaults to the local timezone.
@@ -37,6 +39,8 @@ export function addYears(
 
 /**
  * Add months to a date (or subtract if negative).
+ *
+ * @category Arithmetic
  *
  * @param date The start date.
  * @param numberOfMonths The number of months to add (or subtract if negative)
@@ -73,6 +77,8 @@ export function addMonths(
 /**
  * Add days to a date (or subtract if negative)
  *
+ * @category Arithmetic
+ *
  * @param date The start date.
  * @param numberOfDays The number of days to add (or subtract if negative).
  * @param tz An optional timezone. Defaults to the local timezone.
@@ -107,6 +113,8 @@ export function addDays(
 
 /**
  * Add hours to a date (or subtract if negative).
+ *
+ * @category Arithmetic
  *
  * @param date The start date.
  * @param numberOfHours The number of hours to add (or subtract if negative).
@@ -143,6 +151,8 @@ export function addHours(
 /**
  * Adds minutes to a date (or subtracts if negative).
  *
+ * @category Arithmetic
+ *
  * @param date The start date.
  * @param numberOfMinutes The number of minutes to ad (or subtract if negative).
  * @param tz An optional timezone. Defaults to the local timezone.
@@ -178,6 +188,8 @@ export function addMinutes(
 /**
  * Adds seconds to a date (or subtracts if negative).
  *
+ * @category Arithmetic
+ *
  * @param date The start date.
  * @param numberOfSeconds The number of seconds to add.
  * @param tz An optional timezone. Defaults to the local timezone.
@@ -212,6 +224,8 @@ export function addSeconds(
 
 /**
  * Adds milliseconds to a date (or subtracts if negative).
+ *
+ * @category Arithmetic
  *
  * @param date The start date.
  * @param numberOfMilliseconds The number of milliseconds to add (or subtract if negative).

@@ -4,6 +4,8 @@ import { getClosestValues, padNumber } from './utils'
 
 /**
  * A line from the tzdata database.
+ *
+ * @category Timezone
  */
 export interface TimezoneDelta {
   utc: Date
@@ -15,6 +17,8 @@ export interface TimezoneDelta {
 
 /**
  * The base class for timezones.
+ *
+ * @category Timezone
  */
 export abstract class Timezone {
   /** @ignore */
@@ -363,15 +367,21 @@ class LocalTimezone extends Timezone {
 
 /**
  * The local timezone.
+ *
+ * @category Timezone
  */
 export const tzUtc = new UtcTimezone()
 /**
  * The timezone for UTC.
+ *
+ * @category Timezone
  */
 export const tzLocal = new LocalTimezone()
 
 /**
  * An implementation for timezones using IANA data.
+ *
+ * @category Timezone
  */
 export class IANATimezone extends Timezone {
   #deltas: TimezoneDelta[]

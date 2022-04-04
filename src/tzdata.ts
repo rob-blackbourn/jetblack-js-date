@@ -4,6 +4,8 @@ import { IANATimezone, TimezoneDelta } from './timezone'
 /**
  * A JSON.parse reviver for tzdata.
  *
+ * @category Timezone
+ *
  * @param key The JSON key.
  * @param value The JSON value.
  * @returns A revived value if applicable.
@@ -21,6 +23,8 @@ export function tzDataReviver(key: string, value: any): any {
 /**
  * Transform the values of a timezone delta.
  *
+ * @category Timezone
+ *
  * @param obj The object to transform.
  * @returns The transformed object.
  */
@@ -36,6 +40,8 @@ export function objectToTimezoneDelta(obj: object): TimezoneDelta {
  *
  * The JSON data requires transformation to convert date and duration strings to
  * objects.
+ *
+ * @category Timezone
  *
  * @param name The timezone name.
  * @param tzdata The JSON timezone data.

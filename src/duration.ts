@@ -4,6 +4,8 @@ const SECONDS_IN_DAY = 24 * 60 * 60
 
 /**
  * Represents an ISO 8601 duration.
+ *
+ * @category Duration
  */
 export class Duration {
   static readonly #DURATION_PATTERN =
@@ -408,6 +410,8 @@ export class Duration {
 /**
  * Add a duration to a date.
  *
+ * @category Arithmetic
+ *
  * @param date The start date.
  * @param duration The duration to add.
  * @param tz An optional timezone. Defaults to tzLocal.
@@ -442,6 +446,8 @@ export function addDuration(
 
 /**
  * Subtract a duration from a date.
+ *
+ * @category Arithmetic
  *
  * @param date The start date.
  * @param duration The duration to subtract.

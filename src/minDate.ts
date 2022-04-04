@@ -1,6 +1,8 @@
 /**
  * Find the smallest date.
  *
+ * @category Comparisons
+ *
  * @param dates The dates to check.
  * @returns The smallest date.
  */

@@ -1,6 +1,8 @@
 /**
  * Check if the year is a leap year.
  *
+ * @category Calendars
+ *
  * @param year The year.
  * @returns True if the year is a leap year, otherwise false.
  */

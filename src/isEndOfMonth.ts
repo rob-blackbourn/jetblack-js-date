@@ -4,6 +4,8 @@ import { Timezone, tzLocal } from './timezone'
 /**
  * Check if the date is the last day of the month.
  *
+ * @category Calendars
+ *
  * @param date The date to check.
  * @param tz An optional timezone. Defaults to tzLocal.
  * @returns True if the date is the last day of the month.

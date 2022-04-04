@@ -2,6 +2,7 @@ export {
   startOfDay,
   startOfToday,
   endOfDay,
+  endOfMonth,
   endOfToday,
   startOfMonth,
   startOfCurrentMonth,
@@ -44,7 +45,6 @@ export { daysInYear } from './daysInYear'
 export { diffInCalDays, diffInCalMonths } from './differences'
 export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
-export { endOfMonth } from './endOfMonth'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
 export { minDate } from './minDate'

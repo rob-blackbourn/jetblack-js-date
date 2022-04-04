@@ -4,6 +4,8 @@ import { Timezone, tzLocal } from './timezone'
 /**
  * Find the week year for a given date.
  *
+ * @category Miscellaneous
+ *
  * @param date The date.
  * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The week year.

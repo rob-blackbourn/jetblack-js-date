@@ -1,6 +1,8 @@
 /**
  * Find the quarter for a given date.
  *
+ * @category Calendars
+ *
  * @param date The date.
  * @returns The quarter of the year.
  */

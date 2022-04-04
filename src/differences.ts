@@ -5,6 +5,8 @@ import { MILLISECONDS_IN_DAY } from './constants'
 /**
  * Find the number of days between two dates.
  *
+ * @category Differences
+ *
  * @param leftDate The left date.
  * @param rightDate The right date.
  * @param tz An optional timezone. Defaults to the local timezone.
@@ -26,6 +28,8 @@ export function diffInCalDays(
 
 /**
  * Find the number of months between two dates.
+ *
+ * @category Differences
  *
  * @param leftDate The left date.
  * @param rightDate The right date.

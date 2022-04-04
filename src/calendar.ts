@@ -3,6 +3,8 @@ import { Timezone, tzLocal } from './timezone'
 
 /**
  * The base class for calendars.
+ *
+ * @category Calendars
  */
 export abstract class Calendar {
   /** @hidden */
@@ -35,6 +37,8 @@ export abstract class Calendar {
 
 /**
  * A calendar where specific days of the week are considered holidays.
+ *
+ * @category Calendars
  */
 export class WeekendCalendar extends Calendar {
   /** @hidden */
@@ -69,11 +73,15 @@ export class WeekendCalendar extends Calendar {
 
 /**
  * The default calendar where Saturday and Sunday are considered holidays.
+ *
+ * @Category Calendars
  */
 export const calWeekends = new WeekendCalendar()
 
 /**
  * A calendar class which supports weekends and an array of arbitrary dates.
+ *
+ * @category Calendars
  */
 export class HolidayCalendar extends WeekendCalendar {
   /** @ignore */
@@ -98,6 +106,8 @@ export class HolidayCalendar extends WeekendCalendar {
 
 /**
  * Add business days to a date (or subtract if negative).
+ *
+ * @category Arithmetic
  *
  * @param date The start date.
  * @param count The number of days to add (or subtract if negative).
@@ -126,6 +136,8 @@ export function addBusinessDays(
 
 /**
  * Find the nearest business date.
+ *
+ * @category Miscellaneous
  *
  * @param date The start date.
  * @param preferForward If true a future date is preferred if both directions have the same cost. Defaults to true.

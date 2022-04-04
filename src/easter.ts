@@ -3,6 +3,8 @@ import { Timezone, tzLocal } from './timezone'
 /**
  * Calculates Easter in the Gregorian calendar.
  *
+ * @category Calendars
+ *
  * @param year The year.
  * @param tz An optional timezone. Defaults to tzLocal.
  * @returns The date for easter in the given year.

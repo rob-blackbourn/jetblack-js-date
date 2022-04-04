@@ -5,6 +5,8 @@ import { Timezone, tzLocal } from './timezone'
 /**
  * Creates a range of dates.
  *
+ * @category Ranges
+ *
  * @param startDate The start dat.
  * @param endDate The end date.
  * @param step The day step count.

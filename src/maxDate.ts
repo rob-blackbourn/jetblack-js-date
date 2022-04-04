@@ -1,6 +1,8 @@
 /**
  * Find the largest date.
  *
+ * @category Comparisons
+ *
  * @param dates The dates to check.
  * @returns The largest date.
  */
