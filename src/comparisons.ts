@@ -9,7 +9,7 @@ import { Timezone, tzLocal } from './timezone'
  * @param rhs The right date.
  * @returns True if the left date equals the right date, otherwise false.
  */
-export function dateEquals(lhs: Date, rhs: Date): boolean {
+export function dateIsEqual(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() === rhs.getTime()
 }
 
@@ -22,7 +22,7 @@ export function dateEquals(lhs: Date, rhs: Date): boolean {
  * @param rhs The right date.
  * @returns True if the dates are not equal, otherwise false.
  */
-export function dateNotEquals(lhs: Date, rhs: Date): boolean {
+export function dateIsNotEqual(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() !== rhs.getTime()
 }
 
@@ -35,7 +35,7 @@ export function dateNotEquals(lhs: Date, rhs: Date): boolean {
  * @param rhs The right date.
  * @returns True if the left date is before the right date, otherwise false.
  */
-export function dateBefore(lhs: Date, rhs: Date): boolean {
+export function dateIsBefore(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() < rhs.getTime()
 }
 
@@ -48,7 +48,7 @@ export function dateBefore(lhs: Date, rhs: Date): boolean {
  * @param rhs The right date.
  * @returns True if the left date is on or before the right date, otherwise false.
  */
-export function dateOnOrBefore(lhs: Date, rhs: Date): boolean {
+export function dateIsOnOrBefore(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() <= rhs.getTime()
 }
 
@@ -61,7 +61,7 @@ export function dateOnOrBefore(lhs: Date, rhs: Date): boolean {
  * @param rhs The right date.
  * @returns True if the left date is on or after the right date, otherwise false.
  */
-export function dateOnOrAfter(lhs: Date, rhs: Date): boolean {
+export function dateIsOnOrAfter(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() >= rhs.getTime()
 }
 
@@ -74,7 +74,7 @@ export function dateOnOrAfter(lhs: Date, rhs: Date): boolean {
  * @param rhs The right date.
  * @returns True if the left date is after the right date, otherwise false.
  */
-export function dateAfter(lhs: Date, rhs: Date): boolean {
+export function dateIsAfter(lhs: Date, rhs: Date): boolean {
   return lhs.getTime() > rhs.getTime()
 }
 

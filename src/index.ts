@@ -29,12 +29,12 @@ export {
   nearestBusinessDay
 } from './calendar'
 export {
-  dateEquals,
-  dateNotEquals,
-  dateBefore,
-  dateOnOrBefore,
-  dateOnOrAfter,
-  dateAfter,
+  dateIsEqual,
+  dateIsNotEqual,
+  dateIsBefore,
+  dateIsOnOrBefore,
+  dateIsOnOrAfter,
+  dateIsAfter,
   compareDateAsc,
   compareDateDesc,
   areInSameQuarter
