@@ -9,7 +9,10 @@ export {
   startOfYear,
   startOfCurrentYear,
   startOfWeek,
-  startOfWeekYear
+  startOfWeekYear,
+  startOfHour,
+  startOfMinute,
+  startOfSecond
 } from './anchors'
 export {
   addDays,
@@ -39,7 +42,7 @@ export {
   compareDateDesc,
   areInSameQuarter
 } from './comparisons'
-export { dayRange } from './dayRange'
+export { dayRange } from './ranges'
 export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
 export { dayOfYear } from './dayOfYear'
