@@ -77,6 +77,7 @@ import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
   'Europe/Brussels',
+  // Convert the dates and durations from JSON strings to objects.
   BRUSSELS_TZDATA.map(objectToTimezoneDelta)
 )
 
@@ -94,6 +95,7 @@ const timezoneName = 'Europe/Brussels'
 fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.json`)
   .then(response => response.text())
   .then(zoneDataText => {
+    // Use a reviver to convert JSON strings to dates and durations.
     const zoneData = JSON.parse(zoneDataText, tzDataReviver)
     const tzBrussels = new IANATimezone(timeZoneName, zoneData)
     const newYearsDay = tzBrussels.makeDate(2000, 1, 1)

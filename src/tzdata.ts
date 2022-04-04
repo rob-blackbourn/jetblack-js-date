@@ -1,5 +1,5 @@
 import { Duration } from './duration'
-import { TimezoneDelta } from './timezone'
+import { IANATimezone, TimezoneDelta } from './timezone'
 
 /**
  * A JSON.parse reviver for tzdata.
@@ -29,4 +29,18 @@ export function objectToTimezoneDelta(obj: object): TimezoneDelta {
     (result, [key, value]) => ({ ...result, [key]: tzDataReviver(key, value) }),
     {}
   ) as TimezoneDelta
+}
+
+/**
+ * Create a timezone from JSON data.
+ *
+ * The JSON data requires transformation to convert date and duration strings to
+ * objects.
+ *
+ * @param name The timezone name.
+ * @param tzdata The JSON timezone data.
+ * @returns The new timezone.
+ */
+export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
+  return new IANATimezone(name, tzdata.map(objectToTimezoneDelta))
 }

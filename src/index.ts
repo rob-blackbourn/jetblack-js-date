@@ -57,6 +57,10 @@ export {
   IANATimezone,
   TimezoneDelta
 } from './timezone'
-export { tzDataReviver, objectToTimezoneDelta } from './tzdata'
+export {
+  tzDataReviver,
+  objectToTimezoneDelta,
+  timezoneFromJSON
+} from './tzdata'
 export { weekOfDate } from './weekOfDate'
 export { weekYear } from './weekYear'
