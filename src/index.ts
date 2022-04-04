@@ -42,6 +42,7 @@ export {
 export { dayRange } from './dayRange'
 export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
+export { dayOfYear } from './dayOfYear'
 export { diffInCalDays, diffInCalMonths } from './differences'
 export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
@@ -62,5 +63,5 @@ export {
   objectToTimezoneDelta,
   timezoneFromJSON
 } from './tzdata'
-export { weekOfDate } from './weekOfDate'
+export { weekOfYear } from './weekOfYear'
 export { weekYear } from './weekYear'
