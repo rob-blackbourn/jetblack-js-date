@@ -85,8 +85,11 @@ const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
 // returns "2000-01-01T01:00:00Z"
 ```
 
-When the required timezones are not known at build time they may be accessed dynamically
-by using an online content delivery network.
+When the required timezones are not known at build time they may be accessed dynamically.
+The [jsdelivr](https://www.jsdelivr.com/) content delivery network
+is capable of serving individual files from the `@jetblack/tzdata` npm package.
+
+The following example shows how this can be done.
 
 ```js
 import { IANATimezone, tzDataReviver } from '../src'
@@ -104,9 +107,5 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
   .catch(error => console.error(error))
 }
 ```
-
-The above example demonstrates how the [jsdelivr](https://www.jsdelivr.com/) content delivery
-network can be leveraged to serve the timezone data, through it's ability to access individual
-files.
 
 The list of all available zones is provided at `dist/latest/zones.json`.
