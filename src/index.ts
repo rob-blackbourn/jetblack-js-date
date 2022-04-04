@@ -1,4 +1,16 @@
 export {
+  startOfDay,
+  startOfToday,
+  endOfDay,
+  endOfToday,
+  startOfMonth,
+  startOfCurrentMonth,
+  startOfYear,
+  startOfCurrentYear,
+  startOfWeek,
+  startOfWeekYear
+} from './anchors'
+export {
   addDays,
   addHours,
   addMilliseconds,
@@ -32,18 +44,12 @@ export { daysInYear } from './daysInYear'
 export { diffInCalDays } from './diffInCalDays'
 export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
-export { endOfDay } from './endOfDay'
 export { endOfMonth } from './endOfMonth'
-export { endOfToday } from './endOfToday'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
-export { startOfDay } from './startOfDay'
-export { startOfToday } from './startOfToday'
-export { startOfWeek } from './startOfWeek'
-export { startOfWeekYear } from './startOfWeekYear'
 export {
   Timezone,
   tzLocal,

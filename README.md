@@ -33,21 +33,31 @@ The package can be installed from npmjs.
 npm install --save @jetblack/date
 ```
 
-## Usage
+## Convenience Methods
 
-A range of dates could be calculated using UTC dates in the following manner:
+The library provides the usual convenience methods (e.g. `addDays`, `startOfDay`, etc.),
+but with the addition of a timezone.
 
 ```js
-import { dayRange, tzUTC } from '@jetblack/date'
+import { startOfToday, tzLocal, tzUTC } from '@jetblack/date'
 
-const start = tzUTC.makeDate(2000, 1, 1)
-const end = tzUtc.makeDate(2000, 12, 31)
-const step = 1 // one day
+// Get the start of today relative to the local timezone.
+const todayLocal = startOfToday()
 
-const everyDayInTheYear = dayRange(start, end, step, tzUtc)
-  .map(d => d.toISOString())
-// returns [ "2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", ..., "2000-12-31T00:00:00Z" ]
+// If the timezone isn't specified, it defaults to the local timezone.
+// The following passes it explicitly.
+const todayLocalExplicit = startOfToday(tzLocal)
+
+// The start of today relative to UTC can be found by passing the UTC timezone.
+const todayUTC = startOfToday(tzUTC)
+
+// If the browser had timezone information the following would find the
+// start of the day in Tokyo.
+// const todayTokyo = startOfToday(tzTokyo)
 ```
+
+The following describes how timezone data which is not natively supported by the
+browser can be accessed and used.
 
 ### IANA Timezones
 

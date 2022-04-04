@@ -1,5 +1,4 @@
-import { startOfWeek } from './startOfWeek'
-import { startOfWeekYear } from './startOfWeekYear'
+import { startOfWeek, startOfWeekYear } from './anchors'
 import { Timezone, tzLocal } from './timezone'
 
 const MILLISECONDS_IN_WEEK = 7 * 24 * 60 * 60 * 1000

@@ -1,5 +1,5 @@
 import { addDays } from './arithmetic'
-import { startOfDay } from './startOfDay'
+import { startOfDay } from './anchors'
 import { Timezone, tzLocal } from './timezone'
 
 /**

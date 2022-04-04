@@ -1,4 +1,4 @@
-import { startOfDay } from './startOfDay'
+import { startOfDay } from './anchors'
 import { Timezone, tzLocal } from './timezone'
 import { MILLISECONDS_IN_DAY } from './constants'
 

@@ -1,4 +1,4 @@
-import { startOfWeek } from './startOfWeek'
+import { startOfWeek } from './anchors'
 import { Timezone, tzLocal } from './timezone'
 
 /**
