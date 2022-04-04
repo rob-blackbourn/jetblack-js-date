@@ -84,7 +84,8 @@ const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
 // returns "2000-01-01T01:00:00Z"
 ```
 
-When the required timezones are not known at build time they may be accessed dynamically.
+When the required timezones are not known at build time they may be accessed dynamically
+by using an online content delivery network.
 
 ```js
 import { IANATimezone, tzDataReviver } from '../src'
