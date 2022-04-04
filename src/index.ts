@@ -41,7 +41,7 @@ export {
 export { dayRange } from './dayRange'
 export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
-export { diffInCalDays } from './diffInCalDays'
+export { diffInCalDays, diffInCalMonths } from './differences'
 export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
 export { endOfMonth } from './endOfMonth'
