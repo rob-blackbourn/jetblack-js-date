@@ -1,4 +1,6 @@
-import { Timezone, tzLocal } from './timezone'
+import { Duration } from './duration'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * Add years to a date (or subtract if negative).
@@ -322,46 +324,76 @@ export function addNthDayOfWeek(
   }
 }
 
-/*
-def add_nth_day_of_week(
-  date: datetime.date,
-  nth: int,
-  dow: DayOfWeek,
-  strictly_different: bool
-) -> datetime.date:
-if nth == 0:
-  return date
+/**
+ * Add a duration to a date.
+ *
+ * @category Arithmetic
+ *
+ * @param date The start date.
+ * @param duration The duration to add.
+ * @param tz An optional timezone. Defaults to tzLocal.
+ * @returns A new date adjusted by adding the duration.
+ */
+export function addDuration(
+  date: Date,
+  duration: Duration,
+  tz: Timezone = tzLocal
+): Date {
+  const [
+    year,
+    monthIndex,
+    _weekDay,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  ] = tz.dateParts(date)
 
-if dow < DayOfWeek.MONDAY or dow > DayOfWeek.FRIDAY:
-  return date
+  return tz.makeDate(
+    year + duration.years,
+    monthIndex + duration.months,
+    day + (duration.days + duration.weeks * 7),
+    hours + duration.hours,
+    minutes + duration.minutes,
+    seconds + duration.seconds,
+    milliseconds
+  )
+}
 
-diff = dow - date.weekday()
+/**
+ * Subtract a duration from a date.
+ *
+ * @category Arithmetic
+ *
+ * @param date The start date.
+ * @param duration The duration to subtract.
+ * @param tz An optional timezone. Defaults to tzLocal.
+ * @returns A new date adjusted by subtracting the duration.
+ */
+export function subDuration(
+  date: Date,
+  duration: Duration,
+  tz: Timezone = tzLocal
+): Date {
+  const [
+    year,
+    monthIndex,
+    _weekDay,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  ] = tz.dateParts(date)
 
-if diff == 0 and strictly_different:
-  nth += 1 if nth >= 0 else -1
-
-# forwards
-if nth > 0:
-  # If diff = 0 below, the input date is the 1st DOW already, no adjustment
-  # is required. The 'diff' is the adjustment from the input date
-  # required to get to the first DOW matching the 'dow_index' given.
-
-  if diff < 0:
-      diff += 7
-
-  adjusted_start_date = date + datetime.timedelta(diff)
-  end_date = adjusted_start_date + datetime.timedelta((nth - 1) * 7)
-  return end_date
-# backwards
-else:
-  # If diff = 0 below, the input date is the 1st DOW already, no adjustment
-  # is required. The 'diff' is the adjustment from the input date
-  # required to get to the first DOW matching the 'dow_index' given.
-
-  if diff > 0:
-      diff -= 7
-
-  adjusted_start_date = date + datetime.timedelta(diff)
-  end_date = adjusted_start_date + datetime.timedelta((nth + 1) * 7)
-  return end_date
-*/
+  return tz.makeDate(
+    year - duration.years,
+    monthIndex - duration.months,
+    day - (duration.days + duration.weeks * 7),
+    hours - duration.hours,
+    minutes - duration.minutes,
+    seconds - duration.seconds,
+    milliseconds
+  )
+}

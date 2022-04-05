@@ -12,7 +12,8 @@ import {
   startOfMinute,
   startOfSecond
 } from './anchors'
-import { Timezone, tzLocal } from './timezone'
+import { Timezone } from './timezone'
+import { tzLocal } from './localTimezone'
 
 /**
  * Creates a range of dates by year.

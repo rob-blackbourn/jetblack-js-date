@@ -1,5 +1,6 @@
 import { startOfWeek } from './anchors'
-import { Timezone, tzLocal } from './timezone'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * Find the week year for a given date.

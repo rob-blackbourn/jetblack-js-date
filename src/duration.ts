@@ -1,4 +1,4 @@
-import { Timezone, tzLocal } from './timezone'
+import { Timezone } from './timezone'
 
 const SECONDS_IN_DAY = 24 * 60 * 60
 
@@ -405,78 +405,4 @@ export class Duration {
       seconds % 60
     ]
   }
-}
-
-/**
- * Add a duration to a date.
- *
- * @category Arithmetic
- *
- * @param date The start date.
- * @param duration The duration to add.
- * @param tz An optional timezone. Defaults to tzLocal.
- * @returns A new date adjusted by adding the duration.
- */
-export function addDuration(
-  date: Date,
-  duration: Duration,
-  tz: Timezone = tzLocal
-): Date {
-  const [
-    year,
-    monthIndex,
-    _weekDay,
-    day,
-    hours,
-    minutes,
-    seconds,
-    milliseconds
-  ] = tz.dateParts(date)
-
-  return tz.makeDate(
-    year + duration.years,
-    monthIndex + duration.months,
-    day + (duration.days + duration.weeks * 7),
-    hours + duration.hours,
-    minutes + duration.minutes,
-    seconds + duration.seconds,
-    milliseconds
-  )
-}
-
-/**
- * Subtract a duration from a date.
- *
- * @category Arithmetic
- *
- * @param date The start date.
- * @param duration The duration to subtract.
- * @param tz An optional timezone. Defaults to tzLocal.
- * @returns A new date adjusted by subtracting the duration.
- */
-export function subDuration(
-  date: Date,
-  duration: Duration,
-  tz: Timezone = tzLocal
-): Date {
-  const [
-    year,
-    monthIndex,
-    _weekDay,
-    day,
-    hours,
-    minutes,
-    seconds,
-    milliseconds
-  ] = tz.dateParts(date)
-
-  return tz.makeDate(
-    year - duration.years,
-    monthIndex - duration.months,
-    day - (duration.days + duration.weeks * 7),
-    hours - duration.hours,
-    minutes - duration.minutes,
-    seconds - duration.seconds,
-    milliseconds
-  )
 }

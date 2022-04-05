@@ -1,5 +1,6 @@
 import { isEndOfMonth } from './isEndOfMonth'
-import { Timezone, tzLocal } from './timezone'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 import { findLastIndex } from './utils'
 
 /**

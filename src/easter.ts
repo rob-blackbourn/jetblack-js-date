@@ -1,4 +1,5 @@
-import { Timezone, tzLocal } from './timezone'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * Calculates Easter in the Gregorian calendar.

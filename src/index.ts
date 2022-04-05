@@ -9,7 +9,6 @@ export {
   startOfYear,
   startOfCurrentYear,
   startOfWeek,
-  startOfWeekYear,
   startOfHour,
   startOfMinute,
   startOfSecond
@@ -22,7 +21,9 @@ export {
   addMonths,
   addSeconds,
   addYears,
-  addNthDayOfWeek
+  addNthDayOfWeek,
+  addDuration,
+  subDuration
 } from './arithmetic'
 export {
   Calendar,
@@ -47,8 +48,9 @@ export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
 export { dayOfYear } from './dayOfYear'
 export { diffInCalDays, diffInCalMonths } from './differences'
-export { Duration, addDuration, subDuration } from './duration'
+export { Duration } from './duration'
 export { easter } from './easter'
+export { TimezoneDelta, IANATimezone } from './ianaTimezone'
 export {
   findDayIndex,
   findLastDayIndex,
@@ -61,6 +63,7 @@ export {
 } from './indices'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
+export { tzLocal } from './localTimezone'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
@@ -73,17 +76,13 @@ export {
   minuteRange,
   secondRange
 } from './ranges'
-export {
-  Timezone,
-  tzLocal,
-  tzUtc,
-  IANATimezone,
-  TimezoneDelta
-} from './timezone'
+export { startOfWeekYear } from './startOfWeekYear'
+export { Timezone } from './timezone'
 export {
   tzDataReviver,
   objectToTimezoneDelta,
   timezoneFromJSON
 } from './tzdata'
+export { tzUtc } from './utcTimezone'
 export { weekOfYear } from './weekOfYear'
 export { weekYear } from './weekYear'

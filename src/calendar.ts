@@ -1,5 +1,6 @@
 import { addDays } from './arithmetic'
-import { Timezone, tzLocal } from './timezone'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * The base class for calendars.

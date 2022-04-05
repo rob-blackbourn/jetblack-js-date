@@ -1,5 +1,5 @@
 import { Duration } from './duration'
-import { IANATimezone, TimezoneDelta } from './timezone'
+import { IANATimezone, TimezoneDelta } from './ianaTimezone'
 
 /**
  * A JSON.parse reviver for tzdata.

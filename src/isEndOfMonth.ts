@@ -1,5 +1,6 @@
 import { daysInMonth } from './daysInMonth'
-import { Timezone, tzLocal } from './timezone'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * Check if the date is the last day of the month.

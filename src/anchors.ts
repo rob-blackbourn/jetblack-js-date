@@ -1,7 +1,7 @@
 import { addDays } from './arithmetic'
 import { daysInMonth } from './daysInMonth'
-import { Timezone, tzLocal } from './timezone'
-import { weekYear } from './weekYear'
+import { tzLocal } from './localTimezone'
+import { Timezone } from './timezone'
 
 /**
  * Find the start of the day.
@@ -118,21 +118,6 @@ export function startOfCurrentYear(tz: Timezone = tzLocal): Date {
 export function startOfWeek(date: Date, tz: Timezone = tzLocal): Date {
   const weekDay = tz.weekDay(date)
   return addDays(startOfDay(date, tz), -weekDay, tz)
-}
-
-/**
- * Find the first week of the year for a given date.
- *
- * @category Anchors
- *
- * @param date The date.
- * @param tz An optional timezone. Defaults to the local timezone.
- * @returns The date of the first week of the year.
- */
-export function startOfWeekYear(date: Date, tz: Timezone = tzLocal): Date {
-  const year = weekYear(date, tz)
-  const firstWeek = tz.makeDate(year, 0, 1)
-  return startOfWeek(firstWeek, tz)
 }
 
 /**
