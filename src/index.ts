@@ -43,7 +43,6 @@ export {
   compareDateDesc,
   areInSameQuarter
 } from './comparisons'
-export { dayRange } from './ranges'
 export { daysInMonth } from './daysInMonth'
 export { daysInYear } from './daysInYear'
 export { dayOfYear } from './dayOfYear'
@@ -55,6 +54,15 @@ export { isLeapYear } from './isLeapYear'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
+export {
+  yearRange,
+  monthRange,
+  weekRange,
+  dayRange,
+  hourRange,
+  minuteRange,
+  secondRange
+} from './ranges'
 export {
   Timezone,
   tzLocal,
