@@ -21,7 +21,8 @@ export {
   addMinutes,
   addMonths,
   addSeconds,
-  addYears
+  addYears,
+  addNthDayOfWeek
 } from './arithmetic'
 export {
   Calendar,
