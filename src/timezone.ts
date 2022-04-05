@@ -83,19 +83,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The year.
    */
-  year(date: Date): number {
-    const [
-      year,
-      _monthIndex,
-      _weekDay,
-      _day,
-      _hours,
-      _minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return year
-  }
+  abstract year(date: Date): number
 
   /**
    * The month index for the given date where 0 is January.
@@ -103,19 +91,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The month index of the date where 0 is January.
    */
-  monthIndex(date: Date): number {
-    const [
-      _year,
-      monthIndex,
-      _weekDay,
-      _day,
-      _hours,
-      _minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return monthIndex
-  }
+  abstract monthIndex(date: Date): number
 
   /**
    * The day of the week for the given date where 0 is Sunday.
@@ -123,19 +99,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The day of the week where 0 is Sunday.
    */
-  weekDay(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      weekDay,
-      _day,
-      _hours,
-      _minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return weekDay
-  }
+  abstract weekDay(date: Date): number
 
   /**
    * The day of the month for the given date.
@@ -143,19 +107,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The day of the month.
    */
-  day(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      _weekDay,
-      day,
-      _hours,
-      _minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return day
-  }
+  abstract day(date: Date): number
 
   /**
    * The hour of the day for the given date.
@@ -163,19 +115,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The hour of the day.
    */
-  hours(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      _weekDay,
-      _day,
-      hours,
-      _minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return hours
-  }
+  abstract hours(date: Date): number
 
   /**
    * The minute of the day for the given date.
@@ -183,19 +123,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The minute of the day.
    */
-  minutes(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      _weekDay,
-      _day,
-      _hours,
-      minutes,
-      _seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return minutes
-  }
+  abstract minutes(date: Date): number
 
   /**
    * The second of the day for a given date.
@@ -203,19 +131,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The second of the day.
    */
-  seconds(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      _weekDay,
-      _day,
-      _hours,
-      _minutes,
-      seconds,
-      _milliseconds
-    ] = this.dateParts(date)
-    return seconds
-  }
+  abstract seconds(date: Date): number
 
   /**
    * The millisecond of the day for a given date.
@@ -223,19 +139,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The milliseconds of the day.
    */
-  milliseconds(date: Date): number {
-    const [
-      _year,
-      _monthIndex,
-      _weekDay,
-      _day,
-      _hours,
-      _minutes,
-      _seconds,
-      milliseconds
-    ] = this.dateParts(date)
-    return milliseconds
-  }
+  abstract milliseconds(date: Date): number
 
   /**
    * The ISO 8601 date string representation for a given date.
@@ -320,6 +224,38 @@ class UtcTimezone extends Timezone {
   toISOString(date: Date): string {
     return date.toISOString()
   }
+
+  year(date: Date): number {
+    return date.getUTCFullYear()
+  }
+
+  monthIndex(date: Date): number {
+    return date.getUTCMonth()
+  }
+
+  weekDay(date: Date): number {
+    return date.getUTCDay()
+  }
+
+  day(date: Date): number {
+    return date.getUTCDate()
+  }
+
+  hours(date: Date): number {
+    return date.getUTCHours()
+  }
+
+  minutes(date: Date): number {
+    return date.getUTCMinutes()
+  }
+
+  seconds(date: Date): number {
+    return date.getUTCSeconds()
+  }
+
+  milliseconds(date: Date): number {
+    return date.getUTCMilliseconds()
+  }
 }
 
 class LocalTimezone extends Timezone {
@@ -362,6 +298,38 @@ class LocalTimezone extends Timezone {
 
   offset(date: Date): number {
     return date.getTimezoneOffset()
+  }
+
+  year(date: Date): number {
+    return date.getFullYear()
+  }
+
+  monthIndex(date: Date): number {
+    return date.getMonth()
+  }
+
+  weekDay(date: Date): number {
+    return date.getDay()
+  }
+
+  day(date: Date): number {
+    return date.getDate()
+  }
+
+  hours(date: Date): number {
+    return date.getHours()
+  }
+
+  minutes(date: Date): number {
+    return date.getMinutes()
+  }
+
+  seconds(date: Date): number {
+    return date.getSeconds()
+  }
+
+  milliseconds(date: Date): number {
+    return date.getMilliseconds()
   }
 }
 
@@ -438,5 +406,53 @@ export class IANATimezone extends Timezone {
   offset(date: Date): number {
     const delta = this.#findDelta(date)
     return delta.offset.hours * 60 + delta.offset.minutes
+  }
+
+  year(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.year(local)
+  }
+
+  monthIndex(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.monthIndex(local)
+  }
+
+  weekDay(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.weekDay(local)
+  }
+
+  day(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.day(local)
+  }
+
+  hours(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.hours(local)
+  }
+
+  minutes(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.minutes(local)
+  }
+
+  seconds(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.seconds(local)
+  }
+
+  milliseconds(date: Date): number {
+    const delta = this.#findDelta(date)
+    const local = addDuration(date, delta.offset)
+    return tzUtc.milliseconds(local)
   }
 }
