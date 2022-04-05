@@ -1,7 +1,7 @@
-import { findWeekdayIndex, lastWeekdayIndexOf, tzUtc } from '../src'
+import { findWeekdayIndex, lastWeekdayIndex, tzUtc } from '../src'
 
-describe('addDays', () => {
-  describe('basic', () => {
+describe('indices', () => {
+  describe('weekday', () => {
     it('should find weekday', () => {
       const actual = findWeekdayIndex(
         [
@@ -27,7 +27,7 @@ describe('addDays', () => {
     })
 
     it('should find last weekday', () => {
-      const actual = lastWeekdayIndexOf(
+      const actual = lastWeekdayIndex(
         [
           new Date('2000-01-01T00:00:00Z'),
           new Date('2000-01-02T00:00:00Z'),
@@ -59,7 +59,7 @@ describe('addDays', () => {
       expect(actual).toBe(-1)
     })
     it('should not find last weekday', () => {
-      const actual = lastWeekdayIndexOf(
+      const actual = lastWeekdayIndex(
         [
           new Date('2000-01-11T00:00:00Z'),
           new Date('2000-01-12T00:00:00Z'),

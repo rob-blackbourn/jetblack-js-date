@@ -49,7 +49,16 @@ export { dayOfYear } from './dayOfYear'
 export { diffInCalDays, diffInCalMonths } from './differences'
 export { Duration, addDuration, subDuration } from './duration'
 export { easter } from './easter'
-export { findWeekdayIndex, lastWeekdayIndexOf } from './indices'
+export {
+  findDayIndex,
+  findLastDayIndex,
+  findWeekdayIndex,
+  lastWeekdayIndex,
+  findStartOfMonthIndex,
+  findLastStartOfMonthIndex,
+  findEndOfMonthIndex,
+  findLastEndOfMonthIndex
+} from './indices'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
 export { minDate } from './minDate'

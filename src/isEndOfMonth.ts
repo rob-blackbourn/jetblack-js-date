@@ -11,15 +11,5 @@ import { Timezone, tzLocal } from './timezone'
  * @returns True if the date is the last day of the month.
  */
 export function isEndOfMonth(date: Date, tz: Timezone = tzLocal): boolean {
-  const [
-    year,
-    monthIndex,
-    _weekDay,
-    day,
-    _hours,
-    _minutes,
-    _seconds,
-    _milliseconds
-  ] = tz.dateParts(date)
-  return day === daysInMonth(year, monthIndex)
+  return tz.day(date) === daysInMonth(tz.year(date), tz.monthIndex(date))
 }

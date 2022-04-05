@@ -52,3 +52,15 @@ export function binarySearch<T, I>(
 
 export const padNumber = (value: number, maxLength: number): string =>
   String(value).padStart(maxLength, '0')
+
+export function findLastIndex(
+  array: any[],
+  predicate: (element: any, index: number, array: any[]) => boolean
+): number {
+  for (let i = array.length - 1; i >= 0; --i) {
+    if (predicate(array[i], i, array)) {
+      return i
+    }
+  }
+  return -1
+}
