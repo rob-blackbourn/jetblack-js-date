@@ -6,12 +6,10 @@ import {
   addSeconds,
   addYears
 } from './arithmetic'
-import {
-  startOfDay,
-  startOfHour,
-  startOfMinute,
-  startOfSecond
-} from './anchors'
+import { startOfDay } from './startOfDay'
+import { startOfHour } from './startOfHour'
+import { startOfMinute } from './startOfMinute'
+import { startOfSecond } from './startOfSecond'
 import { Timezone } from './timezone'
 import { tzLocal } from './localTimezone'
 

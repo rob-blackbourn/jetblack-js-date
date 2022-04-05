@@ -1,18 +1,14 @@
-export {
-  startOfDay,
-  startOfToday,
-  endOfDay,
-  endOfMonth,
-  endOfToday,
-  startOfMonth,
-  startOfCurrentMonth,
-  startOfYear,
-  startOfCurrentYear,
-  startOfWeek,
-  startOfHour,
-  startOfMinute,
-  startOfSecond
-} from './anchors'
+export { startOfSecond } from './startOfSecond'
+export { endOfDay } from './endOfDay'
+export { endOfMonth } from './endOfMonth'
+export { endOfToday } from './endOfToday'
+export { startOfMonth } from './startOfMonth'
+export { startOfCurrentMonth } from './startOfCurrentMonth'
+export { startOfYear } from './startOfYear'
+export { startOfCurrentYear } from './startOfCurrentYear'
+export { startOfWeek } from './startOfWeek'
+export { startOfHour } from './startOfHour'
+export { startOfMinute } from './startOfMinute'
 export {
   addDays,
   addHours,
@@ -76,6 +72,8 @@ export {
   minuteRange,
   secondRange
 } from './ranges'
+export { startOfDay } from './startOfDay'
+export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
 export { Timezone } from './timezone'
 export {

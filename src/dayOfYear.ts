@@ -1,4 +1,4 @@
-import { startOfYear } from './anchors'
+import { startOfYear } from './startOfYear'
 import { diffInCalDays } from './differences'
 import { tzLocal } from './localTimezone'
 import { Timezone } from './timezone'

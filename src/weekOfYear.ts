@@ -1,4 +1,4 @@
-import { startOfWeek } from './anchors'
+import { startOfWeek } from './startOfWeek'
 import { tzLocal } from './localTimezone'
 import { startOfWeekYear } from './startOfWeekYear'
 import { Timezone } from './timezone'
