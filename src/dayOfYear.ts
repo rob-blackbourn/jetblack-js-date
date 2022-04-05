@@ -1,5 +1,5 @@
 import { startOfYear } from './startOfYear'
-import { diffInCalDays } from './differences'
+import { diffInCalDays } from './diffInCalDays'
 import { tzLocal } from './localTimezone'
 import { Timezone } from './timezone'
 
