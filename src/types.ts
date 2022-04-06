@@ -36,7 +36,6 @@ export type Milliseconds = number
 export type DateParts = [
   Year,
   MonthIndex,
-  Weekday,
   Day,
   Hours,
   Minutes,

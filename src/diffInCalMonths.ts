@@ -16,11 +16,8 @@ export function diffInCalMonths(
   rightDate: Date,
   tz: Timezone = tzLocal
 ): number {
-  const [leftYear, leftMonthIndex] = tz.dateParts(leftDate)
-  const [rightYear, rightMonthIndex] = tz.dateParts(rightDate)
-
-  const yearDiff = leftYear - rightYear
-  const monthDiff = leftMonthIndex - rightMonthIndex
+  const yearDiff = tz.year(leftDate) - tz.year(rightDate)
+  const monthDiff = tz.monthIndex(leftDate) - tz.monthIndex(rightDate)
 
   return yearDiff * 12 + monthDiff
 }

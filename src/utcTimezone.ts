@@ -24,7 +24,6 @@ class UtcTimezone extends Timezone {
     return [
       date.getUTCFullYear(),
       date.getUTCMonth(),
-      date.getUTCDay(),
       date.getUTCDate(),
       date.getUTCHours(),
       date.getUTCMinutes(),

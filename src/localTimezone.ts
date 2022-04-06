@@ -30,7 +30,6 @@ class LocalTimezone extends Timezone {
     return [
       date.getFullYear(),
       date.getMonth(),
-      date.getDay(),
       date.getDate(),
       date.getHours(),
       date.getMinutes(),

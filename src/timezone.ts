@@ -134,16 +134,8 @@ export abstract class Timezone {
    * @returns The ISO date string.
    */
   toISOString(date: Date) {
-    const [
-      year,
-      monthIndex,
-      _weekDay,
-      day,
-      hours,
-      minutes,
-      seconds,
-      milliseconds
-    ] = this.dateParts(date)
+    const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
+      this.dateParts(date)
     const offset = this.offset(date)
     const offsetSign = Math.sign(offset)
     const offsetHours = offsetSign * Math.trunc(offset / 60)
