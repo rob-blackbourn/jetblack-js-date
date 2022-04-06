@@ -53,3 +53,8 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
 ```
 
 The list of all available zones is provided at `dist/latest/zones.json`.
+
+
+## What next ?
+
+{@page ./calendars.md}

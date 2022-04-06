@@ -11,7 +11,6 @@ module.exports = {
         title: 'Guides',
         childrenDir: 'guide',
         children: [
-          { title: 'Installation', source: 'installation.md' },
           { title: 'Getting started', source: 'getting-started.md' },
           { title: 'IANA Timezones', source: 'iana-timezones.md' },
           { title: 'Calendars', source: 'calendars.md' }

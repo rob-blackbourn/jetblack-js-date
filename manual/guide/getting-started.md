@@ -1,4 +1,12 @@
-# Convenience Methods
+## Installation
+
+The package can be installed from npmjs.
+
+```bash
+npm install --save @jetblack/date
+```
+
+## Convenience Methods
 
 The library provides the usual convenience methods (e.g. `addDays`, `startOfDay`, etc.),
 but with the addition of an optional timezone.
