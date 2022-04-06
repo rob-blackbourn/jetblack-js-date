@@ -92,10 +92,10 @@ export class IANATimezone extends Timezone {
     return tzUtc.monthIndex(local)
   }
 
-  weekDay(date: Date): number {
+  weekday(date: Date): number {
     const delta = this.#findDelta(date)
     const local = addDuration(date, delta.offset)
-    return tzUtc.weekDay(local)
+    return tzUtc.weekday(local)
   }
 
   day(date: Date): number {

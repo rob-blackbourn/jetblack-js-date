@@ -51,7 +51,7 @@ class LocalTimezone extends Timezone {
     return date.getMonth()
   }
 
-  weekDay(date: Date): number {
+  weekday(date: Date): number {
     return date.getDay()
   }
 

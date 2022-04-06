@@ -291,7 +291,7 @@ export function addNthDayOfWeek(
     throw new RangeError('0 <= dow <= 6')
   }
 
-  let diff = dow - tz.weekDay(date)
+  let diff = dow - tz.weekday(date)
 
   if (diff == 0 && strictlyDifferent) {
     nth += nth >= 0 ? 1 : -1

@@ -57,8 +57,8 @@ describe('timezone', () => {
       expect(monthIndex).toBe(0)
     })
     it('should get the weekday for an IANA timezone', () => {
-      const weekDay = tzBrussels.weekDay(new Date('1999-12-31T23:00:00Z'))
-      expect(weekDay).toBe(6)
+      const weekday = tzBrussels.weekday(new Date('1999-12-31T23:00:00Z'))
+      expect(weekday).toBe(6)
     })
     it('should get the day for an IANA timezone', () => {
       const day = tzBrussels.day(new Date('1999-12-31T23:00:00Z'))
@@ -92,8 +92,8 @@ describe('timezone', () => {
       expect(monthIndex).toBe(0)
     })
     it('should get the weekday for an UTC timezone', () => {
-      const weekDay = tzUtc.weekDay(new Date('2000-01-01T00:00:00Z'))
-      expect(weekDay).toBe(6)
+      const weekday = tzUtc.weekday(new Date('2000-01-01T00:00:00Z'))
+      expect(weekday).toBe(6)
     })
     it('should get the day for an UTC timezone', () => {
       const day = tzUtc.day(new Date('2000-01-01T00:00:00Z'))

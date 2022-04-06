@@ -13,6 +13,6 @@ import { Timezone } from './timezone'
  * @returns The start of the week.
  */
 export function startOfWeek(date: Date, tz: Timezone = tzLocal): Date {
-  const weekDay = tz.weekDay(date)
-  return addDays(startOfDay(date, tz), -weekDay, tz)
+  const weekday = tz.weekday(date)
+  return addDays(startOfDay(date, tz), -weekday, tz)
 }

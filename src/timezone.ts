@@ -85,7 +85,7 @@ export abstract class Timezone {
    * @param date The date.
    * @returns The day of the week where 0 is Sunday.
    */
-  abstract weekDay(date: Date): number
+  abstract weekday(date: Date): number
 
   /**
    * The day of the month for the given date.

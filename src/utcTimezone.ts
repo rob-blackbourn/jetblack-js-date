@@ -49,7 +49,7 @@ class UtcTimezone extends Timezone {
     return date.getUTCMonth()
   }
 
-  weekDay(date: Date): number {
+  weekday(date: Date): number {
     return date.getUTCDay()
   }
 
