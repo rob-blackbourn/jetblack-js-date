@@ -1,17 +1,16 @@
-import {
-  addDays,
-  addHours,
-  addMinutes,
-  addMonths,
-  addSeconds,
-  addYears
-} from './arithmetic'
+import { addSeconds } from './addSeconds'
+
+import { addMinutes } from './addMinutes'
 import { startOfDay } from './startOfDay'
 import { startOfHour } from './startOfHour'
 import { startOfMinute } from './startOfMinute'
 import { startOfSecond } from './startOfSecond'
 import { Timezone } from './timezone'
 import { tzLocal } from './localTimezone'
+import { addYears } from './addYears'
+import { addMonths } from './addMonths'
+import { addDays } from './addDays'
+import { addHours } from './addHours'
 
 /**
  * Creates a range of dates by year.

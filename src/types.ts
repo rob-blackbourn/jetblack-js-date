@@ -9,7 +9,7 @@ export type MonthIndex = number
 /**
  * The day of the week type where 0 is Sunday.
  */
-export type WeekDay = number
+export type Weekday = number
 /**
  * The day of the month type.
  */
@@ -36,7 +36,7 @@ export type Milliseconds = number
 export type DateParts = [
   Year,
   MonthIndex,
-  WeekDay,
+  Weekday,
   Day,
   Hours,
   Minutes,

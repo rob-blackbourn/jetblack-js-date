@@ -9,18 +9,16 @@ export { startOfCurrentYear } from './startOfCurrentYear'
 export { startOfWeek } from './startOfWeek'
 export { startOfHour } from './startOfHour'
 export { startOfMinute } from './startOfMinute'
-export {
-  addDays,
-  addHours,
-  addMilliseconds,
-  addMinutes,
-  addMonths,
-  addSeconds,
-  addYears,
-  addNthDayOfWeek,
-  addDuration,
-  subDuration
-} from './arithmetic'
+export { subDuration } from './subDuration'
+export { addDays } from './addDays'
+export { addDuration } from './addDuration'
+export { addHours } from './addHours'
+export { addMilliseconds } from './addMilliseconds'
+export { addMinutes } from './addMinutes'
+export { addMonths } from './addMonths'
+export { addNthDayOfWeek } from './addNthDayOfWeek'
+export { addSeconds } from './addSeconds'
+export { addYears } from './addYears'
 export {
   Calendar,
   WeekendCalendar,

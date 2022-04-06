@@ -1,4 +1,5 @@
-import { addDuration, subDuration } from './arithmetic'
+import { subDuration } from './subDuration'
+import { addDuration } from './addDuration'
 import { Duration } from './duration'
 import { Timezone } from './timezone'
 import { DateParts } from './types'
