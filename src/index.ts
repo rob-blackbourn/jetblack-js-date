@@ -48,16 +48,14 @@ export { diffInCalMonths } from './diffInCalMonths'
 export { Duration } from './duration'
 export { easter } from './easter'
 export { TimezoneDelta, IANATimezone } from './ianaTimezone'
-export {
-  findDayIndex,
-  findLastDayIndex,
-  findWeekdayIndex,
-  lastWeekdayIndex,
-  findStartOfMonthIndex,
-  findLastStartOfMonthIndex,
-  findEndOfMonthIndex,
-  findLastEndOfMonthIndex
-} from './indices'
+export { findLastEndOfMonthIndex } from './findLastEndOfMonthIndex'
+export { findDayIndex } from './findDayIndex'
+export { findLastDayIndex } from './findLastDayIndex'
+export { findWeekdayIndex } from './findWeekdayIndex'
+export { findLastWeekdayIndex } from './findLastWeekdayIndex'
+export { findStartOfMonthIndex } from './findStartOfMonthIndex'
+export { findLastStartOfMonthIndex } from './findLastStartOfMonthIndex'
+export { findEndOfMonthIndex } from './findEndOfMonthIndex'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
 export { tzLocal } from './localTimezone'
