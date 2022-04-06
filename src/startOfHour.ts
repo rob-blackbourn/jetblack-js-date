@@ -1,5 +1,5 @@
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Find the start of the hour.

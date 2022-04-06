@@ -13,7 +13,8 @@ module.exports = {
         children: [
           { title: 'Installation', source: 'installation.md' },
           { title: 'Getting started', source: 'getting-started.md' },
-          { title: 'IANA Timezones', source: 'iana-timezones.md' }
+          { title: 'IANA Timezones', source: 'iana-timezones.md' },
+          { title: 'Calendars', source: 'calendars.md' }
         ]
       },
       { title: 'Changelog', source: '../CHANGELOG.md' }

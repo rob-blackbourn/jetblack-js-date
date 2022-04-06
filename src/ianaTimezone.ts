@@ -1,9 +1,9 @@
 import { subDuration } from './subDuration'
 import { addDuration } from './addDuration'
-import { Duration } from './duration'
-import { Timezone } from './timezone'
+import { Duration } from './Duration'
+import { Timezone } from './Timezone'
 import { DateParts } from './types'
-import { tzUtc } from './utcTimezone'
+import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
 
 /**

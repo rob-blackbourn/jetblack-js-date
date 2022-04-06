@@ -1,7 +1,7 @@
 import { startOfDay } from './startOfDay'
-import { Timezone } from './timezone'
+import { Timezone } from './Timezone'
 import { MILLISECONDS_IN_DAY } from './constants'
-import { tzLocal } from './localTimezone'
+import { tzLocal } from './LocalTimezone'
 
 /**
  * Find the number of days between two dates.

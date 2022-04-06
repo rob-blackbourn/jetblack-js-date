@@ -1,6 +1,6 @@
 import { endOfDay } from './endOfDay'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * The end of today.

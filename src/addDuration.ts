@@ -1,6 +1,6 @@
-import { Duration } from './duration'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { Duration } from './Duration'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Add a duration to a date.

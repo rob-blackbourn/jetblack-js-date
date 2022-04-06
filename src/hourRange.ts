@@ -1,6 +1,6 @@
 import { startOfHour } from './startOfHour'
-import { Timezone } from './timezone'
-import { tzLocal } from './localTimezone'
+import { Timezone } from './Timezone'
+import { tzLocal } from './LocalTimezone'
 import { addHours } from './addHours'
 
 /**

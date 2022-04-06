@@ -1,8 +1,8 @@
 import { addSeconds } from './addSeconds'
 
 import { startOfSecond } from './startOfSecond'
-import { Timezone } from './timezone'
-import { tzLocal } from './localTimezone'
+import { Timezone } from './Timezone'
+import { tzLocal } from './LocalTimezone'
 
 /**
  * Creates a range of dates by seconds.

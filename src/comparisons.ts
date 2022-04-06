@@ -1,5 +1,5 @@
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Checks if the dates are equal.

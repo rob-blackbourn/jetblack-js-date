@@ -19,14 +19,11 @@ export { addMonths } from './addMonths'
 export { addNthDayOfWeek } from './addNthDayOfWeek'
 export { addSeconds } from './addSeconds'
 export { addYears } from './addYears'
-export {
-  Calendar,
-  WeekendCalendar,
-  HolidayCalendar,
-  calWeekends,
-  addBusinessDays,
-  nearestBusinessDay
-} from './calendar'
+export { addBusinessDays } from './addBusinessDays'
+export { nearestBusinessDay } from './nearestBusinessDay'
+export { WeekendCalendar, calWeekends } from './WeekendCalendar'
+export { HolidayCalendar } from './HolidayCalendar'
+export { Calendar } from './Calendar'
 export {
   dateIsEqual,
   dateIsNotEqual,
@@ -43,9 +40,9 @@ export { daysInYear } from './daysInYear'
 export { dayOfYear } from './dayOfYear'
 export { diffInCalDays } from './diffInCalDays'
 export { diffInCalMonths } from './diffInCalMonths'
-export { Duration } from './duration'
+export { Duration } from './Duration'
 export { easter } from './easter'
-export { TimezoneDelta, IANATimezone } from './ianaTimezone'
+export { TimezoneDelta, IANATimezone } from './IANATimezone'
 export { findLastEndOfMonthIndex } from './findLastEndOfMonthIndex'
 export { findDayIndex } from './findDayIndex'
 export { findLastDayIndex } from './findLastDayIndex'
@@ -56,7 +53,7 @@ export { findLastStartOfMonthIndex } from './findLastStartOfMonthIndex'
 export { findEndOfMonthIndex } from './findEndOfMonthIndex'
 export { isEndOfMonth } from './isEndOfMonth'
 export { isLeapYear } from './isLeapYear'
-export { tzLocal } from './localTimezone'
+export { tzLocal } from './LocalTimezone'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
@@ -70,12 +67,12 @@ export { yearRange } from './yearRange'
 export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
-export { Timezone } from './timezone'
+export { Timezone } from './Timezone'
 export {
   tzDataReviver,
   objectToTimezoneDelta,
   timezoneFromJSON
 } from './tzdata'
-export { tzUtc } from './utcTimezone'
+export { tzUtc } from './UTCTimezone'
 export { weekOfYear } from './weekOfYear'
 export { weekYear } from './weekYear'

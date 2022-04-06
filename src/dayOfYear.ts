@@ -1,7 +1,7 @@
 import { startOfYear } from './startOfYear'
 import { diffInCalDays } from './diffInCalDays'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Find the day of the year.

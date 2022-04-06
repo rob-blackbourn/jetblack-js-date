@@ -1,7 +1,7 @@
 import { startOfWeek } from './startOfWeek'
-import { tzLocal } from './localTimezone'
+import { tzLocal } from './LocalTimezone'
 import { startOfWeekYear } from './startOfWeekYear'
-import { Timezone } from './timezone'
+import { Timezone } from './Timezone'
 
 const MILLISECONDS_IN_WEEK = 7 * 24 * 60 * 60 * 1000
 

@@ -1,5 +1,5 @@
-import { Timezone } from './timezone'
-import { tzLocal } from './localTimezone'
+import { Timezone } from './Timezone'
+import { tzLocal } from './LocalTimezone'
 
 /**
  * Find the number of months between two dates.

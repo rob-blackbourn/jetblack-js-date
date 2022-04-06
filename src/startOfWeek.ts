@@ -1,7 +1,7 @@
 import { addDays } from './addDays'
-import { tzLocal } from './localTimezone'
+import { tzLocal } from './LocalTimezone'
 import { startOfDay } from './startOfDay'
-import { Timezone } from './timezone'
+import { Timezone } from './Timezone'
 
 /**
  * Find the start of the week for a given date.

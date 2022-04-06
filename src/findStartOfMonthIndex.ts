@@ -1,6 +1,6 @@
 import { findDayIndex } from './findDayIndex'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Find the index of the first date that is the start of the month.

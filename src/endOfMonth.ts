@@ -1,6 +1,6 @@
 import { daysInMonth } from './daysInMonth'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Calculate the last day of the month.

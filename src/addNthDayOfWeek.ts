@@ -1,6 +1,6 @@
 import { addDays } from './addDays'
-import { tzLocal } from './localTimezone'
-import { Timezone } from './timezone'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * Add or subtract a number of different days of the week.

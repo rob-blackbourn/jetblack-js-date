@@ -1,4 +1,4 @@
-import { Timezone } from './timezone'
+import { Timezone } from './Timezone'
 import { DateParts } from './types'
 
 class UtcTimezone extends Timezone {
