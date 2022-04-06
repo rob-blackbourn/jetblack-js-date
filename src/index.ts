@@ -60,15 +60,13 @@ export { tzLocal } from './localTimezone'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { quarterOfYear } from './quarterOfYear'
-export {
-  yearRange,
-  monthRange,
-  weekRange,
-  dayRange,
-  hourRange,
-  minuteRange,
-  secondRange
-} from './ranges'
+export { secondRange } from './secondRange'
+export { minuteRange } from './minuteRange'
+export { hourRange } from './hourRange'
+export { dayRange } from './dayRange'
+export { weekRange } from './weekRange'
+export { monthRange } from './monthRange'
+export { yearRange } from './yearRange'
 export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
