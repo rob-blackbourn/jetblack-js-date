@@ -19,9 +19,11 @@ dates that are considered holidays.
 Here is a simple calendar.
 
 ```js
+import { HolidayCalendar } from '@jetblack/date'
+
 const cal = new HolidayCalendar(
     'cal',
-    [0, 6],
+    [6, 0], // Saturday and Sunday
     [
     new Date('2015-01-01T00:00:00Z'), // New Years Day
     new Date('2015-04-03T00:00:00Z'), // Good Friday
