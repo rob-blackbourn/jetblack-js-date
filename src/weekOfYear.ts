@@ -1,9 +1,7 @@
-import { startOfWeek } from './startOfWeek'
 import { tzLocal } from './LocalTimezone'
-import { startOfWeekYear } from './startOfWeekYear'
 import { Timezone } from './Timezone'
 
-const MILLISECONDS_IN_WEEK = 7 * 24 * 60 * 60 * 1000
+const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000
 
 /**
  * Find the week of the year for a given date.
@@ -15,8 +13,7 @@ const MILLISECONDS_IN_WEEK = 7 * 24 * 60 * 60 * 1000
  * @returns The week of the year.
  */
 export function weekOfYear(date: Date, tz: Timezone = tzLocal): number {
-  const end = startOfWeek(date, tz)
-  const start = startOfWeekYear(date, tz)
-  const diff = end.getTime() - start.getTime()
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1
+  const jan1 = tz.makeDate(tz.year(date), 0, 1)
+  const daysBetween = (date.getTime() - jan1.getTime()) / MILLISECONDS_IN_DAY
+  return 1 + Math.trunc(daysBetween / 7)
 }
