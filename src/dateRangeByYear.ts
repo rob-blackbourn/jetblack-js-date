@@ -1,32 +1,31 @@
-import { startOfHour } from './startOfHour'
+import { startOfDay } from './startOfDay'
 import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
-import { addHours } from './addHours'
+import { addYears } from './addYears'
 
 /**
- * Creates a range of dates by hours.
+ * Creates a range of dates by year.
  *
  * @category Ranges
  *
  * @param startDate The start date.
  * @param endDate The end date.
- * @param step The hour step count.
+ * @param step The year step count.
  * @param tz An optional timezone. Defaults to the local timezone.
- * @returns The range of dates separated by step hours from the start to the end hour.
+ * @returns The range of dates separated by step years from the start to the end date.
  */
-
-export function hourRange(
+export function dateRangeByYear(
   startDate: Date,
   endDate: Date,
   step: number = 1,
   tz: Timezone = tzLocal
 ): Date[] {
-  const endTime = startOfHour(endDate, tz).getTime()
-  let date = startOfHour(startDate, tz)
+  const endTime = startOfDay(endDate, tz).getTime()
+  let date = startOfDay(startDate, tz)
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addHours(date, step, tz)
+    date = addYears(date, step, tz)
   }
   return dates
 }

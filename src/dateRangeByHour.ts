@@ -1,32 +1,31 @@
-import { startOfDay } from './startOfDay'
+import { startOfHour } from './startOfHour'
 import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
-import { addDays } from './addDays'
+import { addHours } from './addHours'
 
 /**
- * Creates a range of dates by week.
+ * Creates a range of dates by hours.
  *
  * @category Ranges
  *
  * @param startDate The start date.
  * @param endDate The end date.
- * @param step The week step count.
+ * @param step The hour step count.
  * @param tz An optional timezone. Defaults to the local timezone.
- * @returns The range of dates separated by step weeks from the start to the end date.
+ * @returns The range of dates separated by step hours from the start to the end hour.
  */
-
-export function weekRange(
+export function dateRangeByHour(
   startDate: Date,
   endDate: Date,
   step: number = 1,
   tz: Timezone = tzLocal
 ): Date[] {
-  const endTime = startOfDay(endDate, tz).getTime()
-  let date = startOfDay(startDate, tz)
+  const endTime = startOfHour(endDate, tz).getTime()
+  let date = startOfHour(startDate, tz)
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addDays(date, step * 7, tz)
+    date = addHours(date, step, tz)
   }
   return dates
 }

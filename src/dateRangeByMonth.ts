@@ -1,21 +1,20 @@
 import { startOfDay } from './startOfDay'
 import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
-import { addYears } from './addYears'
+import { addMonths } from './addMonths'
 
 /**
- * Creates a range of dates by year.
+ * Creates a range of dates by month.
  *
  * @category Ranges
  *
  * @param startDate The start date.
  * @param endDate The end date.
- * @param step The year step count.
+ * @param step The month step count.
  * @param tz An optional timezone. Defaults to the local timezone.
- * @returns The range of dates separated by step years from the start to the end date.
+ * @returns The range of dates separated by step months from the start to the end date.
  */
-
-export function yearRange(
+export function dateRangeByMonth(
   startDate: Date,
   endDate: Date,
   step: number = 1,
@@ -26,7 +25,7 @@ export function yearRange(
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addYears(date, step, tz)
+    date = addMonths(date, step, tz)
   }
   return dates
 }

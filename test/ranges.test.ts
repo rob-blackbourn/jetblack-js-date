@@ -1,9 +1,15 @@
-import { tzUtc, dayRange, weekRange, monthRange, yearRange } from '../src'
+import {
+  tzUtc,
+  dateRangeByDay,
+  dateRangeByWeek,
+  dateRangeByMonth,
+  dateRangeByYear
+} from '../src'
 
 describe('range', () => {
-  describe('dayRange', () => {
+  describe('dateRangeByDay', () => {
     it('should create a day range', () => {
-      const actual = dayRange(
+      const actual = dateRangeByDay(
         new Date('2000-01-01T00:00:00Z'),
         new Date('2000-01-07T00:00:00Z'),
         1,
@@ -24,7 +30,7 @@ describe('range', () => {
     })
 
     it('should create a week range', () => {
-      const actual = weekRange(
+      const actual = dateRangeByWeek(
         new Date('2000-01-03T00:00:00Z'),
         new Date('2000-01-31T00:00:00Z'),
         1,
@@ -43,7 +49,7 @@ describe('range', () => {
     })
 
     it('should create a month range', () => {
-      const actual = monthRange(
+      const actual = dateRangeByMonth(
         new Date('2000-01-01T00:00:00Z'),
         new Date('2000-06-01T00:00:00Z'),
         1,
@@ -63,7 +69,7 @@ describe('range', () => {
     })
 
     it('should create a year range', () => {
-      const actual = yearRange(
+      const actual = dateRangeByYear(
         new Date('2000-01-01T00:00:00Z'),
         new Date('2005-01-01T00:00:00Z'),
         1,
