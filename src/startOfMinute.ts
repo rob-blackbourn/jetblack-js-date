@@ -7,7 +7,7 @@ import { Timezone } from './Timezone'
  * @category Anchors
  *
  * @param date The date.
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The start of the minute.
  */
 export function startOfMinute(date: Date, tz: Timezone = tzLocal): Date {

@@ -7,7 +7,7 @@ import { Timezone } from './Timezone'
  *
  * @category Anchors
  *
- * @param tz An optional timezone.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The start of the current year.
  */
 export function startOfCurrentYear(tz: Timezone = tzLocal): Date {

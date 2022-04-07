@@ -57,6 +57,18 @@ let jan1 = tzBrussels.makeDate(2000, 0, 1)
 jan1 = new Date(Date.UTC(2000, 0, 1) + 60 * 60 * 1000)
 ```
 
+## Other Methods
+
+As well as making a date the timezone can be used to get the date parts: `year`,
+`monthIndex`, `weekday`, `day`, `hours`, `minutes`, `seconds` and `milliseconds`. A
+more general `dateparts` method can be used to get multiple parts for efficiency.
+
+An `offset` method is provided which accepts a date argument and returns the
+offset from UTC in minutes.
+
+Finally the `toISOString` method is provided to display an ISO 8601 string with
+the timezone offset.
+
 ## What next ?
 
 {@page ./iana-timezones.md}

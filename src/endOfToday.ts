@@ -7,7 +7,7 @@ import { Timezone } from './Timezone'
  *
  * @category Anchors
  *
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The end of the current day.
  */
 export function endOfToday(tz: Timezone = tzLocal): Date {

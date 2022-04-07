@@ -11,8 +11,8 @@ import { calWeekends } from './WeekendCalendar'
  *
  * @param date The start date.
  * @param count The number of days to add (or subtract if negative).
- * @param cal The calendar to use to identify dates which are holidays.
- * @param tz An optional timezone. Defaults to `tzLocal`.
+ * @param cal The calendar to use to identify dates which are holidays. Defaults to the weekend calendar.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by business days.
  */
 export function addBusinessDays(

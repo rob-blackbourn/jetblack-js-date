@@ -9,7 +9,7 @@ import { Timezone } from './Timezone'
  * @category Anchors
  *
  * @param date A date.
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The start of the week.
  */
 export function startOfWeek(date: Date, tz: Timezone = tzLocal): Date {

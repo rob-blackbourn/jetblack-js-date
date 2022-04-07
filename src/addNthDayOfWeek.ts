@@ -15,6 +15,7 @@ import { Timezone } from './Timezone'
  * @param nth The number of week days.
  * @param dow The day of the week where Sunday is 0.
  * @param strictlyDifferent When true the returned date must be different to the start date.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The nth week day.
  */
 export function addNthDayOfWeek(

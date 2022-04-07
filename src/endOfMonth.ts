@@ -7,15 +7,15 @@ import { Timezone } from './Timezone'
  *
  * @category Anchors
  *
- * @param year The year.
- * @param monthIndex The month index (where January is 0).
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param date The start date.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A date which is the last day of the month for the given year and month.
  */
-export function endOfMonth(
-  year: number,
-  monthIndex: number,
-  tz: Timezone = tzLocal
-): Date {
+export function endOfMonth(date: Date, tz: Timezone = tzLocal): Date {
+  const { year, monthIndex } = tz.dateParts(date, {
+    year: true,
+    monthIndex: true
+  })
+
   return tz.makeDate(year, monthIndex, daysInMonth(year, monthIndex))
 }

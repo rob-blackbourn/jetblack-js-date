@@ -8,7 +8,7 @@ import { Timezone } from './Timezone'
  *
  * @param first The first date.
  * @param second The second date.
- * @param tz The optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns True if the dates are in the same quarter, otherwise false.
  */
 export function areInSameQuarter(

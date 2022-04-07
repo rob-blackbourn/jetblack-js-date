@@ -9,7 +9,7 @@ import { Timezone } from './Timezone'
  *
  * @param date The start date.
  * @param duration The duration to add.
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by adding the duration.
  */
 export function addDuration(

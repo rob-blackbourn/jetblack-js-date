@@ -7,7 +7,7 @@ import { Timezone } from './Timezone'
  * @category Calendars
  *
  * @param year The year.
- * @param tz An optional timezone. Defaults to tzLocal.
+ * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The date for easter in the given year.
  */
 export function easter(year: number, tz: Timezone = tzLocal): Date {
