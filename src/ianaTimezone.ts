@@ -2,7 +2,7 @@ import { subDuration } from './subDuration'
 import { addDuration } from './addDuration'
 import { Duration } from './Duration'
 import { Timezone } from './Timezone'
-import { DateParts } from './types'
+import { DatePartRequest, DatePartResponse, DateParts } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
 
@@ -70,10 +70,10 @@ export class IANATimezone extends Timezone {
     return local
   }
 
-  dateParts(date: Date): DateParts {
+  dateParts(date: Date, request: DatePartRequest): DatePartResponse {
     const delta = this.#findDelta(date)
     const local = addDuration(date, delta.offset)
-    return tzUtc.dateParts(local)
+    return tzUtc.dateParts(local, request)
   }
 
   offset(date: Date): number {

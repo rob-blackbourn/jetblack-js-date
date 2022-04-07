@@ -17,7 +17,6 @@ import { Timezone } from './Timezone'
  * @param strictlyDifferent When true the returned date must be different to the start date.
  * @returns The nth week day.
  */
-
 export function addNthDayOfWeek(
   date: Date,
   nth: number,
@@ -40,9 +39,6 @@ export function addNthDayOfWeek(
   }
 
   if (nth > 0) {
-    // If diff = 0 below, the input date is the 1st DOW already, no adjustment
-    // is required. The 'diff' is the adjustment from the input date
-    // required to get to the first DOW matching the 'dow_index' given.
     if (diff < 0) {
       diff += 7
     }
@@ -51,9 +47,6 @@ export function addNthDayOfWeek(
     const endDate = addDays(adjustedStartDate, (nth - 1) * 7, tz)
     return endDate
   } else {
-    // If diff = 0 below, the input date is the 1st DOW already, no adjustment
-    // is required. The 'diff' is the adjustment from the input date
-    // required to get to the first DOW matching the 'dow_index' given.
     if (diff > 0) {
       diff -= 7
     }

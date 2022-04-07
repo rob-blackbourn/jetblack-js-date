@@ -42,3 +42,25 @@ export type DateParts = [
   Seconds,
   Milliseconds
 ]
+
+export interface DatePartRequest {
+  year?: boolean
+  monthIndex?: boolean
+  weekday?: boolean
+  day?: boolean
+  hours?: boolean
+  minutes?: boolean
+  seconds?: boolean
+  milliseconds?: boolean
+}
+
+export interface DatePartResponse {
+  year: number
+  monthIndex: number
+  weekday: number
+  day: number
+  hours: number
+  minutes: number
+  seconds: number
+  milliseconds: number
+}

@@ -16,8 +16,16 @@ describe('timezone', () => {
     })
 
     it('should destruct a date', () => {
-      const [year, monthIndex, day, hours, minutes, seconds, milliseconds] =
-        tzBrussels.dateParts(new Date('1999-12-31T23:00:00Z'))
+      const { year, monthIndex, day, hours, minutes, seconds, milliseconds } =
+        tzBrussels.dateParts(new Date('1999-12-31T23:00:00Z'), {
+          year: true,
+          monthIndex: true,
+          day: true,
+          hours: true,
+          minutes: true,
+          seconds: true,
+          milliseconds: true
+        })
       expect(year).toBe(2000)
       expect(monthIndex).toBe(0)
       expect(day).toBe(1)

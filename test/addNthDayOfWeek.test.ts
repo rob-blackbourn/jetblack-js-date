@@ -97,10 +97,3 @@ describe('addNthDayOfWeek', () => {
     })
   })
 })
-
-/*
-
-    assert date(2015, 6, 10) == datemath.add_nth_day_of_week(
-        date(2015, 6, 30), -3, DayOfWeek.WEDNESDAY, True
-    ), "Third Wednesday from the end of the month.."
-*/

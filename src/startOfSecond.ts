@@ -11,6 +11,16 @@ import { Timezone } from './Timezone'
  * @returns The start of the second.
  */
 export function startOfSecond(date: Date, tz: Timezone = tzLocal): Date {
-  const [year, monthIndex, day, hours, minutes, seconds] = tz.dateParts(date)
+  const { year, monthIndex, day, hours, minutes, seconds } = tz.dateParts(
+    date,
+    {
+      year: true,
+      monthIndex: true,
+      day: true,
+      hours: true,
+      minutes: true,
+      seconds: true
+    }
+  )
   return tz.makeDate(year, monthIndex, day, hours, minutes, seconds)
 }

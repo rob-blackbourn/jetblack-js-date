@@ -11,6 +11,11 @@ import { Timezone } from './Timezone'
  * @returns The start of the hour.
  */
 export function startOfHour(date: Date, tz: Timezone = tzLocal): Date {
-  const [year, monthIndex, day, hours] = tz.dateParts(date)
+  const { year, monthIndex, day, hours } = tz.dateParts(date, {
+    year: true,
+    monthIndex: true,
+    day: true,
+    hours: true
+  })
   return tz.makeDate(year, monthIndex, day, hours)
 }
