@@ -2,7 +2,7 @@ import { subDuration } from './subDuration'
 import { addDuration } from './addDuration'
 import { Duration } from './Duration'
 import { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse, DateParts } from './types'
+import { DatePartRequest, DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
 

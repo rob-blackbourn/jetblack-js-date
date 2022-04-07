@@ -1,5 +1,5 @@
 import { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse, DateParts } from './types'
+import { DatePartRequest, DatePartResponse } from './types'
 
 class UtcTimezone extends Timezone {
   constructor() {

@@ -66,6 +66,7 @@ export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
 export { Timezone } from './Timezone'
+export { DatePartRequest, DatePartResponse } from './types'
 export {
   tzDataReviver,
   objectToTimezoneDelta,

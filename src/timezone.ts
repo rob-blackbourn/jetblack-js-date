@@ -1,4 +1,4 @@
-import { DateParts, DatePartRequest, DatePartResponse } from './types'
+import { DatePartRequest, DatePartResponse } from './types'
 import { padNumber } from './utils'
 
 /**
@@ -51,7 +51,19 @@ export abstract class Timezone {
   /**
    * Extract the date parts.
    *
+   * The request object sets the parts of the response to be calculated.
+   *
+   * ```js
+   * // Only get the year, monthIndex and day.
+   * const { year, monthIndex, day } = tz.dateParts(date, {
+   *   year: true,
+   *   monthIndex: true,
+   *   day: true
+   * })
+   * ```
+   *
    * @param date The date.
+   * @param request The request.
    * @returns The date parts.
    */
   abstract dateParts(date: Date, request: DatePartRequest): DatePartResponse

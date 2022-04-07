@@ -31,4 +31,4 @@ const todayUTC = startOfToday(tzUTC)
 
 ## What next ?
 
-{@page ./iana-timezones.md}
+{@page ./timezones.md}

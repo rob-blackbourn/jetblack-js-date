@@ -22,7 +22,7 @@ const tzBrussels = new IANATimezone(
   BRUSSELS_TZDATA.map(objectToTimezoneDelta)
 )
 
-const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
+const newYearsDay = tzBrussels.makeDate(2000, 0, 1).toISOString()
 // returns "2000-01-01T01:00:00Z"
 ```
 
@@ -45,7 +45,7 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
     // Use a reviver to convert JSON strings to dates and durations.
     const zoneData = JSON.parse(zoneDataText, tzDataReviver)
     const tzBrussels = new IANATimezone(timeZoneName, zoneData)
-    const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
+    const newYearsDay = tzBrussels.makeDate(2000, 0, 1)
     // returns "2000-01-01T01:00:00Z"
   })
   .catch(error => console.error(error))
