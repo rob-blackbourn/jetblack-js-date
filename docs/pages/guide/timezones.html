@@ -30,6 +30,17 @@ Europe/Brussels timezone.</p>
 <pre><code class="language-js"><span class="hl-6">import</span><span class="hl-2"> { </span><span class="hl-4">IANATimezone</span><span class="hl-2">, </span><span class="hl-4">objectToTimezoneDelta</span><span class="hl-2"> } </span><span class="hl-6">from</span><span class="hl-2"> </span><span class="hl-7">&#39;../src&#39;</span><br/><span class="hl-6">import</span><span class="hl-2"> </span><span class="hl-4">BRUSSELS_TZDATA</span><span class="hl-2"> </span><span class="hl-6">from</span><span class="hl-2"> </span><span class="hl-7">&#39;@jetblack/tzdata/dist/latest/Europe/Brussels.json&#39;</span><br/><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">tzBrussels</span><span class="hl-2"> = </span><span class="hl-1">new</span><span class="hl-2"> </span><span class="hl-5">IANATimezone</span><span class="hl-2">(</span><br/><span class="hl-2">  </span><span class="hl-7">&#39;Europe/Brussels&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">BRUSSELS_TZDATA</span><span class="hl-2">.</span><span class="hl-5">map</span><span class="hl-2">(</span><span class="hl-4">objectToTimezoneDelta</span><span class="hl-2">)</span><br/><span class="hl-2">)</span><br/><br/><span class="hl-1">let</span><span class="hl-2"> </span><span class="hl-4">jan1</span><span class="hl-2"> = </span><span class="hl-4">tzBrussels</span><span class="hl-2">.</span><span class="hl-5">makeDate</span><span class="hl-2">(</span><span class="hl-8">2000</span><span class="hl-2">, </span><span class="hl-8">0</span><span class="hl-2">, </span><span class="hl-8">1</span><span class="hl-2">)</span><br/><br/><span class="hl-0">// Equivalent to adding the offset to UTC of one hour on 2000-01-01.</span><br/><span class="hl-4">jan1</span><span class="hl-2"> = </span><span class="hl-1">new</span><span class="hl-2"> </span><span class="hl-9">Date</span><span class="hl-2">(</span><span class="hl-9">Date</span><span class="hl-2">.</span><span class="hl-5">UTC</span><span class="hl-2">(</span><span class="hl-8">2000</span><span class="hl-2">, </span><span class="hl-8">0</span><span class="hl-2">, </span><span class="hl-8">1</span><span class="hl-2">) + </span><span class="hl-8">60</span><span class="hl-2"> * </span><span class="hl-8">60</span><span class="hl-2"> * </span><span class="hl-8">1000</span><span class="hl-2">)</span>
 </code></pre>
 
+<a href="#other-methods" id="other-methods" style="color: inherit; text-decoration: none;">
+  <h2>Other Methods</h2>
+</a>
+<p>As well as making a date the timezone can be used to get the date parts: <code>year</code>,
+<code>monthIndex</code>, <code>weekday</code>, <code>day</code>, <code>hours</code>, <code>minutes</code>, <code>seconds</code> and <code>milliseconds</code>. A
+more general <code>dateparts</code> method can be used to get multiple parts for efficiency.</p>
+<p>An <code>offset</code> method is provided which accepts a date argument and returns the
+offset from UTC in minutes.</p>
+<p>Finally the <code>toISOString</code> method is provided to display an ISO 8601 string with
+the timezone offset.</p>
+
 <a href="#what-next-" id="what-next-" style="color: inherit; text-decoration: none;">
   <h2>What next ?</h2>
 </a>
