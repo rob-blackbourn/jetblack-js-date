@@ -13,7 +13,7 @@ npm install --save @jetblack/tzdata
 Depending on the environment plugins you may be able to import the JSON directly.
 
 ```js
-import { IANATimezone, objectToTimezoneDelta } from '../src'
+import { IANATimezone, objectToTimezoneDelta } from '@jetblack/date'
 import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
@@ -36,7 +36,7 @@ is capable of serving individual files from the
 The following example shows how this can be done.
 
 ```js
-import { IANATimezone, tzDataReviver } from '../src'
+import { IANATimezone, tzDataReviver } from '@jetblack/date'
 
 const timezoneName = 'Europe/Brussels'
 fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.json`)
