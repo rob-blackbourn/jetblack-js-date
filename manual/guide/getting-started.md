@@ -12,7 +12,7 @@ The library provides the usual convenience methods (e.g. `addDays`, `startOfDay`
 but with the addition of an optional timezone.
 
 ```js
-import { startOfToday, tzLocal, tzUTC } from '@jetblack/date'
+import { startOfToday, tzLocal, tzUtc } from '@jetblack/date'
 
 // Get the start of today relative to the local timezone.
 const todayLocal = startOfToday()
@@ -22,7 +22,7 @@ const todayLocal = startOfToday()
 const todayLocalExplicit = startOfToday(tzLocal)
 
 // The start of today relative to UTC can be found by passing the UTC timezone.
-const todayUTC = startOfToday(tzUTC)
+const todayUTC = startOfToday(tzUtc)
 
 // If the browser had timezone information the following would find the
 // start of the day in Tokyo.
