@@ -60,7 +60,7 @@ export { startOfSecond } from './startOfSecond'
 export { startOfWeek } from './startOfWeek'
 export { startOfYear } from './startOfYear'
 export { subDuration } from './subDuration'
-export { TimezoneDelta, IANATimezone } from './IANATimezone'
+export { TimezoneOffset, IANATimezone } from './IANATimezone'
 export { tzLocal } from './LocalTimezone'
 export { WeekendCalendar, calWeekends } from './WeekendCalendar'
 export { startOfDay } from './startOfDay'
@@ -70,7 +70,8 @@ export { Timezone } from './Timezone'
 export { DatePartRequest, DatePartResponse } from './types'
 export {
   tzDataReviver,
-  objectToTimezoneDelta,
+  dataToTimezoneOffset,
+  minDataToTimezoneOffset,
   timezoneFromJSON
 } from './tzdata'
 export { tzUtc } from './UTCTimezone'

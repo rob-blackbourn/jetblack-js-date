@@ -1,34 +1,31 @@
-import { subDuration } from './subDuration'
-import { addDuration } from './addDuration'
-import { Duration } from './Duration'
 import { Timezone } from './Timezone'
 import { DatePartRequest, DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
+import { addMinutes } from './addMinutes'
 
 /**
  * A line from the tzdata database.
  *
  * @category Timezone
  */
-export interface TimezoneDelta {
-  utc: Date
-  local: Date
-  offset: Duration
+export interface TimezoneOffset {
+  /**
+   * The from which this offset applies in milliseconds since 1 Jan 1970 UTC.
+   */
+  utc: number
+  /**
+   * The offset to be added to local time in minutes.
+   */
+  offset: number
+  /**
+   * The common timezone abbreviation.
+   */
   abbr: string
+  /**
+   * If true the adjustment includes daylight savings time.
+   */
   isDst: boolean
-}
-
-/**
- * A line from the minified tzdata database.
- *
- * @category Timezone
- */
-export interface MinTimezoneDelta {
-  u: number
-  o: number
-  a: string
-  d: number
 }
 
 /**
@@ -37,7 +34,7 @@ export interface MinTimezoneDelta {
  * @category Timezone
  */
 export class IANATimezone extends Timezone {
-  #deltas: TimezoneDelta[]
+  #deltas: TimezoneOffset[]
 
   /**
    * Construct a custom timezone.
@@ -45,16 +42,16 @@ export class IANATimezone extends Timezone {
    * @param name The timezone name.
    * @param deltas The timezone offsets
    */
-  constructor(name: string, deltas: TimezoneDelta[]) {
+  constructor(name: string, deltas: TimezoneOffset[]) {
     super(name)
     this.#deltas = deltas
   }
 
-  #findDelta(date: Date): TimezoneDelta {
+  #findOffset(date: Date): TimezoneOffset {
     const [lo, hi] = getClosestValues(
       this.#deltas,
-      date,
-      (a, b) => b.utc.getTime() - a.getTime()
+      date.getTime(),
+      (a, b) => b.utc - a
     )
     return lo
   }
@@ -77,67 +74,67 @@ export class IANATimezone extends Timezone {
       seconds,
       milliseconds
     )
-    const delta = this.#findDelta(date)
-    const local = subDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, -delta.offset)
     return local
   }
 
   dateParts(date: Date, request: DatePartRequest): DatePartResponse {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.dateParts(local, request)
   }
 
   offset(date: Date): number {
-    const delta = this.#findDelta(date)
-    return delta.offset.hours * 60 + delta.offset.minutes
+    const delta = this.#findOffset(date)
+    return delta.offset
   }
 
   year(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.year(local)
   }
 
   monthIndex(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.monthIndex(local)
   }
 
   weekday(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.weekday(local)
   }
 
   day(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.day(local)
   }
 
   hours(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.hours(local)
   }
 
   minutes(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.minutes(local)
   }
 
   seconds(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.seconds(local)
   }
 
   milliseconds(date: Date): number {
-    const delta = this.#findDelta(date)
-    const local = addDuration(date, delta.offset)
+    const delta = this.#findOffset(date)
+    const local = addMinutes(date, delta.offset)
     return tzUtc.milliseconds(local)
   }
 }

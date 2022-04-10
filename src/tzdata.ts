@@ -1,5 +1,5 @@
 import { Duration } from './Duration'
-import { IANATimezone, TimezoneDelta } from './IANATimezone'
+import { IANATimezone, TimezoneOffset } from './IANATimezone'
 
 /**
  * A JSON.parse reviver for tzdata.
@@ -14,25 +14,48 @@ export function tzDataReviver(key: string, value: any): any {
   if (key === 'utc' || key == 'local') {
     return new Date(value)
   } else if (key === 'offset') {
-    return new Duration(value)
+    const duration = new Duration(value)
+    return duration.hours * 60 + duration.minutes
   } else {
     return value
   }
 }
 
 /**
- * Transform the values of a timezone delta.
+ * Transform the values of a timezone offset.
  *
  * @category Timezone
  *
- * @param obj The object to transform.
+ * @param data The object to transform.
  * @returns The transformed object.
  */
-export function objectToTimezoneDelta(obj: object): TimezoneDelta {
-  return Object.entries(obj).reduce(
+export function dataToTimezoneOffset(data: object): TimezoneOffset {
+  return Object.entries(data).reduce(
     (result, [key, value]) => ({ ...result, [key]: tzDataReviver(key, value) }),
     {}
-  ) as TimezoneDelta
+  ) as TimezoneOffset
+}
+
+/**
+ * Transform the values of a minified timezone offset.
+ *
+ * @category Timezone
+ *
+ * @param data The object to transform.
+ * @returns The transformed object.
+ */
+export function minDataToTimezoneOffset(data: {
+  u: number
+  o: number
+  a: string
+  d: number
+}): TimezoneOffset {
+  return {
+    utc: data.u,
+    offset: data.o,
+    abbr: data.a,
+    isDst: data.d === 1
+  }
 }
 
 /**
@@ -48,5 +71,5 @@ export function objectToTimezoneDelta(obj: object): TimezoneDelta {
  * @returns The new timezone.
  */
 export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
-  return new IANATimezone(name, tzdata.map(objectToTimezoneDelta))
+  return new IANATimezone(name, tzdata.map(dataToTimezoneOffset))
 }

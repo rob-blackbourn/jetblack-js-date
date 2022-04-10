@@ -72,13 +72,13 @@ npm install --save @jetblack/tzdata
 Depending on the environment plugins you may be able to import the JSON directly.
 
 ```js
-import { IANATimezone, objectToTimezoneDelta } from '../src'
+import { IANATimezone, dataToTimezoneOffset } from '../src'
 import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
   'Europe/Brussels',
   // Convert the dates and durations from JSON strings to objects.
-  BRUSSELS_TZDATA.map(objectToTimezoneDelta)
+  BRUSSELS_TZDATA.map(dataToTimezoneOffset)
 )
 
 const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()

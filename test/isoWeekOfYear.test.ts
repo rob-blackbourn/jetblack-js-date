@@ -2,13 +2,13 @@ import {
   isoWeekOfYear,
   tzUtc,
   IANATimezone,
-  objectToTimezoneDelta
+  minDataToTimezoneOffset
 } from '../src'
-import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.min.json'
 
 const tzChicago = new IANATimezone(
   'America/Chicago',
-  chicagoTzData.map(objectToTimezoneDelta)
+  chicagoTzData.map(minDataToTimezoneOffset)
 )
 
 /*
