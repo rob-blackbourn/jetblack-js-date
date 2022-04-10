@@ -1,10 +1,9 @@
 import { IANATimezone, objectToTimezoneDelta, tzUtc } from '../src'
-import timezones from './timezones.json'
+import brusselsTzData from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
-const BRUSSELS_TZNAME = 'Europe/Brussels'
 const tzBrussels = new IANATimezone(
-  BRUSSELS_TZNAME,
-  timezones['Europe/Brussels'].map(objectToTimezoneDelta)
+  'Europe/Brussels',
+  brusselsTzData.map(objectToTimezoneDelta)
 )
 
 describe('timezone', () => {

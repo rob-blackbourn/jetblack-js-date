@@ -20,6 +20,18 @@ export interface TimezoneDelta {
 }
 
 /**
+ * A line from the minified tzdata database.
+ *
+ * @category Timezone
+ */
+export interface MinTimezoneDelta {
+  u: number
+  o: number
+  a: string
+  d: number
+}
+
+/**
  * An implementation for timezones using IANA data.
  *
  * @category Timezone
