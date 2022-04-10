@@ -3,7 +3,7 @@ to the local timezone.
 
 The timezone takes over many of the duties of interacting with the built in
 Date object, in the cases where timezone has an effect; for example in finding
-the start of the day.
+the start of the day which may have a different UTC time for a given timezone.
 
 The timezones implement {@linkcode Timezone}.
 
