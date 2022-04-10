@@ -43,7 +43,7 @@ The following create a new date for the first of January 200 in the
 Europe/Brussels timezone.
 
 ```js
-import { IANATimezone, dataToTimezoneOffset } from '../src'
+import { IANATimezone, dataToTimezoneOffset } from '@jetblack/date'
 import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
