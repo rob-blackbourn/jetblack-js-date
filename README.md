@@ -72,7 +72,7 @@ npm install --save @jetblack/tzdata
 Depending on the environment plugins you may be able to import the JSON directly.
 
 ```js
-import { IANATimezone, dataToTimezoneOffset } from '../src'
+import { IANATimezone, dataToTimezoneOffset } from '@jetblack/date'
 import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
@@ -90,19 +90,19 @@ The [jsdelivr](https://www.jsdelivr.com/) content delivery network
 is capable of serving individual files from the
 [@jetblack/tzdata](https://www.npmjs.com/package/@jetblack/tzdata) npm package.
 
-The following example shows how this can be done.
+The following example shows how this can be done using the minified version
+of the data.
 
 ```js
-import { IANATimezone, tzDataReviver } from '../src'
+import { IANATimezone, minDataToTimezoneOffset } from '@jetblack/date'
 
 const timezoneName = 'Europe/Brussels'
-fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.json`)
-  .then(response => response.text())
-  .then(zoneDataText => {
-    // Use a reviver to convert JSON strings to dates and durations.
-    const zoneData = JSON.parse(zoneDataText, tzDataReviver)
+fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.min.json`)
+  .then(response => response.json())
+  .then(data => {
+    const zoneData = data.map(minDataToTimezoneOffset)
     const tzBrussels = new IANATimezone(timeZoneName, zoneData)
-    const newYearsDay = tzBrussels.makeDate(2000, 1, 1)
+    const newYearsDay = tzBrussels.makeDate(2000, 0, 1)
     // returns "2000-01-01T01:00:00Z"
   })
   .catch(error => console.error(error))
