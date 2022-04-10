@@ -72,6 +72,10 @@ class UtcTimezone extends Timezone {
   milliseconds(date: Date): number {
     return date.getUTCMilliseconds()
   }
+
+  isDaylightSavings(date: Date): boolean {
+    return false
+  }
 }
 
 /**

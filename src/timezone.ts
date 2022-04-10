@@ -140,6 +140,14 @@ export abstract class Timezone {
   abstract milliseconds(date: Date): number
 
   /**
+   * Find if the date was subject to daylight savings time.
+   *
+   * @param date The date.
+   * @returns True if the date was subject to daylight savings time.
+   */
+  abstract isDaylightSavings(date: Date): boolean
+
+  /**
    * The ISO 8601 date string representation for a given date.
    *
    * @param date The date.

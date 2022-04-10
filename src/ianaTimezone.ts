@@ -137,4 +137,9 @@ export class IANATimezone extends Timezone {
     const local = addMinutes(date, delta.offset)
     return tzUtc.milliseconds(local)
   }
+
+  isDaylightSavings(date: Date): boolean {
+    const delta = this.#findOffset(date)
+    return delta.isDst
+  }
 }

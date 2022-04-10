@@ -74,6 +74,11 @@ class LocalTimezone extends Timezone {
   milliseconds(date: Date): number {
     return date.getMilliseconds()
   }
+
+  isDaylightSavings(date: Date): boolean {
+    const jan1 = new Date(date.getFullYear(), 0, 1)
+    return date.getTimezoneOffset() !== jan1.getTimezoneOffset()
+  }
 }
 
 /**
