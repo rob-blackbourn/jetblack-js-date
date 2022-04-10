@@ -5,7 +5,10 @@
   "description": "Date utilities",
   "keywords": [
     "date",
-    "timezone"
+    "timezone",
+    "iana",
+    "tzdata",
+    "tz"
   ],
   "main": "dist/index.js",
   "module": "dist/index.ems.js",
