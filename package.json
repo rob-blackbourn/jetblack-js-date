@@ -1,7 +1,7 @@
 {
   "name": "@jetblack/date",
   "private": false,
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Date utilities",
   "keywords": [
     "date",

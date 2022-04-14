@@ -76,8 +76,11 @@ class LocalTimezone extends Timezone {
   }
 
   isDaylightSavings(date: Date): boolean {
-    const jan1 = new Date(date.getFullYear(), 0, 1)
-    return date.getTimezoneOffset() !== jan1.getTimezoneOffset()
+    const currentYear = date.getFullYear()
+    const offsetJan = new Date(currentYear, 0, 1).getTimezoneOffset()
+    const offsetJul = new Date(currentYear, 6, 1).getTimezoneOffset()
+    const summerOffset = Math.max(offsetJan, offsetJul)
+    return date.getTimezoneOffset() === summerOffset
   }
 }
 
