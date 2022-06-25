@@ -7,6 +7,16 @@ import { calWeekends } from './WeekendCalendar'
 /**
  * Add business days to a date (or subtract if negative).
  *
+ * If a calendar is not specified the weekend calendar is used.
+ *
+ * ```js
+ * import { addBusinessDays } from '@jetblack/date'
+ *
+ * // Fri 7 Jan 2000
+ * const date = addBusinessDays(new Date('2000-01-07T00:00:00Z'), 1)
+ * console.log(date.getTime() === new Date('2000-01-10T00:00:00Z').getTime())
+ * ```
+ *
  * @category Arithmetic
  *
  * @param date The start date.
