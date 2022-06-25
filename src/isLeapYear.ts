@@ -1,6 +1,16 @@
 /**
  * Check if the year is a leap year.
  *
+ * ```js
+ * import { isLeapYear } from '@jetblack/date'
+ *
+ * // 2000 was a century leap year.
+ * console.log(isLeapYear(2000) === true)
+ *
+ * // 1900 was not.
+ * console.log(isLeapYear(1900) !== true)
+ * ```
+ *
  * @category Calendars
  *
  * @param year The year.
