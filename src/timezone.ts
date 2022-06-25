@@ -4,6 +4,41 @@ import { padNumber } from './utils'
 /**
  * The base class for timezones.
  *
+ * Two timezones are provided by default: {@link tzLocal} and {@link tzUtc}.
+ * There is also a class {@link IANATimezone} which can be used with the time
+ * zone database maintained by IANA.
+ * All timezone sensitive operations take a timezone as an optional parameter
+ * which defaults to tzLocal.
+ *
+ * There is a tutorial [here](../../pages/guide/timezones.html).
+ *
+ * The timezone object provides accessors for the common properties of a date
+ * such as {@link Timezone.year}. Here is an example of using the year.
+ *
+ * ```js
+ * import { tzLocal, tzUtc } from '@jetblack/date'
+ *
+ * const utcMillennium = new Date("2000-01-01T00:00:00Z")
+ *
+ * // The UTC year will always be 2000
+ * console.log(tzUtc.year(utcMillennium) === 2000)
+ *
+ * // The year in the local timezone will depend where you are.
+ * // If the timezone was New York ...
+ * console.log(tzLocal.year(utcMillennium) === 1999)
+ * ```
+ *
+ * There are two complimentary methods used for date construction:
+ * {@link Timezone.makeDate | makeDate} and {@link Timezone.dateParts | dateParts}.
+ * These are used by the library functions to efficiently deconstruct and
+ * construct dates for performing calculations.
+ *
+ * There are two functions specific to timezones:
+ * {@link Timezone.isDaylightSavings | isDaylightSavings} and {@link Timezone.toISOString | toISOString}.
+ * The JavaScript built in [Date.toISOString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+ * is only aware of the UTC timezone. This method provides support for any
+ * defined timezone.
+ *
  * @category Timezone
  */
 export abstract class Timezone {

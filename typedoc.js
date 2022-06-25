@@ -16,8 +16,7 @@ module.exports = {
           { title: 'IANA Timezones', source: 'iana-timezones.md' },
           { title: 'Calendars', source: 'calendars.md' }
         ]
-      },
-      { title: 'Changelog', source: '../CHANGELOG.md' }
+      }
     ]
   }
 }

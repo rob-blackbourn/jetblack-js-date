@@ -1,7 +1,5 @@
 Timezone-aware date manipulation for JavaScript.
 
-This is work in progress!
-
 ## Overview
 
 This project provides utilities for working with dates and timezones.

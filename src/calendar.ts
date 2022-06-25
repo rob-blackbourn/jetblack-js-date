@@ -1,6 +1,16 @@
 /**
  * The base class for calendars.
  *
+ * Calendars are required when working with functions that require
+ * knowledge of weekends and holidays (e.g. {@link addBusinessDays}).
+ *
+ * There is a tutorial [here](../../pages/guide/calendars.html).
+ *
+ * Two calendars are classes are defined: {@link WeekendCalendar} and
+ * {@link HolidayCalendar}. The object {@link calWeekends} is the
+ * default calendar. It simply defines Saturday and Sunday as holiday
+ * dates.
+ *
  * @category Calendars
  */
 export abstract class Calendar {
