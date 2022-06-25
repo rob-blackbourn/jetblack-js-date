@@ -9,11 +9,17 @@ import { addBusinessDays } from './addBusinessDays'
  * Business day conventions
  */
 export enum BusinessDayConvention {
+  /** No adjustment */
   NONE = 0,
+  /** Adjust to the nearest business day */
   NEAREST = 1,
+  /** Adjust to the nearest business day before the current day */
   PRECEDING = 2,
+  /** Adjust to the nearest business day after the current day */
   FOLLOWING = 3,
+  /** Adjust to the nearest business day after the current day withing the month; otherwise adjust preceding */
   MODIFIED_PRECEDING = 4,
+  /** Adjust to the nearest business day after the current day withing the month; otherwise adjust following */
   MODIFIED_FOLLOWING = 5
 }
 
