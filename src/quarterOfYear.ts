@@ -4,6 +4,11 @@ import { Timezone } from './Timezone'
 /**
  * Find the quarter for a given date.
  *
+ * ```js
+ * console.log(quarterOfYear(new Date('2000-04-01')))
+ * // 2
+ * ```
+ *
  * @category Calendars
  *
  * @param date The date.
