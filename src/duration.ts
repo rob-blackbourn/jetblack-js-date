@@ -3,11 +3,28 @@ const SECONDS_IN_DAY = 24 * 60 * 60
 /**
  * Represents an ISO 8601 duration.
  *
+ *  ```js
+ * const duration = new Duration('P1D')
+ * const d1 = addDuration(new Date('2000-01-01T00:00:00Z'), duration)
+ * console.log(d1)
+ * // Sun Jan 02 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
+ * ```
+ *
+ * Note that durations may be negative.
+ *
+ * ```js
+ * const duration = new Duration('-P1D')
+ * const d1 = addDuration(new Date('2000-01-01T00:00:00Z'), duration)
+ * console.log(d1)
+ * // Fri Dec 31 1999 00:00:00 GMT+0000 (Greenwich Mean Time)
+ * ```
  * @category Duration
  */
 export class Duration {
+  /** @ignore */
   static readonly #DURATION_PATTERN =
     /^(?<sign>-?[+-])?P((?<years>-?[+-]?\d+([.]\d+)?)Y)?((?<months>-?[+-]?\d+([.]\d+)?)M)?((?<weeks>-?[+-]?\d+([.]\d+)?)W)?((?<days>-?[+-]?\d+([.]\d+)?)D)?(T((?<hours>-?[+-]?\d+([.]\d+)?)H)?((?<minutes>-?[+-]?\d+([.]\d+)?)M)?((?<seconds>-?[+-]?\d+([.]\d+)?)S)?)?$/
+  /** @ignore */
   static readonly #ZERO_STRING = 'PT0S'
 
   /** @ignore */
@@ -26,8 +43,34 @@ export class Duration {
   #seconds: number
 
   /**
-   * Constructs a duration from the component values. The resulting duration
-   * will be simplified. For example 12 months will become 1 year and 0 months.
+   * Constructs a duration.
+   *
+   * The resulting duration will be simplified. For example 12 months will
+   * become 1 year and 0 months.
+   *
+   * From component values.
+   *
+   * ```js
+   * const duration = new Duration(2, 14, 0, 0, 24)
+   * console.log(duration.toString())
+   * // P3Y2M1D
+   * ```
+   *
+   * From a string.
+   *
+   * ```js
+   * const duration = new Duration('P2Y14MT24H')
+   * console.log(duration.toString())
+   * // P3Y2M1D
+   * ```
+   *
+   * From a value.
+   *
+   * ```js
+   * const duration = new Duration(98582400)
+   * console.log(duration.toString())
+   * // P3Y2M1D
+   * ```
    *
    * @param years The years.
    * @param months The months.
@@ -313,6 +356,20 @@ export class Duration {
   /**
    * The number of milliseconds of the duration assuming a year has 360 days
    * and a month has 30 days.
+   *
+   * Note that this is not idempotent. As the actual number of days in a year
+   * is not available, constant values are used. This means that 30 days is
+   * equivalent to a month.
+   *
+   * ```js
+   * const d1 = new Duration('P1M')
+   * console.log(d1.valueOf())
+   * // 2592000
+   *
+   * const d2 = new Duration('P30D')
+   * console.log(d1.valueOf())
+   * // 2592000
+   * ```
    *
    * @returns The number of milliseconds to which the duration corresponds.
    */
