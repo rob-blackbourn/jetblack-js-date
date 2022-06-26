@@ -3,11 +3,28 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 
 /**
- * Add or subtract a number of different days of the week.
+ * Add or subtract days of the week.
  *
  * If the start date lies on the specified day of the week and the strictly
  * different flag is false, the current date would be considered the first
  * day of the week.
+ *
+ * Note that the JavaScript Date object treats 0 as Sunday and 6 as Saturday.
+ *
+ * ```js
+ * // Saturday 1 January 1990
+ * const d1 = new Date('2000-01-01T00:00:00Z')
+ *
+ * // The third Thursday of the month.
+ * const d2 = addNthDayOfWeek(d1, 3, 4, false)
+ * console.log(d2)
+ * // Thu Jan 20 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
+ *
+ * // The last Friday of the month
+ * const d3 = addNthDayOfWeek(endOfMonth(d1), -1, 5, false)
+ * console.log(d3)
+ * // Fri Jan 28 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
+ * ```
  *
  * @category Arithmetic
  *
