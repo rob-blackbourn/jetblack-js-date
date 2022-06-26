@@ -4,6 +4,12 @@ import { Timezone } from './Timezone'
 /**
  * Adds milliseconds to a date (or subtracts if negative).
  *
+ * ```js
+ * const d1 = addMilliseconds(new Date('2000-01-01T00:00:00.000'), 111)
+ * console.log(d1.toISOString())
+ * // 2000-01-01T00:00:00.111Z
+ * ```
+ *
  * @category Arithmetic
  *
  * @param date The start date.

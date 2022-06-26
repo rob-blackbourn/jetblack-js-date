@@ -4,6 +4,12 @@ import { Timezone } from './Timezone'
 /**
  * Adds minutes to a date (or subtracts if negative).
  *
+ * ```js
+ * const d1 = addMinutes(new Date('2000-01-01T00:00:00.000'), 5, tzUtc)
+ * console.log(d1.toISOString())
+ * // 2000-01-01T00:05:00.000Z
+ * ```
+ *
  * @category Arithmetic
  *
  * @param date The start date.
