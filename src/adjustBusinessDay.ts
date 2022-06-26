@@ -26,6 +26,20 @@ export enum BusinessDayConvention {
 /**
  * Adjusts a non-business day to the appropriate nearest business day.
  *
+ * ```js
+ * const d1 = new Date('2000-01-01')
+ * console.log(d1)
+ * // Sat Jan 01 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
+ *
+ * const d2 = adjustBusinessDay(d1, BusinessDayConvention.FOLLOWING)
+ * console.log(d2.toString())
+ * // Mon Jan 03 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
+ *
+ * const d3 = adjustBusinessDay(d1, BusinessDayConvention.PRECEDING)
+ * console.log(d3.toString())
+ * // Fri Dec 31 1999 00:00:00 GMT+0000 (Greenwich Mean Time)
+ * ```
+ *
  * @param date The date.
  * @param convention The business day conventions. Defaults to BusinessDayConvention.FOLLOWING.
  * @param prefer_forward If true prefer the nearest business day in the future. Defaults to true.
