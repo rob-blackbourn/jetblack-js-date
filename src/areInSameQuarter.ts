@@ -1,5 +1,6 @@
 import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
+import { quarterOfYear } from './quarterOfYear'
 
 /**
  * Compare two dates to see if they are in the same quarter of the year.
@@ -16,5 +17,5 @@ export function areInSameQuarter(
   second: Date,
   tz: Timezone = tzLocal
 ): boolean {
-  return tz.monthIndex(first) % 4 == tz.monthIndex(second)
+  return quarterOfYear(first) === quarterOfYear(second)
 }
