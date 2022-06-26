@@ -118,4 +118,24 @@ describe('Duration', () => {
       expect(actual.valueOf()).toBe(expected.valueOf())
     })
   })
+
+  describe('Symbol[toPrimitive]', () => {
+    it('should return string for hint string', () => {
+      const expected = 'P1M'
+      const actual = new Duration(expected)
+      expect(`${actual}`).toBe(expected)
+    })
+
+    it('should return number for hint number', () => {
+      const expected = 2592000
+      const actual = new Duration(expected)
+      expect(+actual).toBe(expected)
+    })
+
+    it('should return string for hint default', () => {
+      const expected = 'P1M'
+      const actual = new Duration(expected)
+      expect(actual + '').toBe(expected)
+    })
+  })
 })

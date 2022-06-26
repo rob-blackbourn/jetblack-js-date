@@ -460,4 +460,15 @@ export class Duration {
       seconds % 60
     ]
   }
+
+  [Symbol.toPrimitive](hint: string): any {
+    if (hint === 'string') {
+      return this.toString()
+    } else if (hint === 'number') {
+      return this.valueOf()
+    } else {
+      // hint === 'default'
+      return this.toString()
+    }
+  }
 }
