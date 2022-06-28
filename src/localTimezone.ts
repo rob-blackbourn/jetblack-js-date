@@ -30,7 +30,7 @@ class LocalTimezone extends Timezone {
     return {
       year: request.year ? date.getFullYear() : 0,
       monthIndex: request.monthIndex ? date.getMonth() : 0,
-      weekday: request.day ? date.getDate() : 0,
+      weekday: request.weekday ? date.getDay() : 0,
       day: request.day ? date.getDate() : 0,
       hours: request.hours ? date.getHours() : 0,
       minutes: request.minutes ? date.getMinutes() : 0,
