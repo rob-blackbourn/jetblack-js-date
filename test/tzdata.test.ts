@@ -15,6 +15,7 @@ describe('tzdata', () => {
     const date = new Date('2000-01-01T00:00:00Z')
     expect(tzChicago.offset(date)).toBe(-360)
   })
+
   it('should load minified tzdata', () => {
     const tzChicago = new IANATimezone(
       'America/Chicago',
