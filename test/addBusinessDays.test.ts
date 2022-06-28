@@ -1,7 +1,7 @@
 import { addBusinessDays, HolidayCalendar, tzUtc } from '../src'
 
 describe('addBusinessDays', () => {
-  describe('basic', () => {
+  describe('with default calendar', () => {
     it('should add business days within week', () => {
       // Mon 3 Jan 2000
       const actual = addBusinessDays(new Date('2000-01-03T00:00:00Z'), 1)
@@ -31,7 +31,7 @@ describe('addBusinessDays', () => {
     })
   })
 
-  describe('with calendar', () => {
+  describe('with custom calendar', () => {
     const cal = new HolidayCalendar(
       'cal',
       [0, 6],
@@ -51,30 +51,35 @@ describe('addBusinessDays', () => {
       const expected = new Date('2015-01-08T00:00:00Z')
       expect(actual.toISOString()).toBe(expected.toISOString())
     })
+
     it('should add but nothing to skip', () => {
       const date = new Date('2015-01-02T00:00:00Z')
       const actual = addBusinessDays(date, 4, cal)
       const expected = new Date('2015-01-08T00:00:00Z')
       expect(actual.toISOString()).toBe(expected.toISOString())
     })
+
     it('should add and skip', () => {
       const date = new Date('2014-12-29T00:00:00Z')
       const actual = addBusinessDays(date, 3, cal)
       const expected = new Date('2015-01-02T00:00:00Z')
       expect(actual.toISOString()).toBe(expected.toISOString())
     })
+
     it('should subtract and skip New Years day', () => {
       const date = new Date('2015-01-08T00:00:00Z')
       const actual = addBusinessDays(date, -5, cal)
       const expected = new Date('2014-12-31T00:00:00Z')
       expect(actual.toISOString()).toBe(expected.toISOString())
     })
+
     it('should subtract but nothing to skip', () => {
       const date = new Date('2015-01-08T00:00:00Z')
       const actual = addBusinessDays(date, -4, cal)
       const expected = new Date('2015-01-02T00:00:00Z')
       expect(actual.toISOString()).toBe(expected.toISOString())
     })
+
     it('should subtract and skip', () => {
       const date = new Date('2015-01-02T00:00:00Z')
       const actual = addBusinessDays(date, -2, cal)

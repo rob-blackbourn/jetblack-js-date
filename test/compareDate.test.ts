@@ -8,9 +8,11 @@ describe('compareDate', () => {
     it('should be greater', () => {
       expect(compareDateAsc(jan2, jan1)).toBe(1)
     })
+
     it('should be lesser', () => {
       expect(compareDateAsc(jan1, jan2)).toBe(-1)
     })
+
     it('should be equal', () => {
       expect(compareDateAsc(jan1, jan1)).toBe(0)
     })
@@ -20,9 +22,11 @@ describe('compareDate', () => {
     it('should be greater', () => {
       expect(compareDateDesc(jan1, jan2)).toBe(1)
     })
+
     it('should be lesser', () => {
       expect(compareDateDesc(jan2, jan1)).toBe(-1)
     })
+
     it('should be equal', () => {
       expect(compareDateDesc(jan1, jan1)).toBe(0)
     })
