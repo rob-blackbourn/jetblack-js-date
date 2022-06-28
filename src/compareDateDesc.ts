@@ -1,6 +1,18 @@
 /**
  * Compares two dates descending.
  *
+ * ```js
+ * const a = [
+ *   new Date('2000-07-01'),
+ *   new Date('2000-05-01'),
+ *   new Date('2000-06-01')
+ * ]
+ * console.log(a.sort(compareDateDesc))
+ * // 0: Sat Jul 01 2000 01:00:00 GMT+0100 (British Summer Time)
+ * // 1: Thu Jun 01 2000 01:00:00 GMT+0100 (British Summer Time)
+ * // 2: Mon May 01 2000 01:00:00 GMT+0100 (British Summer Time)
+ * ```
+ *
  * @category Comparisons
  *
  * @param a The first date.
