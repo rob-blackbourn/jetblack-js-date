@@ -7,6 +7,21 @@ const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000
 /**
  * Find the week of the year for a given date.
  *
+ * Weeks start on 1 January of any given year.
+ *
+ * ```js
+ * console.log(weekOfYear(new Date('1999-12-31T00:00:00Z'), tzUtc))
+ * // 53
+ * console.log(weekOfYear(new Date('2000-01-01T00:00:00Z'), tzUtc))
+ * // 1
+ * console.log(weekOfYear(new Date('2000-01-07T00:00:00Z'), tzUtc))
+ * // 1
+ * console.log(weekOfYear(new Date('2000-01-08T00:00:00Z'), tzUtc))
+ * // 2
+ * console.log(weekOfYear(new Date('2000-12-31T00:00:00Z'), tzUtc))
+ * // 53
+ * ```
+ *
  * @category Miscellaneous
  *
  * @param date The date.
