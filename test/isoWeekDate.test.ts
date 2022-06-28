@@ -1,4 +1,4 @@
-import { isoWeekDate } from '../src'
+import { isoWeekDate, tzUtc } from '../src'
 
 describe('isoWeekDate', () => {
   it('should handle contemporary dates', () => {
@@ -24,7 +24,7 @@ describe('isoWeekDate', () => {
       { date: '1982-01-03T00:00:00Z', expected: [1981, 53, 7] }
     ]
     samples.forEach(({ date, expected }) => {
-      expect(isoWeekDate(new Date(date))).toStrictEqual(expected)
+      expect(isoWeekDate(new Date(date), tzUtc)).toStrictEqual(expected)
     })
   })
 })

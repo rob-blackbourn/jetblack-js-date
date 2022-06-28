@@ -1,14 +1,14 @@
-import { addMinutes } from '../src'
+import { addMinutes, tzUtc } from '../src'
 
 describe('addMinutes', () => {
   it('should add minutes', () => {
-    const actual = addMinutes(new Date('2000-01-01T00:00:00Z'), 1)
+    const actual = addMinutes(new Date('2000-01-01T00:00:00Z'), 1, tzUtc)
     const expected = new Date('2000-01-01T00:01:00Z')
     expect(actual.getTime()).toBe(expected.getTime())
   })
 
   it('should subtract minutes', () => {
-    const actual = addMinutes(new Date('2000-01-01T00:00:00Z'), -1)
+    const actual = addMinutes(new Date('2000-01-01T00:00:00Z'), -1, tzUtc)
     const expected = new Date('1999-12-31T23:59:00Z')
     expect(actual.getTime()).toBe(expected.getTime())
   })

@@ -5,13 +5,13 @@ describe('startOfWeekYear', () => {
     const date = new Date('2005-07-02T00:00:00Z')
     const actual = startOfWeekYear(date, tzUtc)
     const expected = new Date('2004-12-26T00:00:00Z')
-    expect(actual.toISOString()).toBe(expected.toISOString())
+    expect(actual.getTime()).toBe(expected.getTime())
   })
 
   it('for Jan 2 2005', () => {
     const date = new Date('2005-01-02T00:00:00Z')
     const actual = startOfWeekYear(date, tzUtc)
     const expected = new Date('2004-12-26T00:00:00Z')
-    expect(actual.toISOString()).toBe(expected.toISOString())
+    expect(actual.getTime()).toBe(expected.getTime())
   })
 })
