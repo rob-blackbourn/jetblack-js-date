@@ -5,6 +5,13 @@ import { Timezone } from './Timezone'
 /**
  * Calculate the last moment of the month.
  *
+ * ```js
+ * const d1 = tzUtc.makeDate(2000, 1, 1)
+ * const d2 = endOfMonth(d1, tzUtc)
+ * console.log(d2.toISOString())
+ * // 2000-02-29T23:59:59.999Z
+ * ```
+ *
  * @category Anchors
  *
  * @param date The start date.

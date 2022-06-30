@@ -4,6 +4,13 @@ import { Timezone } from './Timezone'
 /**
  * Return the end of the day for the given date.
  *
+ * ```js
+ * const d1 = tzUtc.makeDate(2000, 1, 1)
+ * const d2 = endOfDay(d1, tzUtc)
+ * console.log(d2.toISOString())
+ * // 2000-02-01T23:59:59.999Z
+ * ```
+ *
  * @category Anchors
  *
  * @param date The start date.
