@@ -19,6 +19,7 @@ describe('adjustBusinessDay', () => {
     ]
   )
 
+  const decThirtyFirst = new Date('2014-12-31')
   const janFirst = new Date('2015-01-01')
   const janSecond = new Date('2015-01-02')
 
@@ -34,7 +35,7 @@ describe('adjustBusinessDay', () => {
     ).toBe(janFirst.getTime())
   })
 
-  it('should adjust', () => {
+  it('should adjust following', () => {
     expect(
       adjustBusinessDay(
         janFirst,
@@ -44,5 +45,17 @@ describe('adjustBusinessDay', () => {
         tzUtc
       ).getTime()
     ).toBe(janSecond.getTime())
+  })
+
+  it('should adjust preceding', () => {
+    expect(
+      adjustBusinessDay(
+        janFirst,
+        BusinessDayConvention.PRECEDING,
+        true,
+        cal,
+        tzUtc
+      ).toISOString()
+    ).toBe(decThirtyFirst.toISOString())
   })
 })

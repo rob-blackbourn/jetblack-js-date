@@ -6,7 +6,14 @@ import { tzLocal } from './LocalTimezone'
 import { addBusinessDays } from './addBusinessDays'
 
 /**
- * Business day conventions
+ * Business day conventions.
+ *
+ * These rules determine adjustments made to dates when dealing with holidays.
+ * The most obvious rule is whether to move forwards, backwards, or to find the
+ * nearest non-holiday.
+ *
+ * The modified rules determine what to do when the adjustment is at the end of
+ * the month.
  */
 export enum BusinessDayConvention {
   /** No adjustment */

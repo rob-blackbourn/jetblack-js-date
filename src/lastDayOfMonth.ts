@@ -3,7 +3,7 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 
 /**
- * Calculate the last moment of the month.
+ * Calculate the last day of the month.
  *
  * @category Anchors
  *
@@ -11,19 +11,11 @@ import { Timezone } from './Timezone'
  * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A date which is the last day of the month for the given year and month.
  */
-export function endOfMonth(date: Date, tz: Timezone = tzLocal): Date {
+export function lastDayOfMonth(date: Date, tz: Timezone = tzLocal): Date {
   const { year, monthIndex } = tz.dateParts(date, {
     year: true,
     monthIndex: true
   })
 
-  return tz.makeDate(
-    year,
-    monthIndex,
-    daysInMonth(year, monthIndex),
-    23,
-    59,
-    59,
-    999
-  )
+  return tz.makeDate(year, monthIndex, daysInMonth(year, monthIndex))
 }

@@ -3,6 +3,14 @@ import { isLeapYear } from './isLeapYear'
 /**
  * Find the number of days in a year.
  *
+ * ```js
+ * console.log(daysInYear(2000))
+ * // 366
+ *
+ * console.log(daysInYear(2001))
+ * // 365
+ * ```
+ *
  * @category Calendars
  *
  * @param year The year.

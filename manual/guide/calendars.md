@@ -22,16 +22,16 @@ Here is a simple calendar.
 import { HolidayCalendar } from '@jetblack/date'
 
 const cal = new HolidayCalendar(
-    'cal',
-    [6, 0], // Saturday and Sunday
-    [
+  'cal',
+  [6, 0], // Saturday and Sunday
+  [
     new Date('2015-01-01T00:00:00Z'), // New Years Day
     new Date('2015-04-03T00:00:00Z'), // Good Friday
     new Date('2015-04-06T00:00:00Z'), // Easter Monday
     new Date('2015-05-01T00:00:00Z'), // May Day
     new Date('2015-12-25T00:00:00Z'), // Christmas day
     new Date('2015-12-26T00:00:00Z')  // Boxing day
-    ]
+  ]
 )
 ```
 
