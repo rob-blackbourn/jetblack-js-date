@@ -5,7 +5,7 @@ describe('dateFormat', () => {
     const d = new Date('2022-07-02T06:39:15.291Z')
     const s = dateFormat(
       d,
-      'ddd, dd mmm yyyy HH:MM:ss Z',
+      'ddd, dd mmm yyyy HH:MM:SS Z',
       { locale: 'en' },
       tzUtc
     )
@@ -16,7 +16,7 @@ describe('dateFormat', () => {
     const d = new Date('2022-07-02T06:39:15.291Z')
     const s = dateFormat(
       d,
-      'ddd, dd mmm yyyy HH:MM:ss Z',
+      'ddd, dd mmm yyyy HH:MM:SS Z',
       { locale: 'fr' },
       tzUtc
     )
@@ -185,45 +185,67 @@ describe('dateFormat', () => {
     ).toBe('02')
   })
 
-  it('should pad s when necessary', () => {
+  it('should pad S when necessary', () => {
     expect(
-      dateFormat(new Date('2001-01-09T01:01:05Z'), 's', { locale: 'en' }, tzUtc)
+      dateFormat(new Date('2001-01-09T01:01:05Z'), 'S', { locale: 'en' }, tzUtc)
     ).toBe('5')
     expect(
-      dateFormat(new Date('2001-01-19T13:13:26Z'), 's', { locale: 'en' }, tzUtc)
+      dateFormat(new Date('2001-01-19T13:13:26Z'), 'S', { locale: 'en' }, tzUtc)
     ).toBe('26')
   })
 
-  it('should always pad ss', () => {
+  it('should always pad SS', () => {
     expect(
-      dateFormat(
-        new Date('2001-01-09T01:02:59Z'),
-        'ss',
-        { locale: 'en' },
-        tzUtc
-      )
+      dateFormat(new Date('2001-01-09T01:02:59Z'), 'S', { locale: 'en' }, tzUtc)
     ).toBe('59')
   })
 
-  it('should get L', () => {
+  it('should get F', () => {
     expect(
       dateFormat(
-        new Date('2001-01-09T01:02:59.999Z'),
-        'L',
+        new Date('2001-01-09T01:02:59.123Z'),
+        'F',
         { locale: 'en' },
         tzUtc
       )
-    ).toBe('99')
+    ).toBe('1')
   })
 
-  it('should get l', () => {
+  it('should get FF', () => {
     expect(
       dateFormat(
-        new Date('2001-01-09T01:02:59.999Z'),
-        'l',
+        new Date('2001-01-09T01:02:59.123Z'),
+        'FF',
         { locale: 'en' },
         tzUtc
       )
-    ).toBe('999')
+    ).toBe('12')
+    expect(
+      dateFormat(
+        new Date('2001-01-09T01:02:59.023Z'),
+        'FF',
+        { locale: 'en' },
+        tzUtc
+      )
+    ).toBe('02')
+  })
+
+  it('should get FFF', () => {
+    expect(
+      dateFormat(
+        new Date('2001-01-09T01:02:59.123Z'),
+        'FFF',
+        { locale: 'en' },
+        tzUtc
+      )
+    ).toBe('123')
+    expect(
+      dateFormat(
+        new Date('2001-01-09T01:02:59.003Z'),
+        'FFF',
+        { locale: 'en' },
+        tzUtc
+      )
+    ).toBe('003')
   })
 })

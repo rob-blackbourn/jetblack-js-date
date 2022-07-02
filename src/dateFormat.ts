@@ -21,22 +21,22 @@ import { tzUtc } from './UTCTimezone'
 
 // Regexes and supporting functions are cached through closure
 const token =
-  /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|W{1,2}|[LlopSZN]|"[^"]*"|'[^']*'/g
+  /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMSTt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
 
 export let defaultMasks: { [name: string]: string } = {
-  default: 'ddd mmm dd yyyy HH:MM:ss',
+  default: 'ddd mmm dd yyyy HH:MM:SS',
   shortDate: 'm/d/yy',
   paddedShortDate: 'mm/dd/yyyy',
   mediumDate: 'mmm d, yyyy',
   longDate: 'mmmm d, yyyy',
   fullDate: 'dddd, mmmm d, yyyy',
   shortTime: 'h:MM TT',
-  mediumTime: 'h:MM:ss TT',
-  longTime: 'h:MM:ss TT Z',
+  mediumTime: 'h:MM:SS TT',
+  longTime: 'h:MM:SS TT Z',
   isoDate: 'yyyy-mm-dd',
-  isoTime: 'HH:MM:ss',
-  isoDateTime: "yyyy-mm-dd'T'HH:MM:sso",
-  expiresHeaderFormat: 'ddd, dd mmm yyyy HH:MM:ss Z'
+  isoTime: 'HH:MM:SS',
+  isoDateTime: "yyyy-mm-dd'T'HH:MM:SSo",
+  expiresHeaderFormat: 'ddd, dd mmm yyyy HH:MM:SS Z'
 }
 
 /**
@@ -162,8 +162,8 @@ export function dateFormat(
   const y = () => tz.year(date)
   const H = () => tz.hours(date)
   const M = () => tz.minutes(date)
-  const s = () => tz.seconds(date)
-  const L = () => tz.milliseconds(date)
+  const S = () => tz.seconds(date)
+  const F = () => tz.milliseconds(date)
   const o = () => tz.offset(date)
   const W = () => isoWeekOfYear(date)
   const N = () => getDayOfWeek(date, tz)
@@ -202,10 +202,11 @@ export function dateFormat(
     HH: () => String(H()).padStart(2, '0'),
     M: () => M(),
     MM: () => String(M()).padStart(2, '0'),
-    s: () => s(),
-    ss: () => String(s()).padStart(2, '0'),
-    l: () => String(L()).padStart(3, '0'),
-    L: () => String(Math.floor(L() / 10)).padStart(2, '0'),
+    S: () => S(),
+    SS: () => String(S()).padStart(2, '0'),
+    F: () => String(Math.floor(F() / 100)),
+    FF: () => String(Math.floor(F() / 10)).padStart(2, '0'),
+    FFF: () => String(F()).padStart(3, '0'),
     t: () => (H() < 12 ? 'a' : 'p'),
     tt: () => (H() < 12 ? 'am' : 'pm'),
     T: () => (H() < 12 ? 'A' : 'P'),
@@ -221,10 +222,6 @@ export function dateFormat(
       String(Math.floor(Math.abs(o()) / 60)).padStart(2, '0') +
       ':' +
       String(Math.floor(Math.abs(o()) % 60)).padStart(2, '0'),
-    S: () =>
-      ['th', 'st', 'nd', 'rd'][
-        d() % 10 > 3 ? 0 : (((d() % 100) - (d() % 10) != 10 ? 1 : 0) * d()) % 10
-      ],
     W: () => W(),
     WW: () => String(W()).padStart(2, '0'),
     N: () => N()
