@@ -17,12 +17,13 @@ import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
+import { tzUtc } from './UTCTimezone'
 
 // Regexes and supporting functions are cached through closure
 const token =
   /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|W{1,2}|[LlopSZN]|"[^"]*"|'[^']*'/g
 
-export let masks: { [name: string]: string } = {
+export let defaultMasks: { [name: string]: string } = {
   default: 'ddd mmm dd yyyy HH:MM:ss',
   shortDate: 'm/d/yy',
   paddedShortDate: 'mm/dd/yyyy',
@@ -50,51 +51,46 @@ const getDayOfWeek = (date: Date, tz: Timezone): number => {
   return dow === 0 ? 7 : dow
 }
 
-// Internationalization strings
-export const i18n = {
-  dayNames: [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-  ],
-  monthNames: [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ],
-  timeNames: ['a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM']
+interface LocaleNames {
+  weekday: { short: Array<string | undefined>; long: Array<string | undefined> }
+  month: { short: Array<string | undefined>; long: Array<string | undefined> }
+}
+type LocalNameType = 'weekday' | 'month'
+type LocalNameStyle = 'short' | 'long'
+const localeCache: { [locale: string]: LocaleNames } = {}
+
+function getLocaleName(
+  index: number,
+  type: LocalNameType,
+  style: LocalNameStyle,
+  locale: string | undefined
+): string {
+  if (!locale) {
+    locale = Intl.DateTimeFormat().resolvedOptions().locale
+  }
+
+  if (!(locale in localeCache)) {
+    localeCache[locale] = {
+      weekday: {
+        short: Array(7).fill(undefined),
+        long: Array(7).fill(undefined)
+      },
+      month: {
+        short: Array(7).fill(undefined),
+        long: Array(7).fill(undefined)
+      }
+    }
+  }
+  let localeName = localeCache[locale][type][style][index]
+  if (!localeName) {
+    const monthIndex = type === 'month' ? index : 0
+    const day = type === 'weekday' ? 1 + index : 1
+    const date = tzUtc.makeDate(1967, monthIndex, day)
+    localeName = date.toLocaleString(locale, { [type]: style })
+    localeCache[locale][type][style][index] = localeName
+  }
+
+  return localeName
 }
 
 /**
@@ -145,12 +141,20 @@ const getDayName = ({
   return dayName
 }
 
+export interface DateFormatOptions {
+  masks?: { [name: string]: string }
+  locale?: string
+}
+
 export function dateFormat(
   date: Date,
-  mask: string = 'default',
+  mask: string,
+  options: DateFormatOptions,
   tz: Timezone = tzLocal
 ) {
-  mask = String(masks[mask] || mask)
+  const { masks = defaultMasks, locale } = options
+
+  const pattern = String(masks[mask] || mask)
 
   const d = () => tz.day(date)
   const D = () => tz.weekday(date)
@@ -167,29 +171,29 @@ export function dateFormat(
   const flags: { [key: string]: () => any } = {
     d: () => d(),
     dd: () => String(d()).padStart(2, '0'),
-    ddd: () => i18n.dayNames[D()],
+    ddd: () => getLocaleName(D(), 'weekday', 'short', locale),
     DDD: () =>
       getDayName({
         y: y(),
         m: m(),
         d: d(),
         tz: tz,
-        dayName: i18n.dayNames[D()],
+        dayName: getLocaleName(D(), 'weekday', 'short', locale),
         short: true
       }),
-    dddd: () => i18n.dayNames[D() + 7],
+    dddd: () => getLocaleName(D(), 'weekday', 'long', locale),
     DDDD: () =>
       getDayName({
         y: y(),
         m: m(),
         d: d(),
         tz: tz,
-        dayName: i18n.dayNames[D() + 7]
+        dayName: getLocaleName(D(), 'weekday', 'long', locale)
       }),
     m: () => m() + 1,
     mm: () => String(m() + 1).padStart(2, '0'),
-    mmm: () => i18n.monthNames[m()],
-    mmmm: () => i18n.monthNames[m() + 12],
+    mmm: () => getLocaleName(m(), 'month', 'short', locale),
+    mmmm: () => getLocaleName(m(), 'month', 'long', locale),
     yy: () => String(y()).slice(2),
     yyyy: () => String(y()).padStart(4, '0'),
     h: () => H() % 12 || 12,
@@ -202,10 +206,10 @@ export function dateFormat(
     ss: () => String(s()).padStart(2, '0'),
     l: () => String(L()).padStart(3, '0'),
     L: () => String(Math.floor(L() / 10)).padStart(2, '0'),
-    t: () => (H() < 12 ? i18n.timeNames[0] : i18n.timeNames[1]),
-    tt: () => (H() < 12 ? i18n.timeNames[2] : i18n.timeNames[3]),
-    T: () => (H() < 12 ? i18n.timeNames[4] : i18n.timeNames[5]),
-    TT: () => (H() < 12 ? i18n.timeNames[6] : i18n.timeNames[7]),
+    t: () => (H() < 12 ? 'a' : 'p'),
+    tt: () => (H() < 12 ? 'am' : 'pm'),
+    T: () => (H() < 12 ? 'A' : 'P'),
+    TT: () => (H() < 12 ? 'AM' : 'PM'),
     Z: () => tz.name,
     o: () =>
       (o() > 0 ? '-' : '+') +
@@ -226,7 +230,7 @@ export function dateFormat(
     N: () => N()
   }
 
-  return mask.replace(token, match => {
+  return pattern.replace(token, match => {
     if (match in flags) {
       return flags[match]()
     }
