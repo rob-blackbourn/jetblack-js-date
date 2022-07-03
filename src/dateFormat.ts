@@ -103,29 +103,33 @@ const getDayName = ({
   short?: boolean
 }) => {
   const today = new Date()
-  const yesterday = addDays(today, -1, tz)
-  const tomorrow = addDays(today, 1, tz)
-  const today_d = () => tz.day(today)
-  const today_m = () => tz.monthIndex(today)
-  const today_y = () => tz.year(today)
-  const yesterday_d = () => tz.day(yesterday)
-  const yesterday_m = () => tz.monthIndex(yesterday)
-  const yesterday_y = () => tz.year(yesterday)
-  const tomorrow_d = () => tz.day(tomorrow)
-  const tomorrow_m = () => tz.monthIndex(tomorrow)
-  const tomorrow_y = () => tz.year(tomorrow)
 
-  if (today_y() === y && today_m() === m && today_d() === d) {
+  if (
+    tz.year(today) === y &&
+    tz.monthIndex(today) === m &&
+    tz.day(today) === d
+  ) {
     return short ? 'Tdy' : 'Today'
-  } else if (
-    yesterday_y() === y &&
-    yesterday_m() === m &&
-    yesterday_d() === d
+  }
+
+  const yesterday = addDays(today, -1, tz)
+  if (
+    tz.year(yesterday) === y &&
+    tz.monthIndex(yesterday) === m &&
+    tz.day(yesterday) === d
   ) {
     return short ? 'Ysd' : 'Yesterday'
-  } else if (tomorrow_y() === y && tomorrow_m() === m && tomorrow_d() === d) {
+  }
+
+  const tomorrow = addDays(today, 1, tz)
+  if (
+    tz.year(tomorrow) === y &&
+    tz.monthIndex(tomorrow) === m &&
+    tz.day(tomorrow) === d
+  ) {
     return short ? 'Tmw' : 'Tomorrow'
   }
+
   return dayName
 }
 
@@ -184,75 +188,64 @@ export function dateFormat(
   tz: Timezone = tzLocal,
   locale: string | undefined = undefined
 ) {
-  const d = () => tz.day(date)
-  const D = () => tz.weekday(date)
-  const m = () => tz.monthIndex(date)
-  const y = () => tz.year(date)
-  const H = () => tz.hours(date)
-  const M = () => tz.minutes(date)
-  const S = () => tz.seconds(date)
-  const F = () => tz.milliseconds(date)
-  const o = () => tz.offset(date)
-  const W = () => isoWeekOfYear(date)
-  const N = () => getDayOfWeek(date, tz)
-
   const flags: { [key: string]: () => any } = {
-    d: () => d(),
-    dd: () => String(d()).padStart(2, '0'),
-    ddd: () => getLocaleName(D(), 'weekday', 'short', locale),
+    d: () => tz.day(date),
+    dd: () => String(tz.day(date)).padStart(2, '0'),
+    ddd: () => getLocaleName(tz.weekday(date), 'weekday', 'short', locale),
     DDD: () =>
       getDayName({
-        y: y(),
-        m: m(),
-        d: d(),
+        y: tz.year(date),
+        m: tz.monthIndex(date),
+        d: tz.day(date),
         tz: tz,
-        dayName: getLocaleName(D(), 'weekday', 'short', locale),
+        dayName: getLocaleName(tz.weekday(date), 'weekday', 'short', locale),
         short: true
       }),
-    dddd: () => getLocaleName(D(), 'weekday', 'long', locale),
+    dddd: () => getLocaleName(tz.weekday(date), 'weekday', 'long', locale),
     DDDD: () =>
       getDayName({
-        y: y(),
-        m: m(),
-        d: d(),
+        y: tz.year(date),
+        m: tz.monthIndex(date),
+        d: tz.day(date),
         tz: tz,
-        dayName: getLocaleName(D(), 'weekday', 'long', locale)
+        dayName: getLocaleName(tz.weekday(date), 'weekday', 'long', locale)
       }),
-    m: () => m() + 1,
-    mm: () => String(m() + 1).padStart(2, '0'),
-    mmm: () => getLocaleName(m(), 'month', 'short', locale),
-    mmmm: () => getLocaleName(m(), 'month', 'long', locale),
-    yy: () => String(y()).slice(2),
-    yyyy: () => String(y()).padStart(4, '0'),
-    h: () => H() % 12 || 12,
-    hh: () => String(H() % 12 || 12).padStart(2, '0'),
-    H: () => H(),
-    HH: () => String(H()).padStart(2, '0'),
-    M: () => M(),
-    MM: () => String(M()).padStart(2, '0'),
-    S: () => S(),
-    SS: () => String(S()).padStart(2, '0'),
-    F: () => String(Math.floor(F() / 100)),
-    FF: () => String(Math.floor(F() / 10)).padStart(2, '0'),
-    FFF: () => String(F()).padStart(3, '0'),
-    t: () => (H() < 12 ? 'a' : 'p'),
-    tt: () => (H() < 12 ? 'am' : 'pm'),
-    T: () => (H() < 12 ? 'A' : 'P'),
-    TT: () => (H() < 12 ? 'AM' : 'PM'),
+    m: () => tz.monthIndex(date) + 1,
+    mm: () => String(tz.monthIndex(date) + 1).padStart(2, '0'),
+    mmm: () => getLocaleName(tz.monthIndex(date), 'month', 'short', locale),
+    mmmm: () => getLocaleName(tz.monthIndex(date), 'month', 'long', locale),
+    yy: () => String(tz.year(date)).slice(2),
+    yyyy: () => String(tz.year(date)).padStart(4, '0'),
+    h: () => tz.hours(date) % 12 || 12,
+    hh: () => String(tz.hours(date) % 12 || 12).padStart(2, '0'),
+    H: () => tz.hours(date),
+    HH: () => String(tz.hours(date)).padStart(2, '0'),
+    M: () => tz.minutes(date),
+    MM: () => String(tz.minutes(date)).padStart(2, '0'),
+    S: () => tz.seconds(date),
+    SS: () => String(tz.seconds(date)).padStart(2, '0'),
+    F: () => String(Math.floor(tz.milliseconds(date) / 100)),
+    FF: () => String(Math.floor(tz.milliseconds(date) / 10)).padStart(2, '0'),
+    FFF: () => String(tz.milliseconds(date)).padStart(3, '0'),
+    t: () => (tz.hours(date) < 12 ? 'a' : 'p'),
+    tt: () => (tz.hours(date) < 12 ? 'am' : 'pm'),
+    T: () => (tz.hours(date) < 12 ? 'A' : 'P'),
+    TT: () => (tz.hours(date) < 12 ? 'AM' : 'PM'),
     Z: () => tz.name,
     o: () =>
-      (o() > 0 ? '-' : '+') +
+      (tz.offset(date) > 0 ? '-' : '+') +
       String(
-        Math.floor(Math.abs(o()) / 60) * 100 + (Math.abs(o()) % 60)
+        Math.floor(Math.abs(tz.offset(date)) / 60) * 100 +
+          (Math.abs(tz.offset(date)) % 60)
       ).padStart(4, '0'),
     p: () =>
-      (o() > 0 ? '-' : '+') +
-      String(Math.floor(Math.abs(o()) / 60)).padStart(2, '0') +
+      (tz.offset(date) > 0 ? '-' : '+') +
+      String(Math.floor(Math.abs(tz.offset(date)) / 60)).padStart(2, '0') +
       ':' +
-      String(Math.floor(Math.abs(o()) % 60)).padStart(2, '0'),
-    W: () => W(),
-    WW: () => String(W()).padStart(2, '0'),
-    N: () => N()
+      String(Math.floor(Math.abs(tz.offset(date)) % 60)).padStart(2, '0'),
+    W: () => isoWeekOfYear(date),
+    WW: () => String(isoWeekOfYear(date)).padStart(2, '0'),
+    N: () => getDayOfWeek(date, tz)
   }
 
   return pattern.replace(token, match => {
