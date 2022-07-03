@@ -18,15 +18,7 @@ import { tzUtc } from './UTCTimezone'
 const token =
   /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMSTt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
 
-/**
- * Get ISO-8601 numeric representation of the day of the week
- * 1 (for Monday) through 7 (for Sunday)
- *
- * @ internal
- *
- * @param date A date
- * @returns The ISO week day
- */
+/** @internal */
 const getDayOfWeek = (date: Date, tz: Timezone): number => {
   let dow = tz.weekday(date)
   return dow === 0 ? 7 : dow
@@ -79,13 +71,10 @@ function getLocaleName(
 }
 
 /**
- * Get day name
+ * Get day name:
  * Yesterday, Today, Tomorrow if the date lies within, else fallback to Monday - Sunday
  *
  * @internal
- *
- * @param  {Object}
- * @return {String}
  */
 const getDayName = ({
   y,
