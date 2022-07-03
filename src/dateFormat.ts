@@ -6,11 +6,6 @@
  * Includes enhancements by Scott Trenda <scott.trenda.net>
  * and Kris Kowal <cixar.com/~kris.kowal/>
  * and Rob Blackbourn.
- *
- * Accepts a date, a mask, or a date and a mask.
- * Returns a formatted version of the given date.
- * The date defaults to the current date/time.
- * The mask defaults to masks.default.
  */
 
 import { addDays } from './addDays'
@@ -19,29 +14,15 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 import { tzUtc } from './UTCTimezone'
 
-// Regexes and supporting functions are cached through closure
+/** @internal  */
 const token =
   /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMSTt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
-
-export let defaultMasks: { [name: string]: string } = {
-  default: 'ddd mmm dd yyyy HH:MM:SS',
-  shortDate: 'm/d/yy',
-  paddedShortDate: 'mm/dd/yyyy',
-  mediumDate: 'mmm d, yyyy',
-  longDate: 'mmmm d, yyyy',
-  fullDate: 'dddd, mmmm d, yyyy',
-  shortTime: 'h:MM TT',
-  mediumTime: 'h:MM:SS TT',
-  longTime: 'h:MM:SS TT Z',
-  isoDate: 'yyyy-mm-dd',
-  isoTime: 'HH:MM:SS',
-  isoDateTime: "yyyy-mm-dd'T'HH:MM:SSo",
-  expiresHeaderFormat: 'ddd, dd mmm yyyy HH:MM:SS Z'
-}
 
 /**
  * Get ISO-8601 numeric representation of the day of the week
  * 1 (for Monday) through 7 (for Sunday)
+ *
+ * @ internal
  *
  * @param date A date
  * @returns The ISO week day
@@ -51,26 +32,30 @@ const getDayOfWeek = (date: Date, tz: Timezone): number => {
   return dow === 0 ? 7 : dow
 }
 
+/** @internal  */
 interface LocaleNames {
   weekday: { short: Array<string | undefined>; long: Array<string | undefined> }
   month: { short: Array<string | undefined>; long: Array<string | undefined> }
 }
-type LocalNameType = 'weekday' | 'month'
-type LocalNameStyle = 'short' | 'long'
+/** @internal  */
+type LocaleOptionName = 'weekday' | 'month'
+/** @internal  */
+type LocaleOptionValue = 'short' | 'long'
+
+/** @internal  */
 const localeCache: { [locale: string]: LocaleNames } = {}
 
+/** @internal  */
 function getLocaleName(
   index: number,
-  type: LocalNameType,
-  style: LocalNameStyle,
+  type: LocaleOptionName,
+  style: LocaleOptionValue,
   locale: string | undefined
 ): string {
-  if (!locale) {
-    locale = Intl.DateTimeFormat().resolvedOptions().locale
-  }
+  const cacheName = !locale ? 'default' : locale
 
-  if (!(locale in localeCache)) {
-    localeCache[locale] = {
+  if (!(cacheName in localeCache)) {
+    localeCache[cacheName] = {
       weekday: {
         short: Array(7).fill(undefined),
         long: Array(7).fill(undefined)
@@ -81,13 +66,13 @@ function getLocaleName(
       }
     }
   }
-  let localeName = localeCache[locale][type][style][index]
+  let localeName = localeCache[cacheName][type][style][index]
   if (!localeName) {
     const monthIndex = type === 'month' ? index : 0
     const day = type === 'weekday' ? 1 + index : 1
     const date = tzUtc.makeDate(1967, monthIndex, day)
     localeName = date.toLocaleString(locale, { [type]: style })
-    localeCache[locale][type][style][index] = localeName
+    localeCache[cacheName][type][style][index] = localeName
   }
 
   return localeName
@@ -96,6 +81,9 @@ function getLocaleName(
 /**
  * Get day name
  * Yesterday, Today, Tomorrow if the date lies within, else fallback to Monday - Sunday
+ *
+ * @internal
+ *
  * @param  {Object}
  * @return {String}
  */
@@ -141,21 +129,61 @@ const getDayName = ({
   return dayName
 }
 
-export interface DateFormatOptions {
-  masks?: { [name: string]: string }
-  locale?: string
-}
-
+/**
+ * Format a date with a pattern.
+ *
+ * ```js
+ * const d = new Date("2000-01-01")
+ * const s = dateFormat(d, "d-mmm-yy")
+ * console.log(s)
+ * > 1-Jan-00
+ * ```
+ *
+ * | Value   | Description |
+ * | ------- | ----------- |
+ * | d       | Day of the month as digits; no leading zero for single-digit days. |
+ * | dd      | Day of the month as digits; leading zero for single-digit days. |
+ * | ddd     | Day of the week as a three-letter abbreviation. |
+ * | dddd    | Day of the week as its full name. |
+ * | m       | Month as digits; no leading zero for single-digit months. |
+ * | mm      | Month as digits; leading zero for single-digit months. |
+ * | mmm     | Month as a three-letter abbreviation. |
+ * | mmmm    | Month as its full name. |
+ * | yy      | Year as last two digits; leading zero for years less than 10. |
+ * | yyyy    | Year represented by four digits. |
+ * | h       | Hours; no leading zero for single-digit hours (12-hour clock). |
+ * | hh      | Hours; leading zero for single-digit hours (12-hour clock). |
+ * | H       | Hours; no leading zero for single-digit hours (24-hour clock). |
+ * | HH      | Hours; leading zero for single-digit hours (24-hour clock). |
+ * | M       | Minutes; no leading zero for single-digit minutes. |
+ * | MM      | Minutes; leading zero for single-digit minutes. |
+ * | S       | Seconds; no leading zero for single-digit seconds. |
+ * | SS      | Seconds; leading zero for single-digit seconds. |
+ * | F       | Hundreds of milliseconds. |
+ * | FF      | Tens of milliseconds with a leading zero for single-digit values. |
+ * | FFF     | Milliseconds: zero padded. |
+ * | t       | Lowercase, single-character time marker string: a or p. |
+ * | tt      | Lowercase, two-character time marker string: am or pm. |
+ * | T       | Uppercase, single-character time marker string: A or P. |
+ * | TT      | Uppercase, two-character time marker string: AM or PM. |
+ * | Z       | Timezone name. |
+ * | o       | GMT/UTC timezone offset, e.g. -0500 or +0230. |
+ * | '...' or "..." | Literal character sequence. Surrounding quotes are removed. |
+ *
+ * @category Formatting
+ *
+ * @param date A date.
+ * @param pattern The format pattern.
+ * @param tz An optional timezone. Defaults to the local timezone.
+ * @param locale An optional locale. Defaults to the current browser locale.
+ * @returns The formatted date string.
+ */
 export function dateFormat(
   date: Date,
-  mask: string,
-  options: DateFormatOptions,
-  tz: Timezone = tzLocal
+  pattern: string = "yyyy-mm-dd'T'HH:MM:SSo",
+  tz: Timezone = tzLocal,
+  locale: string | undefined = undefined
 ) {
-  const { masks = defaultMasks, locale } = options
-
-  const pattern = String(masks[mask] || mask)
-
   const d = () => tz.day(date)
   const D = () => tz.weekday(date)
   const m = () => tz.monthIndex(date)
