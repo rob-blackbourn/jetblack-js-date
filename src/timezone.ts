@@ -183,6 +183,35 @@ export abstract class Timezone {
   abstract isDaylightSavings(date: Date): boolean
 
   /**
+   * Makes a new date by taking the date parts using this timezone and making the
+   * date with the supplied time zone.
+   *
+   * @param date A date
+   * @param tz A timezone
+   * @returns A new date using the date parts from this timezone, constructed with the supplied timezone.
+   */
+  as(date: Date, tz: Timezone): Date {
+    const { year, monthIndex, day, hours, minutes, seconds, milliseconds } =
+      this.dateParts(date, {
+        year: true,
+        monthIndex: true,
+        day: true,
+        hours: true,
+        minutes: true,
+        seconds: true,
+        milliseconds: true
+      })
+    return tz.makeDate(
+      year,
+      monthIndex,
+      day,
+      hours,
+      minutes,
+      seconds,
+      milliseconds
+    )
+  }
+  /**
    * The ISO 8601 date string representation for a given date.
    *
    * @param date The date.

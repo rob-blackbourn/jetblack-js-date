@@ -1,10 +1,10 @@
-import { startOfDay } from './startOfDay'
 import { Timezone } from './Timezone'
-import { MILLISECONDS_IN_DAY } from './constants'
 import { tzLocal } from './LocalTimezone'
+import { diffInDays } from './diffInDays'
+import { tzUtc } from './UTCTimezone'
 
 /**
- * Find the number of days between two dates.
+ * Find the number of whole days between two dates.
  *
  * @category Differences
  *
@@ -18,11 +18,8 @@ export function diffInCalDays(
   rightDate: Date,
   tz: Timezone = tzLocal
 ) {
-  const start = startOfDay(leftDate, tz)
-  const end = startOfDay(rightDate, tz)
+  const lhs = tz.as(leftDate, tzUtc)
+  const rhs = tz.as(rightDate, tzUtc)
 
-  const startTime = start.getTime() - tz.offset(start)
-  const endTime = end.getTime() - tz.offset(end)
-
-  return Math.round((startTime - endTime) / MILLISECONDS_IN_DAY)
+  return Math.floor(diffInDays(lhs, rhs))
 }
