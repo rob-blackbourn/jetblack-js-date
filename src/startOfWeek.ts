@@ -14,5 +14,6 @@ import { Timezone } from './Timezone'
  */
 export function startOfWeek(date: Date, tz: Timezone = tzLocal): Date {
   const weekday = tz.weekday(date)
-  return addDays(startOfDay(date, tz), -weekday, tz)
+  const dayStart = startOfDay(date, tz)
+  return weekday === 0 ? dayStart : addDays(dayStart, -weekday, tz)
 }
