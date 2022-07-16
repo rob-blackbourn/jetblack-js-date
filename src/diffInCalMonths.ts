@@ -2,7 +2,7 @@ import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
 
 /**
- * Find the number of months between two dates.
+ * Find the number of whole months between two dates.
  *
  * @category Differences
  *

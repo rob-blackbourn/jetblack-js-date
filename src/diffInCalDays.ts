@@ -4,7 +4,7 @@ import { diffInDays } from './diffInDays'
 import { tzUtc } from './UTCTimezone'
 
 /**
- * Find the number of days between two dates.
+ * Find the number of whole days between two dates.
  *
  * @category Differences
  *
@@ -21,5 +21,5 @@ export function diffInCalDays(
   const lhs = tz.as(leftDate, tzUtc)
   const rhs = tz.as(rightDate, tzUtc)
 
-  return Math.round(diffInDays(lhs, rhs))
+  return Math.floor(diffInDays(lhs, rhs))
 }

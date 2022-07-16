@@ -2,7 +2,7 @@ import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
 
 /**
- * Find the number of years between two dates.
+ * Find the number of whole years between two dates.
  *
  * @category Differences
  *
