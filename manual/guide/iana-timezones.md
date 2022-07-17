@@ -26,6 +26,17 @@ const newYearsDay = tzBrussels.makeDate(2000, 0, 1).toISOString()
 // returns "2000-01-01T01:00:00Z"
 ```
 
+There is a utility function which wraps this up using dynamic imports.
+
+```js
+import { loadTimezone } from '@jetblack/date'
+
+const tzChicago = await loadTimezone('America/Chicago')
+console.log(tzChicago.makeDate(2022, 12, 25).toISOString())
+// 2023-01-25T06:00:00.000Z
+```
+
+
 ## Dynamic
 
 When the required timezones are not known at build time they may be accessed dynamically.
@@ -50,6 +61,16 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
   })
   .catch(error => console.error(error))
 }
+```
+
+There is a utility function which wraps this up.
+
+```js
+import { fetchTimezone } from '@jetblack/date'
+
+const tzChicago = await fetchTimezone('America/Chicago')
+console.log(tzChicago.makeDate(2022, 12, 25).toISOString())
+// 2023-01-25T06:00:00.000Z
 ```
 
 The list of all available zones is provided at `dist/latest/zones.json`.

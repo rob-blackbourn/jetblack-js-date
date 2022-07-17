@@ -85,6 +85,8 @@ export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
  * // 2023-01-25T06:00:00.000Z
  * ```
  *
+ * @category Timezone
+ *
  * @param name The timezone name.
  * @param version The database version.
  * @param rootUrl The root url.
@@ -114,6 +116,8 @@ export async function fetchTimezone(
  * // (1) ['Arctic/Longyearbyen']
  * ```
  *
+ * @category Timezone
+ *
  * @param version The database version.
  * @param rootUrl The root url.
  * @param options Fetch options
@@ -141,6 +145,8 @@ export async function fetchTimezoneNames(
  * // 2023-01-25T06:00:00.000Z
  * ```
  *
+ * @category Timezone
+ *
  * @param name The name of the timezone.
  * @param version The database version.
  * @returns A promise resolving to the timezone.
@@ -164,6 +170,8 @@ export async function loadTimezone(
  * console.log(names.filter(name => name.startsWith('Arctic')))
  * // (1) ['Arctic/Longyearbyen']
  * ```
+ *
+ * @category Timezone
  *
  * @param version The database version.
  * @returns A promise resolving to the list of timezone names.
