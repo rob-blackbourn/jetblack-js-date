@@ -1,6 +1,6 @@
 ## Installation
 
-The package can be installed from npmjs.
+The package can be installed from [npmjs](https://www.npmjs.com/package/@jetblack/date).
 
 ```bash
 npm install --save @jetblack/date
@@ -9,7 +9,7 @@ npm install --save @jetblack/date
 ## Convenience Methods
 
 The library provides the usual convenience methods (e.g. `addDays`, `startOfDay`, etc.),
-but with the addition of an optional timezone.
+but with the addition of a timezone where necessary.
 
 ```js
 import { startOfToday, tzLocal, tzUtc } from '@jetblack/date'

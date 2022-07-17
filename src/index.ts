@@ -91,7 +91,11 @@ export {
   tzDataReviver,
   dataToTimezoneOffset,
   minDataToTimezoneOffset,
-  timezoneFromJSON
+  timezoneFromJSON,
+  fetchTimezone,
+  fetchTimezoneNames,
+  loadTimezone,
+  loadTimezoneNames
 } from './tzdata'
 export { tzUtc } from './UTCTimezone'
 export { weekOfYear } from './weekOfYear'
