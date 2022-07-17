@@ -83,22 +83,16 @@ export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
  * @param options Fetch options
  * @returns A promise resolving to the timezone.
  */
-export function fetchTimezone(
+export async function fetchTimezone(
   name: string,
   version: string = 'latest',
   rootUrl: string = 'https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist',
   options?: RequestInit
 ): Promise<IANATimezone> {
-  return new Promise<IANATimezone>((resolve, reject) => {
-    fetch(`${rootUrl}/${version}/${name}.min.json`, options)
-      .then(response => response.json())
-      .then(data => {
-        const zoneData = data.map(minDataToTimezoneOffset)
-        const tz = new IANATimezone(name, zoneData)
-        resolve(tz)
-      })
-      .catch(reject)
-  })
+  const url = `${rootUrl}/${version}/${name}.min.json`
+  const response = await fetch(url, options)
+  const data = await response.json()
+  return new IANATimezone(name, data.map(minDataToTimezoneOffset))
 }
 
 /**
@@ -109,34 +103,43 @@ export function fetchTimezone(
  * @param options Fetch options
  * @returns A promise resolving to the list of time zone names.
  */
-export function fetchTimezoneNames(
+export async function fetchTimezoneNames(
   version: string = 'latest',
   rootUrl: string = 'https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist',
   options?: RequestInit
 ): Promise<string[]> {
-  return new Promise<string[]>((resolve, reject) => {
-    fetch(`${rootUrl}/${version}/zones.json`, options)
-      .then(response => response.json())
-      .then(resolve)
-      .catch(reject)
-  })
+  const url = `${rootUrl}/${version}/zones.json`
+  const response = await fetch(url, options)
+  const names = await response.json()
+  return names
 }
 
+/**
+ * Load a timezone using dynamic import.
+ *
+ * @param name The name of the timezone.
+ * @param version The database version.
+ * @returns A promise resolving to the timezone.
+ */
 export async function loadTimezone(
   name: string,
   version: string = 'latest'
 ): Promise<IANATimezone> {
-  const { default: tzData } = await import(
-    `@jetblack/tzdata/dist/${version}/${name}.min.json`
-  )
+  const path = `@jetblack/tzdata/dist/${version}/${name}.min.json`
+  const { default: tzData } = await import(path)
   return new IANATimezone(name, tzData.map(minDataToTimezoneOffset))
 }
 
+/**
+ * Load the timezone names using dynamic import.
+ *
+ * @param version The database version.
+ * @returns A promise resolving to the list of timezone names.
+ */
 export async function loadTimezoneNames(
   version: string = 'latest'
-): Promise<IANATimezone> {
-  const { default: names } = await import(
-    `@jetblack/tzdata/dist/${version}/zones.json`
-  )
+): Promise<string[]> {
+  const path = `@jetblack/tzdata/dist/${version}/zones.json`
+  const { default: names } = await import(path)
   return names
 }
