@@ -73,3 +73,70 @@ export function minDataToTimezoneOffset(data: {
 export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
   return new IANATimezone(name, tzdata.map(dataToTimezoneOffset))
 }
+
+/**
+ * Fetch a timezone.
+ *
+ * @param name The timezone name.
+ * @param version The database version.
+ * @param rootUrl The root url.
+ * @param options Fetch options
+ * @returns A promise resolving to the timezone.
+ */
+export function fetchTimezone(
+  name: string,
+  version: string = 'latest',
+  rootUrl: string = 'https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist',
+  options?: RequestInit
+): Promise<IANATimezone> {
+  return new Promise<IANATimezone>((resolve, reject) => {
+    fetch(`${rootUrl}/${version}/${name}.min.json`, options)
+      .then(response => response.json())
+      .then(data => {
+        const zoneData = data.map(minDataToTimezoneOffset)
+        const tz = new IANATimezone(name, zoneData)
+        resolve(tz)
+      })
+      .catch(reject)
+  })
+}
+
+/**
+ * Fetch a list of timezone names.
+ *
+ * @param version The database version.
+ * @param rootUrl The root url.
+ * @param options Fetch options
+ * @returns A promise resolving to the list of time zone names.
+ */
+export function fetchTimezoneNames(
+  version: string = 'latest',
+  rootUrl: string = 'https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist',
+  options?: RequestInit
+): Promise<string[]> {
+  return new Promise<string[]>((resolve, reject) => {
+    fetch(`${rootUrl}/${version}/zones.json`, options)
+      .then(response => response.json())
+      .then(resolve)
+      .catch(reject)
+  })
+}
+
+export async function loadTimezone(
+  name: string,
+  version: string = 'latest'
+): Promise<IANATimezone> {
+  const { default: tzData } = await import(
+    `@jetblack/tzdata/dist/${version}/${name}.min.json`
+  )
+  return new IANATimezone(name, tzData.map(minDataToTimezoneOffset))
+}
+
+export async function loadTimezoneNames(
+  version: string = 'latest'
+): Promise<IANATimezone> {
+  const { default: names } = await import(
+    `@jetblack/tzdata/dist/${version}/zones.json`
+  )
+  return names
+}

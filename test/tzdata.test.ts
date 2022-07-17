@@ -1,7 +1,8 @@
 import {
   IANATimezone,
   dataToTimezoneOffset,
-  minDataToTimezoneOffset
+  minDataToTimezoneOffset,
+  loadTimezone
 } from '../src'
 import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
 import chicagoMinTzData from '@jetblack/tzdata/dist/latest/America/Chicago.min.json'
@@ -21,6 +22,12 @@ describe('tzdata', () => {
       'America/Chicago',
       chicagoMinTzData.map(minDataToTimezoneOffset)
     )
+    const date = new Date('2000-01-01T00:00:00Z')
+    expect(tzChicago.offset(date)).toBe(-360)
+  })
+
+  it('should load minified tzdata with dynamic import', async () => {
+    const tzChicago = await loadTimezone('America/Chicago')
     const date = new Date('2000-01-01T00:00:00Z')
     expect(tzChicago.offset(date)).toBe(-360)
   })
