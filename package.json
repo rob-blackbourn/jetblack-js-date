@@ -20,7 +20,7 @@
     "build": "rimraf dist && rollup -c",
     "dev": "rimraf dist && rollup -c -w",
     "test": "jest",
-    "docs:build": "typedoc",
+    "docs:build": "typedoc && cp assets/* docs",
     "docs:serve": "http-server docs"
   },
   "devDependencies": {

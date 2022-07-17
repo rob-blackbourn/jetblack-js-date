@@ -12,6 +12,7 @@ module.exports = {
         childrenDir: 'guide',
         children: [
           { title: 'Getting started', source: 'getting-started.md' },
+          { title: 'Design Choices', source: 'design-choices.md' },
           { title: 'Date Arithmetic', source: 'date-arithmetic.md' },
           { title: 'Timezones', source: 'timezones.md' },
           { title: 'IANA Timezones', source: 'iana-timezones.md' },

@@ -39,7 +39,7 @@ jan1 = new Date(Date.UTC(2000, 0, 1))
 
 For detail on IANA timezones see {@page ./iana-timezones.md}.
 
-The following create a new date for the first of January 200 in the
+The following creates a new date for the first of January 200 in the
 Europe/Brussels timezone.
 
 ```js

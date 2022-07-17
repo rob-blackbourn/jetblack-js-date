@@ -31,4 +31,4 @@ const todayUTC = startOfToday(tzUtc)
 
 ## What next ?
 
-{@page ./date-arithmetic.md}
+{@page ./design-choices.md}
