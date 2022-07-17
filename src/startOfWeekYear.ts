@@ -4,7 +4,7 @@ import { Timezone } from './Timezone'
 import { weekYear } from './weekYear'
 
 /**
- * Find the first week of the year for a given date.
+ * Find the first week of the year for the week year of a given date.
  *
  * @category Anchors
  *

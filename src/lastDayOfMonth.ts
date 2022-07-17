@@ -3,7 +3,7 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 
 /**
- * Calculate the last day of the month.
+ * Find the last day of the month.
  *
  * @category Anchors
  *

@@ -5,6 +5,8 @@ import { Timezone } from './Timezone'
 /**
  * Subtract a duration from a date.
  *
+ * @deprecated This function was required before duration could be negative and is no longer necessary. It will be removed in the next major release.
+ *
  * @category Arithmetic
  *
  * @param date The start date.

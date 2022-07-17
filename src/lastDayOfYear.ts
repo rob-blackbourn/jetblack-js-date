@@ -2,7 +2,7 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 
 /**
- * Calculate the last day of the year.
+ * Find the last day of the year.
  *
  * @category Anchors
  *

@@ -1,8 +1,6 @@
 /**
  * Compares two dates ascending.
  *
- * @category Comparisons
- *
  * ```js
  * const a = [
  *   new Date('2000-07-01'),
@@ -14,6 +12,8 @@
  * // 1: Thu Jun 01 2000 01:00:00 GMT+0100 (British Summer Time)
  * // 2: Sat Jul 01 2000 01:00:00 GMT+0100 (British Summer Time)
  * ```
+ *
+ * @category Comparisons
  *
  * @param a The first date.
  * @param b The second date.

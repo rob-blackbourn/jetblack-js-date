@@ -11,6 +11,28 @@
  * default calendar. It simply defines Saturday and Sunday as holiday
  * dates.
  *
+ * This is how the {@link WeekendCalendar} is defined.
+ *
+ * ```ts
+ * export class WeekendCalendar extends Calendar {
+ *   #weekends: number[]
+ *
+ *   constructor(name: string = 'WeekendCalendar', weekends: number[] = [0, 6]) {
+ *     super(name)
+ *     this.#weekends = weekends
+ *   }
+ *
+ *   isWeekend(date: Date): boolean {
+ *     const dayOfWeek = date.getDay()
+ *     return this.#weekends.some(x => x === dayOfWeek)
+ *   }
+ *
+ *   isHoliday(date: Date): boolean {
+ *     return this.isWeekend(date)
+ *   }
+ * }
+ * ```
+ *
  * @category Calendars
  */
 export abstract class Calendar {

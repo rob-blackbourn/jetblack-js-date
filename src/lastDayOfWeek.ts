@@ -6,6 +6,8 @@ import { Timezone } from './Timezone'
 /**
  * Find the last day of the week for a given date.
  *
+ * Note: weeks start on Sunday and end on Saturday.
+ *
  * @category Anchors
  *
  * @param date A date.
