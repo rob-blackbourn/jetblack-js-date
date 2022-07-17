@@ -7,9 +7,9 @@ The Date object treats `0` as the first month of the year, and this library
 accepts that convention. Because this can feel a little odd, references to months
 usually specify `monthIndex` as a reminder.
 
-### Day Of Week
+### Day of Week
 
-The Date objects treats `0` as Sunday, and this library accepts that convention.
+The Date object treats `0` as Sunday, and this library accepts that convention.
 This means functions like `startOfWeek` will return Sunday rather than Monday.
 
 ### Prefer Functions to Classes
