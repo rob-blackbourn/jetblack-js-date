@@ -77,6 +77,14 @@ export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
 /**
  * Fetch a timezone.
  *
+ * ```ts
+ * import { fetchTimezone } from '@jetblack/date'
+ *
+ * const tzChicago = await fetchTimezone('America/Chicago')
+ * console.log(tzChicago.makeDate(2022, 12, 25).toISOString())
+ * // 2023-01-25T06:00:00.000Z
+ * ```
+ *
  * @param name The timezone name.
  * @param version The database version.
  * @param rootUrl The root url.
@@ -98,6 +106,14 @@ export async function fetchTimezone(
 /**
  * Fetch a list of timezone names.
  *
+ * ```ts
+ * import { fetchTimezoneNames } from '@jetblack/map'
+ *
+ * const names = await fetchTimezoneNames()
+ * console.log(names.filter(name => name.startsWith('Arctic')))
+ * // (1) ['Arctic/Longyearbyen']
+ * ```
+ *
  * @param version The database version.
  * @param rootUrl The root url.
  * @param options Fetch options
@@ -117,6 +133,14 @@ export async function fetchTimezoneNames(
 /**
  * Load a timezone using dynamic import.
  *
+ * ```ts
+ * import { loadTimezone } from '@jetblack/date'
+ *
+ * const tzChicago = await loadTimezone('America/Chicago')
+ * console.log(tzChicago.makeDate(2022, 12, 25).toISOString())
+ * // 2023-01-25T06:00:00.000Z
+ * ```
+ *
  * @param name The name of the timezone.
  * @param version The database version.
  * @returns A promise resolving to the timezone.
@@ -132,6 +156,14 @@ export async function loadTimezone(
 
 /**
  * Load the timezone names using dynamic import.
+ *
+ * ```ts
+ * import { loadTimezoneNames } from '@jetblack/map'
+ *
+ * const names = await loadTimezoneNames()
+ * console.log(names.filter(name => name.startsWith('Arctic')))
+ * // (1) ['Arctic/Longyearbyen']
+ * ```
  *
  * @param version The database version.
  * @returns A promise resolving to the list of timezone names.
