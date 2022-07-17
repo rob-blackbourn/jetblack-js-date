@@ -2,7 +2,7 @@ Timezone-aware date manipulation for JavaScript.
 
 ## Overview
 
-This is a toolkit for working with dates with timezones.
+This is a toolkit for working with dates and timezones.
 
 JavaScript provides
 [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
