@@ -2,14 +2,15 @@ Calculations which work on  business days require calendars.
 
 Two calendars are provided out of the box:
 
-* WeekendCalendar
-* HolidayCalendar
+* [[WeekendCalendar]]
+* [[HolidayCalendar]]
 
 ## WeekendCalendar
 
-The weekend calendar takes an array of weekdays which it considers to always be holiday dates.
-By default the weekdays are Saturday and Sunday, and a concrete calendar is exported as `calWeekends`.
-This is the default calendar used by business day functions.
+The weekend calendar takes an array of weekdays which it considers to always be
+holiday dates. By default the weekdays are Saturday and Sunday, and a concrete
+calendar is exported as [[calWeekends]]. This is the default calendar used by
+business day functions.
 
 ## HolidayCalendar
 

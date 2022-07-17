@@ -12,13 +12,19 @@ usually specify <code>monthIndex</code> as a reminder.</p>
   <h3>Day of Week</h3>
 </a>
 <p>The Date object treats <code>0</code> as Sunday, and this library accepts that convention.
-This means functions like <code>startOfWeek</code> will return Sunday rather than Monday.</p>
+This means functions like <a href="../../modules.html#startOfWeek">startOfWeek</a> will return Sunday rather than Monday.</p>
 
 <a href="#prefer-functions-to-classes" id="prefer-functions-to-classes" style="color: inherit; text-decoration: none;">
   <h3>Prefer Functions to Classes</h3>
 </a>
 <p>While classes might provide a more elegant interface, few tree shaking libraries
 and able to prune unused class methods, so functions are preferred to classes.</p>
+
+<a href="#no-unnecessary-functions" id="no-unnecessary-functions" style="color: inherit; text-decoration: none;">
+  <h3>No Unnecessary Functions</h3>
+</a>
+<p>The <a href="../../modules.html#addDays">addDays</a> function has no complimentary <code>subDays</code> function, as this can
+be achieved by making the <code>days</code> argument negative.</p>
 
 <a href="#what-next-" id="what-next-" style="color: inherit; text-decoration: none;">
   <h2>What next ?</h2>

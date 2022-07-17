@@ -59,15 +59,19 @@ jan1 = new Date(Date.UTC(2000, 0, 1) + 60 * 60 * 1000)
 
 ## Other Methods
 
-As well as making a date the timezone can be used to get the date parts: `year`,
-`monthIndex`, `weekday`, `day`, `hours`, `minutes`, `seconds` and `milliseconds`. A
-more general `dateparts` method can be used to get multiple parts for efficiency.
+As well as making a date the timezone can be used to get the date parts:
+[[Timezone.year | `year`]], [[Timezone.monthIndex | `monthIndex`]],
+[[Timezone.weekday | `weekday`]], [[Timezone.day | `day`]],
+[Timezone.hours | `hours`], [[Timezone.minutes | `minutes`]],
+[[Timezone.seconds | `seconds`]] and [[Timezone.milliseconds | `milliseconds`]].
+A more general [[Timezone.dateParts | `dateparts`]] method can be used to get
+multiple parts for efficiency.
 
-An `offset` method is provided which accepts a date argument and returns the
-offset from UTC in minutes.
+An [[Timezone.offset | `offset`]] method is provided which accepts a date
+argument and returns the offset from UTC in minutes.
 
-Finally the `toISOString` method is provided to display an ISO 8601 string with
-the timezone offset.
+Finally the [[Timezone.toISOString | `toISOString`]] method is provided to
+display an ISO 8601 string with the timezone offset.
 
 ## What next ?
 

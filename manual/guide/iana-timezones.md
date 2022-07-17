@@ -26,7 +26,8 @@ const newYearsDay = tzBrussels.makeDate(2000, 0, 1).toISOString()
 // returns "2000-01-01T01:00:00Z"
 ```
 
-There is a utility function which wraps this up using dynamic imports.
+There is a utility function [[`loadTimezone`]] which wraps this up using
+[dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import).
 
 ```js
 import { loadTimezone } from '@jetblack/date'
@@ -63,7 +64,7 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
 }
 ```
 
-There is a utility function which wraps this up.
+There is a utility function [[`fetchTimezone`]] which wraps this up.
 
 ```js
 import { fetchTimezone } from '@jetblack/date'
