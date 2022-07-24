@@ -6,6 +6,17 @@ import { Timezone } from './Timezone'
 /**
  * Find the end of the week for a given date.
  *
+ * ```js
+ * const days1 = endOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)
+ * console.log(days1.toISOString())
+ * // 2022-03-26T23:59:59.999Z
+ *
+ * // Compare to lastDayOfWeek
+ * const days2 = lastDayOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)
+ * console.log(days2.toISOString())
+ * // 2022-03-26T00:00:00.000Z
+ * ```
+ *
  * @category Anchors
  *
  * @param date A date.
