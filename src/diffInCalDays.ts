@@ -6,6 +6,25 @@ import { tzUtc } from './UTCTimezone'
 /**
  * Find the number of whole days between two dates.
  *
+ * ```js
+ * const days1 = diffInCalDays(
+ *   new Date('2022-03-25T00:00:00Z'),
+ *   new Date('2022-01-25T00:00:00Z'),
+ *   tzUtc
+ * )
+ * console.log(days1)
+ * // 59
+ *
+ * // The time part is discarded.
+ * const days2 = diffInCalDays(
+ *   new Date('2022-03-25T12:00:00Z'),
+ *   new Date('2022-01-25T00:00:00Z'),
+ *   tzUtc
+ * )
+ * console.log(days2)
+ * // 59
+ * ```
+ *
  * @category Differences
  *
  * @param leftDate The left date.
