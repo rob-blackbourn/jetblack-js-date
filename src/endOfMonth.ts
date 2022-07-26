@@ -6,10 +6,14 @@ import { Timezone } from './Timezone'
  * Calculate the last moment of the month.
  *
  * ```js
- * const d1 = tzUtc.makeDate(2000, 1, 1)
- * const d2 = endOfMonth(d1, tzUtc)
- * console.log(d2.toISOString())
- * // 2000-02-29T23:59:59.999Z
+ * const days1 = endOfMonth(new Date('2022-03-25T00:00:00Z'), tzUtc)
+ * console.log(days1.toISOString())
+ * // 2022-03-31T23:59:59.999Z
+ *
+ * // Compare with lastDayOfMonth.
+ * const days2 = lastDayOfMonth(new Date('2022-03-25T00:00:00Z'), tzUtc)
+ * console.log(days2.toISOString())
+ * // 2022-03-31T00:00:00.000Z
  * ```
  *
  * @category Anchors
