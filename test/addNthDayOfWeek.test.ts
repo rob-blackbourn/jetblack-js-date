@@ -20,7 +20,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-01T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should go to the next week when strictly different', () => {
@@ -32,7 +32,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-08T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should choose the first Tuesday as the next date', () => {
@@ -44,7 +44,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-02T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should choose the first Tuesday as the next date regardless of strict difference', () => {
@@ -56,7 +56,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-02T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should choose the third Wednesday', () => {
@@ -68,7 +68,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-17T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should not change as the last Tuesday is the same date', () => {
@@ -80,7 +80,7 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-30T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should find the third Wednesday from the end of the month', () => {
@@ -92,6 +92,6 @@ describe('addNthDayOfWeek', () => {
       tzUtc
     )
     const expected = new Date('2015-06-10T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 })

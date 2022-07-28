@@ -5,13 +5,13 @@ describe('addYears', () => {
     it('should add years', () => {
       const actual = addYears(new Date('2000-01-01T00:00:00Z'), 5, tzUtc)
       const expected = new Date('2005-01-01T00:00:00Z')
-      expect(actual.getTime()).toBe(expected.getTime())
+      expect(actual.toISOString()).toBe(expected.toISOString())
     })
 
     it('should subtract years', () => {
       const actual = addYears(new Date('2000-01-01T00:00:00Z'), -5, tzUtc)
       const expected = new Date('1995-01-01T00:00:00Z')
-      expect(actual.getTime()).toBe(expected.getTime())
+      expect(actual.toISOString()).toBe(expected.toISOString())
     })
   })
 
@@ -19,7 +19,7 @@ describe('addYears', () => {
     it('should not years', () => {
       const actual = addYears(new Date('2000-01-01T00:00:00Z'), 0, tzUtc)
       const expected = new Date('2000-01-01T00:00:00Z')
-      expect(actual.getTime()).toBe(expected.getTime())
+      expect(actual.toISOString()).toBe(expected.toISOString())
     })
   })
 })

@@ -9,7 +9,7 @@ describe('addDuration', () => {
       tzUtc
     )
     const expected = new Date('2000-01-02T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should add a negative duration', () => {
@@ -20,6 +20,6 @@ describe('addDuration', () => {
       tzUtc
     )
     const expected = new Date('1999-12-31T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 })

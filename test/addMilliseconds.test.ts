@@ -8,7 +8,7 @@ describe('addMilliseconds', () => {
       tzUtc
     )
     const expected = new Date('2000-01-01T00:00:00.001Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 
   it('should subtract milliseconds', () => {
@@ -18,6 +18,6 @@ describe('addMilliseconds', () => {
       tzUtc
     )
     const expected = new Date('1999-12-31T23:59:59.999Z')
-    expect(actual.getTime()).toBe(expected.getTime())
+    expect(actual.toISOString()).toBe(expected.toISOString())
   })
 })

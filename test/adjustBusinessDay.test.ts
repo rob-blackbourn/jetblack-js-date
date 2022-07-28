@@ -31,8 +31,8 @@ describe('adjustBusinessDay', () => {
         true,
         cal,
         tzUtc
-      ).getTime()
-    ).toBe(janFirst.getTime())
+      ).toISOString()
+    ).toBe(janFirst.toISOString())
   })
 
   it('should adjust following', () => {
@@ -43,8 +43,8 @@ describe('adjustBusinessDay', () => {
         true,
         cal,
         tzUtc
-      ).getTime()
-    ).toBe(janSecond.getTime())
+      ).toISOString()
+    ).toBe(janSecond.toISOString())
   })
 
   it('should adjust preceding', () => {
