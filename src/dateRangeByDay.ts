@@ -8,8 +8,8 @@ import { startOfDay } from './startOfDay'
  *
  * ```js
  * const dates = dateRangeByDay(
- *   new Date('2000-01-01'),
- *   new Date('2000-01-10'),
+ *   new Date('2000-01-01T12:00:00Z'), // Sets to start of day.
+ *   new Date('2000-01-10T12:00:00Z'),
  *   1,
  *   tzUtc
  * )
