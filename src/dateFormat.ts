@@ -62,7 +62,7 @@ function getLocaleName(
   if (!localeName) {
     const monthIndex = type === 'month' ? index : 0
     const day = type === 'weekday' ? 1 + index : 1
-    const date = tzUtc.makeDate(1967, monthIndex, day)
+    const date = tzLocal.makeDate(1967, monthIndex, day)
     localeName = date.toLocaleString(locale, { [type]: style })
     localeCache[cacheName][type][style][index] = localeName
   }
