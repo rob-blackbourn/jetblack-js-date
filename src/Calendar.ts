@@ -1,3 +1,5 @@
+import { Timezone } from "./Timezone"
+
 /**
  * The base class for calendars.
  *
@@ -59,7 +61,8 @@ export abstract class Calendar {
    * Check if the date is a holiday.
    *
    * @param date The date.
+   * @param tz An optional timezone. Defaults to the local timezone.
    * @returns True if the date is a holiday, otherwise false.
    */
-  abstract isHoliday(date: Date): boolean
+  abstract isHoliday(date: Date, tz: Timezone): boolean
 }

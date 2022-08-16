@@ -21,15 +21,15 @@ export function nearestBusinessDay(
   cal: Calendar = calWeekends,
   tz: Timezone = tzLocal
 ): Date {
-  if (!cal.isHoliday(date)) {
+  if (!cal.isHoliday(date, tz)) {
     return date
   }
   let forwardDate = addDays(date, 1, tz)
   let backwardDate = addDays(date, -1, tz)
 
   while (true) {
-    const isForwardHoliday = cal.isHoliday(forwardDate)
-    const isBackwardHoliday = !cal.isHoliday(backwardDate)
+    const isForwardHoliday = cal.isHoliday(forwardDate, tz)
+    const isBackwardHoliday = !cal.isHoliday(backwardDate, tz)
     if (!isForwardHoliday && (preferForward || isBackwardHoliday)) {
       return forwardDate
     } else if (!isBackwardHoliday) {

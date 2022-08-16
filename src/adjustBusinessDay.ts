@@ -61,7 +61,7 @@ export function adjustBusinessDay(
   cal: Calendar = calWeekends,
   tz: Timezone = tzLocal
 ): Date {
-  if (convention === BusinessDayConvention.NONE || !cal.isHoliday(date)) {
+  if (convention === BusinessDayConvention.NONE || !cal.isHoliday(date, tz)) {
     return date
   } else if (convention === BusinessDayConvention.NEAREST) {
     return nearestBusinessDay(date, prefer_forward, cal, tz)

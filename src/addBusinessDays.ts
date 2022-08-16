@@ -37,7 +37,7 @@ export function addBusinessDays(
     date = addDays(date, sign, tz)
     count -= sign
 
-    while (cal.isHoliday(date)) {
+    while (cal.isHoliday(date, tz)) {
       date = addDays(date, sign, tz)
     }
   }

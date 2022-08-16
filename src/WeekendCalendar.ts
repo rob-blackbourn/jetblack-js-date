@@ -1,4 +1,6 @@
 import { Calendar } from './Calendar'
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 
 /**
  * A calendar where specific days of the week are considered holidays.
@@ -25,15 +27,16 @@ export class WeekendCalendar extends Calendar {
    * Check if the date is a weekend.
    *
    * @param date The date.
+   * @param tz An optional timezone. Defaults to the local timezone.
    * @returns True is the date is a weekend, otherwise false.
    */
-  isWeekend(date: Date): boolean {
-    const dayOfWeek = date.getDay()
+  isWeekend(date: Date, tz: Timezone = tzLocal): boolean {
+    const dayOfWeek = tz.weekday(date)
     return this.#weekends.some(x => x === dayOfWeek)
   }
 
-  isHoliday(date: Date): boolean {
-    return this.isWeekend(date)
+  isHoliday(date: Date, tz: Timezone = tzLocal): boolean {
+    return this.isWeekend(date, tz)
   }
 }
 
