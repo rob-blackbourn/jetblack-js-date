@@ -18,9 +18,9 @@ import { Timezone } from './Timezone'
  */
 export function isoWeekDate(date: Date, tz: Timezone = tzLocal) {
   const dayAdjust = 4 - (tz.weekday(date) || 7)
-  const nearestThursday = addDays(date, dayAdjust)
+  const nearestThursday = addDays(date, dayAdjust, tz)
   const isoYear = tz.year(nearestThursday)
-  const yearStart = startOfYear(nearestThursday)
+  const yearStart = startOfYear(nearestThursday, tz)
   const daysToThursday = diffInCalDays(nearestThursday, yearStart, tz)
   const isoWeek = Math.ceil((daysToThursday + 1) / 7)
   const isoDay = 1 + ((10 - dayAdjust) % 7)
