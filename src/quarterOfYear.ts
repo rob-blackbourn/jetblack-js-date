@@ -16,5 +16,5 @@ import { Timezone } from './Timezone'
  * @returns The quarter of the year.
  */
 export function quarterOfYear(date: Date, tz: Timezone = tzLocal): number {
-  return Math.floor((date.getMonth() + 3) / 3)
+  return Math.floor((tz.monthIndex(date) + 3) / 3)
 }

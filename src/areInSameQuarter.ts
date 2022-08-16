@@ -24,5 +24,5 @@ export function areInSameQuarter(
   second: Date,
   tz: Timezone = tzLocal
 ): boolean {
-  return quarterOfYear(first) === quarterOfYear(second)
+  return quarterOfYear(first, tz) === quarterOfYear(second, tz)
 }
