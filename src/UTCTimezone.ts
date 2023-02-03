@@ -9,7 +9,7 @@ class UtcTimezone extends Timezone {
   makeDate(
     year: number,
     monthIndex: number,
-    day: number = 0,
+    day: number = 1,
     hours: number = 0,
     minutes: number = 0,
     seconds: number = 0,
