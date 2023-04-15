@@ -2,7 +2,7 @@
 
 Daylight savings time (DST) presents an issue for date arithmetic.
 
-The following example adds three days to the Saturday before the clocks
+The following example adds two days to the Saturday before the clocks
 change using the local timezone (London) and UTC (which does not have DST).
 
 ```js
