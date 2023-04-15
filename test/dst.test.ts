@@ -1,9 +1,4 @@
-import {
-  IANATimezone,
-  addHours,
-  addMinutes,
-  dataToTimezoneOffset
-} from '../src'
+import { IANATimezone, addMinutes, dataToTimezoneOffset } from '../src'
 import londonTzData from '@jetblack/tzdata/dist/latest/Europe/London.json'
 
 describe('dst', () => {
