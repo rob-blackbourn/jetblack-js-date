@@ -1,9 +1,4 @@
-import {
-  IANATimezone,
-  addHours,
-  addMinutes,
-  dataToTimezoneOffset
-} from '../src'
+import { IANATimezone, addMinutes, dataToTimezoneOffset } from '../src'
 import londonTzData from '@jetblack/tzdata/dist/latest/Europe/London.json'
 
 describe('dst', () => {
@@ -15,17 +10,25 @@ describe('dst', () => {
   )
 
   it('should know daylight savings', () => {
-    expect(tzLondon.isDaylightSavings(new Date('2000-03-26'))).toBeFalsy()
-    expect(tzLondon.isDaylightSavings(new Date('2000-03-27'))).toBeTruthy()
-    expect(tzLondon.isDaylightSavings(new Date('2000-10-29'))).toBeTruthy()
-    expect(tzLondon.isDaylightSavings(new Date('2000-10-30'))).toBeFalsy()
+    expect(
+      tzLondon.isDaylightSavings(new Date('2000-03-26T00:59:59Z'))
+    ).toBeFalsy()
+    expect(
+      tzLondon.isDaylightSavings(new Date('2000-03-26T01:00:00Z'))
+    ).toBeTruthy()
+    expect(
+      tzLondon.isDaylightSavings(new Date('2000-10-29T00:59:59Z'))
+    ).toBeTruthy()
+    expect(
+      tzLondon.isDaylightSavings(new Date('2000-10-29T01:00:00Z'))
+    ).toBeFalsy()
   })
 
   it('should know offset', () => {
-    expect(tzLondon.offset(new Date('2000-03-26'))).toBe(0)
-    expect(tzLondon.offset(new Date('2000-03-27'))).toBe(60)
-    expect(tzLondon.offset(new Date('2000-10-29'))).toBe(60)
-    expect(tzLondon.offset(new Date('2000-10-30'))).toBe(0)
+    expect(tzLondon.offset(new Date('2000-03-26T00:59:59Z'))).toBe(0)
+    expect(tzLondon.offset(new Date('2000-03-26T01:00:00Z'))).toBe(60)
+    expect(tzLondon.offset(new Date('2000-10-29T00:59:59Z'))).toBe(60)
+    expect(tzLondon.offset(new Date('2000-10-29T01:00:00Z'))).toBe(0)
   })
 
   it('should show time', () => {
