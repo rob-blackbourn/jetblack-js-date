@@ -1,6 +1,4 @@
 import { startOfHour } from './startOfHour'
-import { Timezone } from './Timezone'
-import { tzLocal } from './LocalTimezone'
 import { addHours } from './addHours'
 
 /**
@@ -11,17 +9,15 @@ import { addHours } from './addHours'
  * @param startDate The start date.
  * @param endDate The end date.
  * @param step The hour step count.
- * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The range of dates separated by step hours from the start to the end hour.
  */
 export function dateRangeByHour(
   startDate: Date,
   endDate: Date,
-  step: number = 1,
-  tz: Timezone = tzLocal
+  step: number = 1
 ): Date[] {
-  const endTime = startOfHour(endDate, tz).getTime()
-  let date = startOfHour(startDate, tz)
+  const endTime = startOfHour(endDate).getTime()
+  let date = startOfHour(startDate)
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)

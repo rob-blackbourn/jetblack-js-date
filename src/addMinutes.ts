@@ -1,3 +1,5 @@
+import { MILLISECONDS_IN_MINUTE } from './constants'
+
 /**
  * Adds minutes to a date (or subtracts if negative).
  *
@@ -14,5 +16,5 @@
  * @returns A new date adjusted by the number of minutes.
  */
 export function addMinutes(date: Date, numberOfMinutes: number): Date {
-  return new Date(date.getTime() + numberOfMinutes * 60 * 1000)
+  return new Date(date.getTime() + numberOfMinutes * MILLISECONDS_IN_MINUTE)
 }

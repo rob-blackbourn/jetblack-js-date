@@ -1,8 +1,7 @@
 import { tzLocal } from './LocalTimezone'
 import { startOfYear } from './startOfYear'
 import { Timezone } from './Timezone'
-
-const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000
+import { MILLISECONDS_IN_DAY } from './constants'
 
 /**
  * Find the week of the year for a given date.

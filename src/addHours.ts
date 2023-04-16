@@ -1,3 +1,5 @@
+import { MILLISECONDS_IN_HOUR } from './constants'
+
 /**
  * Add hours to a date (or subtract if negative).
  *
@@ -21,5 +23,5 @@
  * @returns A new date adjusted by the number of hours.
  */
 export function addHours(date: Date, numberOfHours: number): Date {
-  return new Date(date.getTime() + numberOfHours * 60 * 60 * 1000)
+  return new Date(date.getTime() + numberOfHours * MILLISECONDS_IN_HOUR)
 }
