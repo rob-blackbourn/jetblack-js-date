@@ -52,12 +52,10 @@ describe('dst', () => {
     expect(tzLondon.toISOString(almostMidnight)).toBe(
       '2000-03-25T23:59:00+00:00'
     )
-    expect(tzLondon.toISOString(addMinutes(almostMidnight, 60, tzLondon))).toBe(
+    expect(tzLondon.toISOString(addMinutes(almostMidnight, 60))).toBe(
       '2000-03-26T00:59:00+00:00' // no change till 1am.
     )
-    expect(
-      tzLondon.toISOString(addMinutes(almostMidnight, 60 * 2 + 1, tzLondon))
-    ).toBe(
+    expect(tzLondon.toISOString(addMinutes(almostMidnight, 60 + 1))).toBe(
       '2000-03-26T02:00:00+01:00' // skip 1am for 2am+01:00
     )
   })
@@ -67,17 +65,14 @@ describe('dst', () => {
     expect(tzLondon.toISOString(almostMidnight)).toBe(
       '2000-10-28T23:59:00+01:00'
     )
-    expect(tzLondon.toISOString(addMinutes(almostMidnight, 1, tzLondon))).toBe(
+    expect(tzLondon.toISOString(addMinutes(almostMidnight, 1))).toBe(
       '2000-10-29T00:00:00+01:00'
     )
-    expect(tzLondon.toISOString(addMinutes(almostMidnight, 61, tzLondon))).toBe(
-      '2000-10-29T01:00:00+00:00'
+    expect(tzLondon.toISOString(addMinutes(almostMidnight, 61))).toBe(
+      '2000-10-29T01:00:00+01:00'
     )
-    expect(tzLondon.toISOString(addMinutes(almostMidnight, 90, tzLondon))).toBe(
-      '2000-10-29T01:29:00+00:00'
+    expect(tzLondon.toISOString(addMinutes(almostMidnight, 90))).toBe(
+      '2000-10-29T01:29:00+01:00'
     )
-    expect(
-      tzLondon.toISOString(addMinutes(almostMidnight, 2 * 60 + 1, tzLondon))
-    ).toBe('2000-10-29T02:00:00+00:00')
   })
 })

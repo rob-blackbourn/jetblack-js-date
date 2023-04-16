@@ -2,7 +2,6 @@ import { Timezone } from './Timezone'
 import { DatePartRequest, DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
-import { addMinutes } from './addMinutes'
 
 /**
  * A line from the tzdata database.

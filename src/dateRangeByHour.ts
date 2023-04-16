@@ -25,7 +25,7 @@ export function dateRangeByHour(
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addHours(date, step, tz)
+    date = addHours(date, step)
   }
   return dates
 }

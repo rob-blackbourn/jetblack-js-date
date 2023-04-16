@@ -25,7 +25,7 @@ export function dateRangeByMinute(
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addMinutes(date, step, tz)
+    date = addMinutes(date, step)
   }
   return dates
 }

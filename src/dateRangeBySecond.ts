@@ -25,7 +25,7 @@ export function dateRangeBySecond(
   const dates = []
   while (date.getTime() <= endTime) {
     dates.push(date)
-    date = addSeconds(date, step, tz)
+    date = addSeconds(date, step)
   }
   return dates
 }
