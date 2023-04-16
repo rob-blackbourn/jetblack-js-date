@@ -1,5 +1,4 @@
-import { tzLocal } from './LocalTimezone'
-import { Timezone } from './Timezone'
+import { MILLISECONDS_IN_MINUTE } from './constants'
 
 /**
  * Find the start of the minute.
@@ -7,16 +6,10 @@ import { Timezone } from './Timezone'
  * @category Anchors
  *
  * @param date The date.
- * @param tz An optional timezone. Defaults to the local timezone.
  * @returns The start of the minute.
  */
-export function startOfMinute(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex, day, hours, minutes } = tz.dateParts(date, {
-    year: true,
-    monthIndex: true,
-    day: true,
-    hours: true,
-    minutes: true
-  })
-  return tz.makeDate(year, monthIndex, day, hours, minutes)
+export function startOfMinute(date: Date): Date {
+  return new Date(
+    Math.trunc(date.getTime() / MILLISECONDS_IN_MINUTE) * MILLISECONDS_IN_MINUTE
+  )
 }

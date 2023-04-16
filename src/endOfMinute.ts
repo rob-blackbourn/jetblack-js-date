@@ -1,5 +1,4 @@
-import { tzLocal } from './LocalTimezone'
-import { Timezone } from './Timezone'
+import { MILLISECONDS_IN_MINUTE } from './constants'
 
 /**
  * Return the end of the minute for the given date.
@@ -14,16 +13,13 @@ import { Timezone } from './Timezone'
  * @category Anchors
  *
  * @param date The start date.
- * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date which is the end of the minute.
  */
-export function endOfMinute(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex, day, hours, minutes } = tz.dateParts(date, {
-    year: true,
-    monthIndex: true,
-    day: true,
-    hours: true,
-    minutes: true
-  })
-  return tz.makeDate(year, monthIndex, day, hours, minutes, 59, 999)
+export function endOfMinute(date: Date): Date {
+  return new Date(
+    Math.trunc(date.getTime() / MILLISECONDS_IN_MINUTE) *
+      MILLISECONDS_IN_MINUTE +
+      MILLISECONDS_IN_MINUTE -
+      1
+  )
 }

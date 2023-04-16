@@ -1,5 +1,4 @@
-import { tzLocal } from './LocalTimezone'
-import { Timezone } from './Timezone'
+import { MILLISECONDS_IN_SECOND } from './constants'
 
 /**
  * Return the end of the second for the given date.
@@ -14,20 +13,13 @@ import { Timezone } from './Timezone'
  * @category Anchors
  *
  * @param date The start date.
- * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date which is the end of the second.
  */
-export function endOfSecond(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex, day, hours, minutes, seconds } = tz.dateParts(
-    date,
-    {
-      year: true,
-      monthIndex: true,
-      day: true,
-      hours: true,
-      minutes: true,
-      seconds: true
-    }
+export function endOfSecond(date: Date): Date {
+  return new Date(
+    Math.trunc(date.getTime() / MILLISECONDS_IN_SECOND) *
+      MILLISECONDS_IN_SECOND +
+      MILLISECONDS_IN_SECOND -
+      1
   )
-  return tz.makeDate(year, monthIndex, day, hours, minutes, seconds, 999)
 }

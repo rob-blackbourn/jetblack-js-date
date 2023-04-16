@@ -1,8 +1,8 @@
+import { MILLISECONDS_IN_MINUTE } from './constants'
 import { Timezone } from './Timezone'
 import { DatePartRequest, DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
-import { addMinutes } from './addMinutes'
 
 /**
  * A line from the tzdata database.
@@ -58,13 +58,17 @@ export class IANATimezone extends Timezone {
 
   #fromLocal(localDate: Date): Date {
     const delta = this.#findOffset(localDate)
-    const utcDate = new Date(localDate.getTime() - delta.offset * 60 * 1000)
+    const utcDate = new Date(
+      localDate.getTime() - delta.offset * MILLISECONDS_IN_MINUTE
+    )
     return utcDate
   }
 
   #toLocal(utcDate: Date): Date {
     const delta = this.#findOffset(utcDate)
-    const localDate = new Date(utcDate.getTime() + delta.offset * 60 * 1000)
+    const localDate = new Date(
+      utcDate.getTime() + delta.offset * MILLISECONDS_IN_MINUTE
+    )
     return localDate
   }
 

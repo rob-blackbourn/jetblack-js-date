@@ -12,7 +12,6 @@ import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
-import { tzUtc } from './UTCTimezone'
 
 /** @internal  */
 const token =
