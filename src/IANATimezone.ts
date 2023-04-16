@@ -56,6 +56,18 @@ export class IANATimezone extends Timezone {
     return lo
   }
 
+  #fromLocal(localDate: Date): Date {
+    const delta = this.#findOffset(localDate)
+    const utcDate = new Date(localDate.getTime() - delta.offset * 60 * 1000)
+    return utcDate
+  }
+
+  #toLocal(utcDate: Date): Date {
+    const delta = this.#findOffset(utcDate)
+    const localDate = new Date(utcDate.getTime() + delta.offset * 60 * 1000)
+    return localDate
+  }
+
   makeDate(
     year: number,
     monthIndex: number,
@@ -74,14 +86,11 @@ export class IANATimezone extends Timezone {
       seconds,
       milliseconds
     )
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, -delta.offset)
-    return local
+    return this.#fromLocal(date)
   }
 
   dateParts(date: Date, request: DatePartRequest): DatePartResponse {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.dateParts(local, request)
   }
 
@@ -91,50 +100,42 @@ export class IANATimezone extends Timezone {
   }
 
   year(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.year(local)
   }
 
   monthIndex(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.monthIndex(local)
   }
 
   weekday(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.weekday(local)
   }
 
   day(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.day(local)
   }
 
   hours(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.hours(local)
   }
 
   minutes(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.minutes(local)
   }
 
   seconds(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.seconds(local)
   }
 
   milliseconds(date: Date): number {
-    const delta = this.#findOffset(date)
-    const local = addMinutes(date, delta.offset)
+    const local = this.#toLocal(date)
     return tzUtc.milliseconds(local)
   }
 
