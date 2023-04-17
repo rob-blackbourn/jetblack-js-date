@@ -34,5 +34,15 @@ describe('diffInCalDays', () => {
       const expected = 153
       expect(actual).toBe(expected)
     })
+
+    it('should handle dst', () => {
+      const actual = diffInCalDays(
+        tzChicago.makeDate(2000, 3, 2),
+        tzChicago.makeDate(2000, 2, 31, 23),
+        tzChicago
+      )
+      const expected = 2
+      expect(actual).toBe(expected)
+    })
   })
 })

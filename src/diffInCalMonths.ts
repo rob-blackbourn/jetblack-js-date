@@ -1,5 +1,7 @@
 import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
+import { startOfDay } from './startOfDay'
+import { tzUtc } from './UTCTimezone'
 
 /**
  * Find the number of whole months between two dates.
@@ -16,8 +18,11 @@ export function diffInCalMonths(
   rightDate: Date,
   tz: Timezone = tzLocal
 ): number {
-  const yearDiff = tz.year(leftDate) - tz.year(rightDate)
-  const monthDiff = tz.monthIndex(leftDate) - tz.monthIndex(rightDate)
+  const lhs = tz.as(startOfDay(leftDate, tz), tzUtc)
+  const rhs = tz.as(startOfDay(rightDate, tz), tzUtc)
+  const yearDiff = tz.year(lhs) - tz.year(rhs)
+  const monthDiff = tz.monthIndex(lhs) - tz.monthIndex(rhs)
+  const dayDiff = tz.day(lhs) - tz.day(rhs)
 
-  return yearDiff * 12 + monthDiff
+  return yearDiff * 12 + monthDiff - (dayDiff < 0 ? 1 : 0)
 }
