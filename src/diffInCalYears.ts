@@ -1,5 +1,6 @@
 import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
+import { diffInCalMonths } from './diffInCalMonths'
 
 /**
  * Find the number of whole years between two dates.
@@ -16,5 +17,5 @@ export function diffInCalYears(
   rightDate: Date,
   tz: Timezone = tzLocal
 ): number {
-  return tz.year(leftDate) - tz.year(rightDate)
+  return Math.trunc(diffInCalMonths(leftDate, rightDate, tz) / 12)
 }
