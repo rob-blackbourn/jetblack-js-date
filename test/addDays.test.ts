@@ -1,15 +1,38 @@
-import { addDays, tzUtc } from '../src'
+import {
+  IANATimezone,
+  addDays,
+  dataToTimezoneOffset,
+  tzLocal,
+  tzUtc
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('addDays', () => {
-  it('should add days', () => {
-    const actual = addDays(new Date('2000-01-01T00:00:00Z'), 40, tzUtc)
-    const expected = new Date('2000-02-10T00:00:00Z')
-    expect(actual.toISOString()).toBe(expected.toISOString())
-  })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
 
-  it('should subtract days', () => {
-    const actual = addDays(new Date('2000-01-01T00:00:00Z'), -40, tzUtc)
-    const expected = new Date('1999-11-22T00:00:00Z')
-    expect(actual.toISOString()).toBe(expected.toISOString())
-  })
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      it('should add days', () => {
+        const date = tz.makeDate(2000, 0, 1)
+        const actual = addDays(date, 40, tz)
+        const expected = tz.makeDate(2000, 1, 10)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+
+      it('should subtract days', () => {
+        const date = tz.makeDate(2000, 0, 1)
+        const actual = addDays(date, -40, tz)
+        const expected = tz.makeDate(1999, 10, 22)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+    })
+  }
 })
