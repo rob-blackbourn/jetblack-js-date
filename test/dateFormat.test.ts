@@ -1,4 +1,4 @@
-import { dateFormat, tzUtc, tzLocal } from '../src'
+import { dateFormat, tzUtc } from '../src'
 
 describe('dateFormat', () => {
   it('should pass smoke test for en', () => {

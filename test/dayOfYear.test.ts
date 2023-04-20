@@ -6,34 +6,27 @@ import {
   tzUtc
 } from '../src'
 import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('dayOfYear', () => {
-  describe('tzUtc', () => {
-    it('returns the local week of year of the given date', () => {
-      const date = tzUtc.makeDate(2000, 4, 1)
-      const result = dayOfYear(date, tzUtc)
-      expect(result).toBe(122)
-    })
-  })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
 
-  describe('tzLocal', () => {
-    it('returns the local week of year of the given date', () => {
-      const date = tzLocal.makeDate(2000, 4, 1)
-      const result = dayOfYear(date, tzLocal)
-      expect(result).toBe(122)
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      describe('tzUtc', () => {
+        it('returns the local week of year of the given date', () => {
+          const date = tz.makeDate(2000, 4, 1)
+          const result = dayOfYear(date, tz)
+          expect(result).toBe(122)
+        })
+      })
     })
-  })
-
-  describe('tzChicago', () => {
-    const tzChicago = new IANATimezone(
-      'America/Chicago',
-      chicagoTzData.map(dataToTimezoneOffset)
-    )
-
-    it('returns the local week of year of the given date', () => {
-      const date = tzChicago.makeDate(2000, 4, 1)
-      const result = dayOfYear(date, tzChicago)
-      expect(result).toBe(122)
-    })
-  })
+  }
 })
