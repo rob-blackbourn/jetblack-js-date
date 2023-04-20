@@ -1,9 +1,31 @@
-import { endOfMonth, tzUtc } from '../src'
+import {
+  IANATimezone,
+  dataToTimezoneOffset,
+  endOfMonth,
+  tzLocal,
+  tzUtc
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('endOfMonth', () => {
-  it('should find the last moment of the month', () => {
-    const actual = endOfMonth(new Date('2000-01-01T00:00:00Z'), tzUtc)
-    const expected = new Date('2000-01-31T23:59:59.999Z')
-    expect(actual.toISOString()).toBe(expected.toISOString())
-  })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
+
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      it('should find the last moment of the month', () => {
+        const date = tz.makeDate(2000, 0, 1)
+        const actual = endOfMonth(date, tz)
+        const expected = tz.makeDate(2000, 0, 31, 23, 59, 59, 999)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+    })
+  }
 })
