@@ -1,10 +1,10 @@
-import { IANATimezone, dataToTimezoneOffset, tzUtc, tzLocal } from '../src'
+import { IANATimezone, dataToTimezoneOffset, tzLocal, tzUtc } from '../src'
 import brusselsTzData from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
 
 describe('timezone', () => {
-  describe("tzLocal", () => {
-    it("should make a date with a year and month", () => {
+  describe('tzLocal', () => {
+    it('should make a date with a year and month', () => {
       const jan1 = tzLocal.makeDate(2000, 0)
       expect(tzLocal.year(jan1)).toBe(2000)
       expect(tzLocal.monthIndex(jan1)).toBe(0)
@@ -15,9 +15,9 @@ describe('timezone', () => {
       expect(tzLocal.milliseconds(jan1)).toBe(0)
     })
   })
-  
-  describe("tzUtc", () => {
-    it("should make a date with a year and month", () => {
+
+  describe('tzUtc', () => {
+    it('should make a date with a year and month', () => {
       const jan1 = tzUtc.makeDate(2000, 0)
       expect(tzUtc.year(jan1)).toBe(2000)
       expect(tzUtc.monthIndex(jan1)).toBe(0)
@@ -28,7 +28,7 @@ describe('timezone', () => {
       expect(tzUtc.milliseconds(jan1)).toBe(0)
     })
   })
-  
+
   describe('Europe/Brussels', () => {
     const tzBrussels = new IANATimezone(
       'Europe/Brussels',

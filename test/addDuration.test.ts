@@ -1,6 +1,6 @@
 import {
-  IANATimezone,
   Duration,
+  IANATimezone,
   addDuration,
   dataToTimezoneOffset,
   tzLocal,

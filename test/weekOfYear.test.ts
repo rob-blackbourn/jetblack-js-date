@@ -1,9 +1,9 @@
 import {
   IANATimezone,
   dataToTimezoneOffset,
-  weekOfYear,
   tzLocal,
-  tzUtc
+  tzUtc,
+  weekOfYear
 } from '../src'
 import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
 import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
