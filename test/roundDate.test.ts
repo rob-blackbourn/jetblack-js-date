@@ -1,21 +1,45 @@
-import { roundDate, tzUtc } from '../src'
+import {
+  IANATimezone,
+  dataToTimezoneOffset,
+  roundDate,
+  tzLocal,
+  tzUtc
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('roundDate', () => {
-  it('should round down', () => {
-    const date = new Date('2020-01-01T11:59:59.999Z')
-    const expected = new Date('2020-01-01T00:00:00Z')
-    expect(roundDate(date, tzUtc).getTime()).toBe(expected.getTime())
-  })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
 
-  it('should round up', () => {
-    const date = new Date('2020-01-01T12:00:00Z')
-    const expected = new Date('2020-01-02T00:00:00Z')
-    expect(roundDate(date, tzUtc).getTime()).toBe(expected.getTime())
-  })
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      it('should round down', () => {
+        const date = tz.makeDate(2020, 0, 1, 11, 59, 59, 999)
+        const actual = roundDate(date, tz)
+        const expected = tz.makeDate(2020, 0, 1)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
 
-  it('should not change', () => {
-    const date = new Date('2020-01-01T00:00:00Z')
-    const expected = new Date('2020-01-01T00:00:00Z')
-    expect(roundDate(date, tzUtc).getTime()).toBe(expected.getTime())
-  })
+      it('should round up', () => {
+        const date = tz.makeDate(2020, 0, 1, 12, 0, 0, 0)
+        const actual = roundDate(date, tz)
+        const expected = tz.makeDate(2020, 0, 2)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+
+      it('should not change', () => {
+        const date = tz.makeDate(2020, 0, 1, 0, 0, 0, 0)
+        const actual = roundDate(date, tz)
+        const expected = tz.makeDate(2020, 0, 1)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+    })
+  }
 })
