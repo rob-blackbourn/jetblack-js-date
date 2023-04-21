@@ -1,4 +1,4 @@
-import { addSeconds, tzUtc } from '../src'
+import { addSeconds } from '../src'
 
 describe('addSeconds', () => {
   it('should add seconds', () => {

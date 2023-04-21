@@ -14,5 +14,5 @@ export function findLastEndOfMonthIndex(
   dates: Date[],
   tz: Timezone = tzLocal
 ): number {
-  return findLastIndex(dates, date => isEndOfMonth(date))
+  return findLastIndex(dates, date => isEndOfMonth(date, tz))
 }

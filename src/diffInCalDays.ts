@@ -2,9 +2,10 @@ import { Timezone } from './Timezone'
 import { tzLocal } from './LocalTimezone'
 import { diffInDays } from './diffInDays'
 import { tzUtc } from './UTCTimezone'
+import { startOfDay } from './startOfDay'
 
 /**
- * Find the number of whole days between two dates.
+ * Find the number of whole days between two dates, discarding any time component.
  *
  * ```js
  * const days1 = diffInCalDays(
@@ -37,8 +38,8 @@ export function diffInCalDays(
   rightDate: Date,
   tz: Timezone = tzLocal
 ) {
-  const lhs = tz.as(leftDate, tzUtc)
-  const rhs = tz.as(rightDate, tzUtc)
+  const lhs = tz.as(startOfDay(leftDate, tz), tzUtc)
+  const rhs = tz.as(startOfDay(rightDate, tz), tzUtc)
 
   return Math.floor(diffInDays(lhs, rhs))
 }

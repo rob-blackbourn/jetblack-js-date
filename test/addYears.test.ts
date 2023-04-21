@@ -1,25 +1,49 @@
-import { addYears, tzUtc } from '../src'
+import {
+  IANATimezone,
+  addYears,
+  dataToTimezoneOffset,
+  tzLocal,
+  tzUtc
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('addYears', () => {
-  describe('basic', () => {
-    it('should add years', () => {
-      const actual = addYears(new Date('2000-01-01T00:00:00Z'), 5, tzUtc)
-      const expected = new Date('2005-01-01T00:00:00Z')
-      expect(actual.toISOString()).toBe(expected.toISOString())
-    })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
 
-    it('should subtract years', () => {
-      const actual = addYears(new Date('2000-01-01T00:00:00Z'), -5, tzUtc)
-      const expected = new Date('1995-01-01T00:00:00Z')
-      expect(actual.toISOString()).toBe(expected.toISOString())
-    })
-  })
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      describe('basic', () => {
+        it('should add years', () => {
+          const date = tz.makeDate(2000, 0, 1)
+          const actual = addYears(date, 5, tz)
+          const expected = tz.makeDate(2005, 0, 1)
+          expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+        })
 
-  describe('edge cases', () => {
-    it('should not years', () => {
-      const actual = addYears(new Date('2000-01-01T00:00:00Z'), 0, tzUtc)
-      const expected = new Date('2000-01-01T00:00:00Z')
-      expect(actual.toISOString()).toBe(expected.toISOString())
+        it('should subtract years', () => {
+          const date = tz.makeDate(2000, 0, 1)
+          const actual = addYears(date, -5, tz)
+          const expected = tz.makeDate(1995, 0, 1)
+          expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+        })
+      })
+
+      describe('edge cases', () => {
+        it('should not years', () => {
+          const date = tz.makeDate(2000, 0, 1)
+          const actual = addYears(date, 0, tz)
+          const expected = tz.makeDate(2000, 0, 1)
+          expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+        })
+      })
     })
-  })
+  }
 })

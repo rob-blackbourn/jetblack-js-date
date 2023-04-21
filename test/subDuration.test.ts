@@ -1,25 +1,39 @@
-import { Duration, subDuration, tzUtc } from '../src'
+import {
+  IANATimezone,
+  dataToTimezoneOffset,
+  Duration,
+  subDuration,
+  tzLocal,
+  tzUtc
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('subDuration', () => {
-  it('should subtract duration', () => {
-    const duration = new Duration('P1D')
-    const actual = subDuration(
-      new Date('2000-01-01T00:00:00Z'),
-      duration,
-      tzUtc
-    )
-    const expected = new Date('1999-12-31T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
-  })
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
 
-  it('should subtract a negative duration', () => {
-    const duration = new Duration('-P1D')
-    const actual = subDuration(
-      new Date('2000-01-01T00:00:00Z'),
-      duration,
-      tzUtc
-    )
-    const expected = new Date('2000-01-02T00:00:00Z')
-    expect(actual.getTime()).toBe(expected.getTime())
-  })
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      it('should subtract duration', () => {
+        const duration = new Duration('P1D')
+        const actual = subDuration(tz.makeDate(2000, 0, 1), duration, tz)
+        const expected = tz.makeDate(1999, 11, 31)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+
+      it('should subtract a negative duration', () => {
+        const duration = new Duration('-P1D')
+        const actual = subDuration(tz.makeDate(2000, 0, 1), duration, tz)
+        const expected = tz.makeDate(2000, 0, 2)
+        expect(tz.toISOString(actual)).toBe(tz.toISOString(expected))
+      })
+    })
+  }
 })

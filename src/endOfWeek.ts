@@ -4,7 +4,9 @@ import { endOfDay } from './endOfDay'
 import { Timezone } from './Timezone'
 
 /**
- * Find the end of the week for a given date.
+ * Find the last moment of the week for a given date.
+ *
+ * Weeks start on Sunday and end on Saturday.
  *
  * ```js
  * const days1 = endOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)
