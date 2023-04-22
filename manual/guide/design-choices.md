@@ -23,4 +23,4 @@ The [[addDays]] function has no complimentary `subDays` function, as this can
 be achieved by making the `days` argument negative.
 ## What next ?
 
-{@page ./date-arithmetic.md}
+{@page ./calculations.md}

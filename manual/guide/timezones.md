@@ -44,17 +44,17 @@ Europe/Brussels timezone.
 
 ```js
 import { IANATimezone, dataToTimezoneOffset } from '@jetblack/date'
-import BRUSSELS_TZDATA from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
+import tzdataBrussels from '@jetblack/tzdata/dist/latest/Europe/Brussels.json'
 
 const tzBrussels = new IANATimezone(
   'Europe/Brussels',
-  BRUSSELS_TZDATA.map(dataToTimezoneOffset)
+  tzdataBrussels.map(dataToTimezoneOffset)
 )
 
 let jan1 = tzBrussels.makeDate(2000, 0, 1)
 
 // Equivalent to adding the offset to UTC of one hour on 2000-01-01.
-jan1 = new Date(Date.UTC(2000, 0, 1) + 60 * 60 * 1000)
+jan1 = new Date(Date.UTC(2000, 0, 1) + 1 * 60 * 60 * 1000)
 ```
 
 ## Other Methods
