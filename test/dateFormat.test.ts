@@ -43,6 +43,27 @@ describe('dateFormat', () => {
     ).toBe('Tuesday')
   })
 
+  it('should pluralize', () => {
+    expect(
+      dateFormat(new Date('2001-01-01T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('1st')
+    expect(
+      dateFormat(new Date('2001-01-02T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('2nd')
+    expect(
+      dateFormat(new Date('2001-01-03T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('3rd')
+    expect(
+      dateFormat(new Date('2001-01-04T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('4th')
+    expect(
+      dateFormat(new Date('2001-01-22T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('22nd')
+    expect(
+      dateFormat(new Date('2001-01-31T00:00:00Z'), 'DD', tzUtc, 'en')
+    ).toBe('31st')
+  })
+
   it('should pad m when necessary', () => {
     expect(dateFormat(new Date('2001-09-09T00:00:00Z'), 'm', tzUtc, 'en')).toBe(
       '9'

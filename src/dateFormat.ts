@@ -11,11 +11,12 @@
 import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
+import { LocaleInfo, NameStyle } from './LocaleInfo'
 import { Timezone } from './Timezone'
 
 /** @internal  */
 const token =
-  /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMSTt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
+  /d{1,4}|D{2,4}|m{1,4}|yy(?:yy)?|([HhMSt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
 
 /** @internal */
 const getDayOfWeek = (date: Date, tz: Timezone): number => {
@@ -24,49 +25,20 @@ const getDayOfWeek = (date: Date, tz: Timezone): number => {
 }
 
 /** @internal  */
-interface LocaleNames {
-  weekday: { short: Array<string | undefined>; long: Array<string | undefined> }
-  month: { short: Array<string | undefined>; long: Array<string | undefined> }
-}
-/** @internal  */
-type LocaleOptionName = 'weekday' | 'month'
-/** @internal  */
-type LocaleOptionValue = 'short' | 'long'
+const localeCache: { [locale: string]: LocaleInfo } = {}
 
 /** @internal  */
-const localeCache: { [locale: string]: LocaleNames } = {}
-
-/** @internal  */
-function getLocaleName(
-  index: number,
-  type: LocaleOptionName,
-  style: LocaleOptionValue,
-  locale: string | undefined
-): string {
-  const cacheName = !locale ? 'default' : locale
-
-  if (!(cacheName in localeCache)) {
-    localeCache[cacheName] = {
-      weekday: {
-        short: Array(7).fill(undefined),
-        long: Array(7).fill(undefined)
-      },
-      month: {
-        short: Array(7).fill(undefined),
-        long: Array(7).fill(undefined)
-      }
+function getLocaleInfo(locale: LocaleInfo | string | undefined): LocaleInfo {
+  if (locale === undefined) {
+    locale = 'default'
+  }
+  if (typeof locale === 'string') {
+    if (!(locale in localeCache)) {
+      localeCache[locale] = new LocaleInfo(locale)
     }
+    locale = localeCache[locale]
   }
-  let localeName = localeCache[cacheName][type][style][index]
-  if (!localeName) {
-    const monthIndex = type === 'month' ? index : 0
-    const day = type === 'weekday' ? 1 + index : 1
-    const date = tzLocal.makeDate(1967, monthIndex, day)
-    localeName = date.toLocaleString(locale, { [type]: style })
-    localeCache[cacheName][type][style][index] = localeName
-  }
-
-  return localeName
+  return locale
 }
 
 /**
@@ -174,34 +146,37 @@ export function dateFormat(
   date: Date,
   pattern: string = "yyyy-mm-dd'T'HH:MM:SSo",
   tz: Timezone = tzLocal,
-  locale: string | undefined = undefined
+  locale: LocaleInfo | string | undefined = undefined
 ) {
+  const localInfo = getLocaleInfo(locale)
+
   const flags: { [key: string]: () => any } = {
     d: () => tz.day(date),
     dd: () => String(tz.day(date)).padStart(2, '0'),
-    ddd: () => getLocaleName(tz.weekday(date), 'weekday', 'short', locale),
+    ddd: () => localInfo.weekday.short[tz.weekday(date)],
+    DD: () => localInfo.dayPlurals[tz.day(date) - 1],
     DDD: () =>
       getDayName({
         y: tz.year(date),
         m: tz.monthIndex(date),
         d: tz.day(date),
         tz: tz,
-        dayName: getLocaleName(tz.weekday(date), 'weekday', 'short', locale),
+        dayName: localInfo.weekday.short[tz.weekday(date)],
         short: true
       }),
-    dddd: () => getLocaleName(tz.weekday(date), 'weekday', 'long', locale),
+    dddd: () => localInfo.weekday.long[tz.weekday(date)],
     DDDD: () =>
       getDayName({
         y: tz.year(date),
         m: tz.monthIndex(date),
         d: tz.day(date),
         tz: tz,
-        dayName: getLocaleName(tz.weekday(date), 'weekday', 'long', locale)
+        dayName: localInfo.weekday.long[tz.weekday(date)]
       }),
     m: () => tz.monthIndex(date) + 1,
     mm: () => String(tz.monthIndex(date) + 1).padStart(2, '0'),
-    mmm: () => getLocaleName(tz.monthIndex(date), 'month', 'short', locale),
-    mmmm: () => getLocaleName(tz.monthIndex(date), 'month', 'long', locale),
+    mmm: () => localInfo.month.short[tz.monthIndex(date)],
+    mmmm: () => localInfo.month.long[tz.monthIndex(date)],
     yy: () => String(tz.year(date)).slice(2),
     yyyy: () => String(tz.year(date)).padStart(4, '0'),
     h: () => tz.hours(date) % 12 || 12,
@@ -215,10 +190,9 @@ export function dateFormat(
     F: () => String(Math.floor(tz.milliseconds(date) / 100)),
     FF: () => String(Math.floor(tz.milliseconds(date) / 10)).padStart(2, '0'),
     FFF: () => String(tz.milliseconds(date)).padStart(3, '0'),
-    t: () => (tz.hours(date) < 12 ? 'a' : 'p'),
-    tt: () => (tz.hours(date) < 12 ? 'am' : 'pm'),
-    T: () => (tz.hours(date) < 12 ? 'A' : 'P'),
-    TT: () => (tz.hours(date) < 12 ? 'AM' : 'PM'),
+    t: () => localInfo.dayPeriod.narrow[tz.hours(date) < 12 ? 0 : 1],
+    tt: () => localInfo.dayPeriod.short[tz.hours(date) < 12 ? 0 : 1],
+    ttt: () => localInfo.dayPeriod.long[tz.hours(date) < 12 ? 0 : 1],
     Z: () => tz.name,
     o: () =>
       (tz.offset(date) > 0 ? '-' : '+') +
