@@ -142,7 +142,7 @@ const getDayName = ({
  * @param locale An optional locale. Defaults to the current browser locale.
  * @returns The formatted date string.
  */
-export function dateFormat(
+export function formatDate(
   date: Date,
   pattern: string = "yyyy-mm-dd'T'HH:MM:SSo",
   tz: Timezone = tzLocal,
