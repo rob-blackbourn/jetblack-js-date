@@ -127,6 +127,24 @@ describe('parseDate', () => {
     expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
   })
 
+  it('should parse dd-mmm-yy and go forward', () => {
+    // If the year would be less than 50 years from this century
+    // use this century.
+    const year = new Date().getFullYear() + 50
+    const actual = parseDate(`1-Jan-${year % 100}`, 'd-mmm-yy')
+    const expected = new Date(`${year}-01-01T00:00:00.000Z`)
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
+  it('should parse dd-mmm-yy and go back', () => {
+    // If the year would be more than 50 years from this century
+    // use the last century.
+    const year = new Date().getFullYear() + 51 - 100
+    const actual = parseDate(`1-Jan-${year % 100}`, 'd-mmm-yy')
+    const expected = new Date(`${year}-01-01T00:00:00.000Z`)
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
   it('should parse yyyy-mm-dd HH:MM:SS', () => {
     const actual = parseDate('2020-02-29 05:01:40', 'yyyy-mm-dd HH:MM:SS')
     const expected = new Date('2020-02-29T05:01:40.000Z')

@@ -1,7 +1,7 @@
 import { LocaleInfo, getLocaleInfo, NameStyle } from './LocaleInfo'
 import { daysInMonth } from './daysInMonth'
 
-type DateInfo = {
+interface DateInfo {
   year: number
   month: number
   day: number
@@ -13,23 +13,24 @@ type DateInfo = {
   timezoneOffset: number
 }
 
-type ParseInfo = [
-  keyof DateInfo | null,
-  string,
-  ((value: string, localeInfo: LocaleInfo) => number | null)?,
-  string?
-]
+type ParseInfo = {
+  field: keyof DateInfo | null
+  pattern: string
+  parse?: (value: string, localeInfo: LocaleInfo) => number | null
+  requiredField?: string
+}
 
-const fourDigits = '\\d{4}'
-const literal = /\[([^]*?)\]/gm
-const threeDigits = '\\d{3}'
-const token =
+const literalRegex = /\[([^]*?)\]/gm
+const tokenRegex =
   /d{1,4}|m{1,4}|yy(?:yy)?|S{1,3}|F{1,3}|D{2,4}|ZZ|Z|([HhMS])\1?|t|"[^"]*"|'[^']*'/g
-const twoDigits = '\\d{2}'
-const twoDigitsOptional = '\\d{1,2}'
-const word = '[^\\s]+'
 
-const regexEscape = (text: string): string =>
+const fourDigitsPattern = '\\d{4}'
+const threeDigitsPattern = '\\d{3}'
+const twoDigitsPattern = '\\d{2}'
+const oneOrTwoDigitsPattern = '\\d{1,2}'
+const wordPattern = '[^\\s]+'
+
+const escapeRegex = (text: string): string =>
   text.replace(/[|\\{()[^$+*?.-]/g, '\\$&')
 
 function parseMonthName(
@@ -44,11 +45,12 @@ function parseMonthName(
 
 const parseMonthIndex = (value: string): number => +value - 1
 
-const emptyWordParseInfo: ParseInfo = [null, word]
-const dayPeriodParseInfo: ParseInfo = [
-  'isAfternoon',
-  word,
-  (value: string, localeInfo: LocaleInfo): number | null => {
+const emptyWordParseInfo: ParseInfo = { field: null, pattern: wordPattern }
+
+const dayPeriodParseInfo: ParseInfo = {
+  field: 'isAfternoon',
+  pattern: wordPattern,
+  parse: (value: string, localeInfo: LocaleInfo): number | null => {
     const val = value.toLowerCase()
     if (val === localeInfo.dayPeriod.narrow[0].toLowerCase()) {
       return 0
@@ -57,12 +59,12 @@ const dayPeriodParseInfo: ParseInfo = [
     }
     return null
   }
-]
+}
 
-const timezoneOffsetParseInfo: ParseInfo = [
-  'timezoneOffset',
-  '[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?',
-  (value: string): number | null => {
+const timezoneOffsetParseInfo: ParseInfo = {
+  field: 'timezoneOffset',
+  pattern: '[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?',
+  parse: (value: string): number | null => {
     const parts = (value + '').match(/([+-]|\d\d)/gi)
 
     if (parts) {
@@ -72,49 +74,87 @@ const timezoneOffsetParseInfo: ParseInfo = [
 
     return 0
   }
-]
+}
 
-const parseFlags: Record<string, ParseInfo> = {
-  d: ['day', twoDigitsOptional],
-  dd: ['day', twoDigits],
+const parseInfoMap: Record<string, ParseInfo> = {
+  d: { field: 'day', pattern: oneOrTwoDigitsPattern },
+  dd: { field: 'day', pattern: twoDigitsPattern },
   ddd: emptyWordParseInfo,
   dddd: emptyWordParseInfo,
-  DD: ['day', twoDigitsOptional + word, (v: string): number => parseInt(v, 10)],
+  DD: {
+    field: 'day',
+    pattern: oneOrTwoDigitsPattern + wordPattern,
+    parse: value => parseInt(value, 10)
+  },
   DDD: emptyWordParseInfo,
   DDDD: emptyWordParseInfo,
-  m: ['month', twoDigitsOptional, parseMonthIndex],
-  mm: ['month', twoDigits, parseMonthIndex],
-  mmm: [
-    'month',
-    word,
-    (value, localeInfo) => parseMonthName(value, 'short', localeInfo)
-  ],
-  mmmm: [
-    'month',
-    word,
-    (value, localeInfo) => parseMonthName(value, 'long', localeInfo)
-  ],
-  yy: [
-    'year',
-    twoDigits,
-    (v: string): number => {
-      const now = new Date()
-      const cent = +('' + now.getFullYear()).substr(0, 2)
-      return +('' + (+v > 68 ? cent - 1 : cent) + v)
+  m: { field: 'month', pattern: oneOrTwoDigitsPattern, parse: parseMonthIndex },
+  mm: { field: 'month', pattern: twoDigitsPattern, parse: parseMonthIndex },
+  mmm: {
+    field: 'month',
+    pattern: wordPattern,
+    parse: (value, localeInfo) => parseMonthName(value, 'short', localeInfo)
+  },
+  mmmm: {
+    field: 'month',
+    pattern: wordPattern,
+    parse: (value, localeInfo) => parseMonthName(value, 'long', localeInfo)
+  },
+  yy: {
+    field: 'year',
+    pattern: twoDigitsPattern,
+    parse: value => {
+      const decade = +value
+      const currentYear = new Date().getFullYear()
+      const currentDecade = currentYear % 100
+      const currentCentury = currentYear - currentDecade
+      const year = currentCentury + decade
+      const yearsBetween = year - currentYear
+      if (Math.abs(yearsBetween) <= 50) {
+        return year
+      } else if (yearsBetween > 0) {
+        return year - 100
+      } else {
+        return year + 100
+      }
+      if (currentYear - year > 50) {
+        // decade 98, 1998 - 1999 =  -1, 2098 - 2000 = 98, 2098 - 2050 =  48
+        // decade 02, 1902 - 1999 = -97, 2002 - 2000 =  2, 2002 - 2050 = -48
+        // decade 50, 1950 - 1999 = -49, 2050 - 2000 = 50, 2050 - 2050 =   0
+        // decade 30, 1930 - 1999 = -69, 2030 - 2000 = 30, 2030 - 2050 = -20
+        // decade 70, 1970 - 1999 = -29, 2070 - 2000 = 70, 2070 - 2050 =  20
+      }
+      return +(
+        '' +
+        (decade > 68 ? currentCentury - 1 : currentCentury) +
+        decade
+      )
     }
-  ],
-  yyyy: ['year', fourDigits],
-  h: ['hour', twoDigitsOptional, undefined, 'isAfternoon'],
-  hh: ['hour', twoDigits, undefined, 'isAfternoon'],
-  H: ['hour', twoDigitsOptional],
-  HH: ['hour', twoDigits],
-  M: ['minute', twoDigitsOptional],
-  MM: ['minute', twoDigits],
-  S: ['second', twoDigitsOptional],
-  SS: ['second', twoDigits],
-  F: ['millisecond', '\\d', (v: string): number => +v * 100],
-  FF: ['millisecond', twoDigits, (v: string): number => +v * 10],
-  FFF: ['millisecond', threeDigits],
+  },
+  yyyy: { field: 'year', pattern: fourDigitsPattern },
+  h: {
+    field: 'hour',
+    pattern: oneOrTwoDigitsPattern,
+    requiredField: 'isAfternoon'
+  },
+  hh: {
+    field: 'hour',
+    pattern: twoDigitsPattern,
+    requiredField: 'isAfternoon'
+  },
+  H: { field: 'hour', pattern: oneOrTwoDigitsPattern },
+  HH: { field: 'hour', pattern: twoDigitsPattern },
+  M: { field: 'minute', pattern: oneOrTwoDigitsPattern },
+  MM: { field: 'minute', pattern: twoDigitsPattern },
+  S: { field: 'second', pattern: oneOrTwoDigitsPattern },
+  SS: { field: 'second', pattern: twoDigitsPattern },
+  F: {
+    field: 'millisecond',
+    pattern: '\\d',
+    parse: v => +v * 100
+  },
+  FF: { field: 'millisecond', pattern: twoDigitsPattern, parse: v => +v * 10 },
+  FFF: { field: 'millisecond', pattern: threeDigitsPattern },
   t: dayPeriodParseInfo,
   ZZ: timezoneOffsetParseInfo,
   Z: timezoneOffsetParseInfo
@@ -147,40 +187,41 @@ export function parseDate(
     isAfternoon: null,
     timezoneOffset: 0
   }
-  const parseInfo: ParseInfo[] = []
+  const formatParseInfos: ParseInfo[] = []
   const literals: string[] = []
 
   // Replace all the literals with @@@. Hopefully a string that won't exist in the format
-  let formatWithoutLiterals = format.replace(literal, ($0, $1) => {
-    literals.push(regexEscape($1))
+  let formatWithoutLiterals = format.replace(literalRegex, ($0, $1) => {
+    literals.push(escapeRegex($1))
     return '@@@'
   })
   const specifiedFields: { [field: string]: boolean } = {}
   const requiredFields: { [field: string]: boolean } = {}
 
   // Change every token that we find into the correct regex
-  const formatRegexWithoutLiterals = regexEscape(formatWithoutLiterals).replace(
-    token,
+  const formatRegexWithoutLiterals = escapeRegex(formatWithoutLiterals).replace(
+    tokenRegex,
     $0 => {
-      const info = parseFlags[$0]
-      const [field, regex, , requiredField] = info
+      const parseInfo = parseInfoMap[$0]
 
       // Check if the person has specified the same field twice. This will lead to confusing results.
-      if (field != null && field in specifiedFields) {
-        throw new Error(`Invalid format. ${field} specified twice in format`)
+      if (parseInfo.field != null && parseInfo.field in specifiedFields) {
+        throw new Error(
+          `Invalid format. ${parseInfo.field} specified twice in format`
+        )
       }
 
-      if (field != null) {
-        specifiedFields[field] = true
+      if (parseInfo.field != null) {
+        specifiedFields[parseInfo.field] = true
       }
 
       // Check if there are any required fields. For instance, 12 hour time requires AM/PM specified
-      if (requiredField) {
-        requiredFields[requiredField] = true
+      if (parseInfo.requiredField) {
+        requiredFields[parseInfo.requiredField] = true
       }
 
-      parseInfo.push(info)
-      return '(' + regex + ')'
+      formatParseInfos.push(parseInfo)
+      return '(' + parseInfo.pattern + ')'
     }
   )
 
@@ -207,7 +248,7 @@ export function parseDate(
 
   // For each match, call the parser function for that date part
   for (let i = 1; i < matches.length; ++i) {
-    const [field, , parser] = parseInfo[i - 1]
+    const { field, parse: parser } = formatParseInfos[i - 1]
     const value = parser ? parser(matches[i], localeInfo) : +matches[i]
 
     // If the parser can't make sense of the value, return null
