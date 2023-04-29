@@ -3,7 +3,7 @@ import { daysInMonth } from './daysInMonth'
 
 interface DateInfo {
   year: number
-  month: number
+  monthIndex: number
   day: number
   hour: number
   minute: number
@@ -108,15 +108,23 @@ const parseInfoMap: Record<string, ParseInfo> = {
   },
   DDD: emptyWordParseInfo,
   DDDD: emptyWordParseInfo,
-  m: { field: 'month', pattern: oneOrTwoDigitsPattern, parse: parseMonthIndex },
-  mm: { field: 'month', pattern: twoDigitsPattern, parse: parseMonthIndex },
+  m: {
+    field: 'monthIndex',
+    pattern: oneOrTwoDigitsPattern,
+    parse: parseMonthIndex
+  },
+  mm: {
+    field: 'monthIndex',
+    pattern: twoDigitsPattern,
+    parse: parseMonthIndex
+  },
   mmm: {
-    field: 'month',
+    field: 'monthIndex',
     pattern: wordPattern,
     parse: (value, localeInfo) => parseMonthName(value, 'short', localeInfo)
   },
   mmmm: {
-    field: 'month',
+    field: 'monthIndex',
     pattern: wordPattern,
     parse: (value, localeInfo) => parseMonthName(value, 'long', localeInfo)
   },
@@ -160,10 +168,10 @@ const parseInfoMap: Record<string, ParseInfo> = {
 
 function isDateInfoValid(dateInfo: DateInfo): boolean {
   return (
-    dateInfo.month >= 0 &&
-    dateInfo.month < 12 &&
+    dateInfo.monthIndex >= 0 &&
+    dateInfo.monthIndex < 12 &&
     dateInfo.day >= 1 &&
-    dateInfo.day <= daysInMonth(dateInfo.year, dateInfo.month) &&
+    dateInfo.day <= daysInMonth(dateInfo.year, dateInfo.monthIndex) &&
     dateInfo.hour >= 0 &&
     dateInfo.hour < 24 &&
     dateInfo.minute >= 0 &&
@@ -192,7 +200,7 @@ export function parseDate(
   // Default to the beginning of the year.
   const dateInfo: DateInfo = {
     year: new Date().getFullYear(),
-    month: 0,
+    monthIndex: 0,
     day: 1,
     hour: 0,
     minute: 0,
@@ -287,7 +295,7 @@ export function parseDate(
   return new Date(
     Date.UTC(
       dateInfo.year,
-      dateInfo.month,
+      dateInfo.monthIndex,
       dateInfo.day,
       dateInfo.hour,
       dateInfo.minute - dateInfo.timezoneOffset,
