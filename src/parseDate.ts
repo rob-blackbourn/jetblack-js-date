@@ -25,8 +25,8 @@ const literal = /\[([^]*?)\]/gm
 const threeDigits = '\\d{3}'
 const token =
   /d{1,4}|m{1,4}|yy(?:yy)?|S{1,3}|F{1,3}|D{2,4}|ZZ|Z|([HhMS])\1?|t|"[^"]*"|'[^']*'/g
-const twoDigits = '\\d\\d'
-const twoDigitsOptional = '\\d\\d?'
+const twoDigits = '\\d{2}'
+const twoDigitsOptional = '\\d{1,2}'
 const word = '[^\\s]+'
 
 const regexEscape = (text: string): string =>
@@ -196,7 +196,7 @@ export function parseDate(
 
   // Check if the date string matches the format. If it doesn't return null
   const matches = dateStr.match(new RegExp(formatRegex, 'i'))
-  if (!matches) {
+  if (!matches || matches[0] !== matches.input) {
     return null
   }
 
@@ -226,7 +226,7 @@ export function parseDate(
   }
 
   if (
-    dateInfo.day < 0 ||
+    dateInfo.day < 1 ||
     dateInfo.day > daysInMonth(dateInfo.year, dateInfo.month)
   ) {
     return null
