@@ -9,7 +9,7 @@ interface DateInfo {
   minute: number
   second: number
   millisecond: number
-  isAfternoon: number | null
+  isAfternoon: number
   timezoneOffset: number
 }
 
@@ -61,13 +61,13 @@ function parseDecade(value: string): number {
 
 const parseMonthIndex = (value: string): number => +value - 1
 
-function parseDayPeriod(value: string, localeInfo: LocaleInfo): number | null {
+function parseDayPeriod(value: string, localeInfo: LocaleInfo): number {
   if (
     value.localeCompare(localeInfo.dayPeriod.narrow[0], localeInfo.locale, {
       sensitivity: 'base'
     }) === 0
   ) {
-    return 0
+    return -1
   } else if (
     value.localeCompare(localeInfo.dayPeriod.narrow[1], localeInfo.locale, {
       sensitivity: 'base'
@@ -75,7 +75,7 @@ function parseDayPeriod(value: string, localeInfo: LocaleInfo): number | null {
   ) {
     return 1
   } else {
-    return null
+    return 0
   }
 }
 
@@ -206,7 +206,7 @@ export function parseDate(
     minute: 0,
     second: 0,
     millisecond: 0,
-    isAfternoon: null,
+    isAfternoon: 0,
     timezoneOffset: 0
   }
   const formatParseInfos: ParseInfo[] = []
@@ -282,9 +282,9 @@ export function parseDate(
     }
   }
 
-  if (dateInfo.isAfternoon === 1 && dateInfo.hour !== 12) {
+  if (dateInfo.isAfternoon > 0 && dateInfo.hour !== 12) {
     dateInfo.hour = +dateInfo.hour + 12
-  } else if (dateInfo.isAfternoon === 0 && dateInfo.hour === 12) {
+  } else if (dateInfo.isAfternoon < 0 && dateInfo.hour === 12) {
     dateInfo.hour = 0
   }
 
