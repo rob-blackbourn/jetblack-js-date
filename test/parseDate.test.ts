@@ -190,4 +190,14 @@ describe('parseDate', () => {
     const expected = new Date('2020-02-29T22:01:40.000Z')
     expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
   })
+
+  it('should parse extra characters not escaped', () => {
+    const actual = parseDate(
+      'xxxx 2000-01-01 xxxx',
+      'xxxx yyyy-mm-dd xxxx',
+      'en-GB'
+    )
+    const expected = new Date('2000-01-01T00:00:00.000Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
 })

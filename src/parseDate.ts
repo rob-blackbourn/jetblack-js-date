@@ -1,4 +1,4 @@
-import { LocaleInfo, getLocaleInfo } from './LocaleInfo'
+import { LocaleInfo, getLocaleInfo, NameStyle } from './LocaleInfo'
 import { daysInMonth } from './daysInMonth'
 
 type DateInfo = {
@@ -16,7 +16,7 @@ type DateInfo = {
 type ParseInfo = [
   keyof DateInfo | null,
   string,
-  ((v: string, localeInfo: LocaleInfo) => number | null)?,
+  ((value: string, localeInfo: LocaleInfo) => number | null)?,
   string?
 ]
 
@@ -32,24 +32,20 @@ const word = '[^\\s]+'
 const regexEscape = (text: string): string =>
   text.replace(/[|\\{()[^$+*?.-]/g, '\\$&')
 
-const monthUpdate =
-  (
-    type: 'month' | 'weekday' | 'dayPeriod',
-    style: 'narrow' | 'short' | 'long'
-  ) =>
-  (value: string, localeInfo: LocaleInfo): number | null => {
-    const lowerCaseArr = localeInfo[type][style].map(v => v.toLowerCase())
-    const index = lowerCaseArr.indexOf(value.toLowerCase())
-    if (index > -1) {
-      return index
-    }
-    return null
-  }
+function parseMonthName(
+  name: string,
+  style: NameStyle,
+  localeInfo: LocaleInfo
+): number | null {
+  const lowerCaseNames = localeInfo.month[style].map(v => v.toLowerCase())
+  const index = lowerCaseNames.indexOf(name.toLowerCase())
+  return index === -1 ? null : index
+}
 
-const monthParse = (value: string): number => +value - 1
-const emptyDigits: ParseInfo = [null, twoDigitsOptional]
-const emptyWord: ParseInfo = [null, word]
-const dayPeriod: ParseInfo = [
+const parseMonthIndex = (value: string): number => +value - 1
+
+const emptyWordParseInfo: ParseInfo = [null, word]
+const dayPeriodParseInfo: ParseInfo = [
   'isPm',
   word,
   (value: string, localeInfo: LocaleInfo): number | null => {
@@ -63,7 +59,7 @@ const dayPeriod: ParseInfo = [
   }
 ]
 
-const timezoneOffset: ParseInfo = [
+const timezoneOffsetParseInfo: ParseInfo = [
   'timezoneOffset',
   '[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?',
   (value: string): number | null => {
@@ -80,15 +76,23 @@ const timezoneOffset: ParseInfo = [
 const parseFlags: Record<string, ParseInfo> = {
   d: ['day', twoDigitsOptional],
   dd: ['day', twoDigits],
-  ddd: emptyWord,
-  dddd: emptyWord,
+  ddd: emptyWordParseInfo,
+  dddd: emptyWordParseInfo,
   DD: ['day', twoDigitsOptional + word, (v: string): number => parseInt(v, 10)],
-  DDD: emptyWord,
-  DDDD: emptyWord,
-  m: ['month', twoDigitsOptional, monthParse],
-  mm: ['month', twoDigits, monthParse],
-  mmm: ['month', word, monthUpdate('month', 'short')],
-  mmmm: ['month', word, monthUpdate('month', 'long')],
+  DDD: emptyWordParseInfo,
+  DDDD: emptyWordParseInfo,
+  m: ['month', twoDigitsOptional, parseMonthIndex],
+  mm: ['month', twoDigits, parseMonthIndex],
+  mmm: [
+    'month',
+    word,
+    (value, localeInfo) => parseMonthName(value, 'short', localeInfo)
+  ],
+  mmmm: [
+    'month',
+    word,
+    (value, localeInfo) => parseMonthName(value, 'long', localeInfo)
+  ],
   yy: [
     'year',
     twoDigits,
@@ -110,9 +114,9 @@ const parseFlags: Record<string, ParseInfo> = {
   F: ['millisecond', '\\d', (v: string): number => +v * 100],
   FF: ['millisecond', twoDigits, (v: string): number => +v * 10],
   FFF: ['millisecond', threeDigits],
-  t: dayPeriod,
-  ZZ: timezoneOffset,
-  Z: timezoneOffset
+  t: dayPeriodParseInfo,
+  ZZ: timezoneOffsetParseInfo,
+  Z: timezoneOffsetParseInfo
 }
 
 /**
