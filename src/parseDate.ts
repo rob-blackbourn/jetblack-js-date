@@ -296,9 +296,16 @@ function createDateParser(
 /**
  * Parse a date string into a Javascript Date object.
  *
+ * If the timezone offset is absent the dates will be according to the local
+ * timezone.
+ *
+ * ### Example
+ *
  * ```js
  * const d = parseDate('12 March, 1998', 'dd mmm, yyyy')
  * ```
+ *
+ * ### Pattern items
  *
  * | Value | Description |
  * | ----- | ----------- |
