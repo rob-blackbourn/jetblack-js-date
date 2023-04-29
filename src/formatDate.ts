@@ -1,7 +1,7 @@
 import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
-import { LocaleInfo, getLocaleInfo } from './LocaleInfo'
+import { I18nSettings, LocaleInfo, getLocaleInfo } from './LocaleInfo'
 import { Timezone } from './Timezone'
 
 /** @internal  */
@@ -16,77 +16,58 @@ const getDayOfWeek = (date: Date, tz: Timezone): number => {
 
 const flags: Record<
   string,
-  (date: Date, tz: Timezone, localeInfo: LocaleInfo) => any
+  (date: Date, tz: Timezone, localeInfo: I18nSettings) => any
 > = {
-  d: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => tz.day(date),
-  dd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.day(date)).padStart(2, '0'),
-  ddd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.weekday.short[tz.weekday(date)],
-  dddd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.weekday.long[tz.weekday(date)],
-  DD: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.dayPlurals[tz.day(date) - 1],
-  m: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    tz.monthIndex(date) + 1,
-  mm: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.monthIndex(date) + 1).padStart(2, '0'),
-  mmm: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.month.short[tz.monthIndex(date)],
-  mmmm: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.month.long[tz.monthIndex(date)],
-  yy: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.year(date)).slice(2),
-  yyyy: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.year(date)).padStart(4, '0'),
-  h: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    tz.hours(date) % 12 || 12,
-  hh: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.hours(date) % 12 || 12).padStart(2, '0'),
-  H: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => tz.hours(date),
-  HH: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.hours(date)).padStart(2, '0'),
-  M: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => tz.minutes(date),
-  MM: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.minutes(date)).padStart(2, '0'),
-  S: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => tz.seconds(date),
-  SS: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.seconds(date)).padStart(2, '0'),
-  F: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(Math.floor(tz.milliseconds(date) / 100)),
-  FF: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  d: (date, tz) => tz.day(date),
+  dd: (date, tz) => String(tz.day(date)).padStart(2, '0'),
+  ddd: (date, tz, localeInfo) => localeInfo.weekday.short[tz.weekday(date)],
+  dddd: (date, tz, localeInfo) => localeInfo.weekday.long[tz.weekday(date)],
+  DD: (date, tz, localeInfo) => localeInfo.dayPlurals[tz.day(date) - 1],
+  m: (date, tz) => tz.monthIndex(date) + 1,
+  mm: (date, tz) => String(tz.monthIndex(date) + 1).padStart(2, '0'),
+  mmm: (date, tz, localeInfo) => localeInfo.month.short[tz.monthIndex(date)],
+  mmmm: (date, tz, localeInfo) => localeInfo.month.long[tz.monthIndex(date)],
+  yy: (date, tz) => String(tz.year(date)).slice(2),
+  yyyy: (date, tz) => String(tz.year(date)).padStart(4, '0'),
+  h: (date, tz) => tz.hours(date) % 12 || 12,
+  hh: (date, tz) => String(tz.hours(date) % 12 || 12).padStart(2, '0'),
+  H: (date, tz) => tz.hours(date),
+  HH: (date, tz) => String(tz.hours(date)).padStart(2, '0'),
+  M: (date, tz) => tz.minutes(date),
+  MM: (date, tz) => String(tz.minutes(date)).padStart(2, '0'),
+  S: (date, tz) => tz.seconds(date),
+  SS: (date, tz) => String(tz.seconds(date)).padStart(2, '0'),
+  F: (date, tz) => String(Math.floor(tz.milliseconds(date) / 100)),
+  FF: (date, tz) =>
     String(Math.floor(tz.milliseconds(date) / 10)).padStart(2, '0'),
-  FFF: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(tz.milliseconds(date)).padStart(3, '0'),
-  t: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  FFF: (date, tz) => String(tz.milliseconds(date)).padStart(3, '0'),
+  t: (date, tz, localeInfo) =>
     localeInfo.dayPeriod.narrow[tz.hours(date) < 12 ? 0 : 1],
-  tt: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  tt: (date, tz, localeInfo) =>
     localeInfo.dayPeriod.short[tz.hours(date) < 12 ? 0 : 1],
-  ttt: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  ttt: (date, tz, localeInfo) =>
     localeInfo.dayPeriod.long[tz.hours(date) < 12 ? 0 : 1],
-  Z: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => tz.name,
-  o: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  Z: (_date, tz) => tz.name,
+  o: (date, tz) =>
     (tz.offset(date) > 0 ? '-' : '+') +
     String(
       Math.floor(Math.abs(tz.offset(date)) / 60) * 100 +
         (Math.abs(tz.offset(date)) % 60)
     ).padStart(4, '0'),
-  p: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+  p: (date, tz) =>
     (tz.offset(date) > 0 ? '-' : '+') +
     String(Math.floor(Math.abs(tz.offset(date)) / 60)).padStart(2, '0') +
     ':' +
     String(Math.floor(Math.abs(tz.offset(date)) % 60)).padStart(2, '0'),
-  W: (date: Date, tz: Timezone, localeInfo: LocaleInfo) => isoWeekOfYear(date),
-  WW: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    String(isoWeekOfYear(date)).padStart(2, '0'),
-  N: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    getDayOfWeek(date, tz)
+  W: date => isoWeekOfYear(date),
+  WW: date => String(isoWeekOfYear(date)).padStart(2, '0'),
+  N: (date, tz) => getDayOfWeek(date, tz)
 }
 
 /**
  * Format a date with a pattern.
  *
- * ### Example
+ * @example
  *
  * ```js
  * const d = new Date("2000-01-01")
@@ -140,7 +121,7 @@ export function formatDate(
   date: Date,
   pattern: string = "yyyy-mm-dd'T'HH:MM:SSo",
   tz: Timezone = tzLocal,
-  locale: LocaleInfo | string | undefined = undefined
+  locale: I18nSettings | string | undefined = undefined
 ) {
   const localeInfo = getLocaleInfo(locale)
 

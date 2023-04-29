@@ -13,8 +13,8 @@ export class WeekendCalendar extends Calendar {
   #weekends: number[]
 
   /**
-   *Construct a weekend calendar.
- 
+   * Construct a weekend calendar.
+   *
    * @param name An optional calendar name.
    * @param weekends An optional array of week days. Defaults to `[0, 6]` for Saturday and Sunday.
    */

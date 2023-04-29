@@ -1,5 +1,12 @@
 import { range } from './utils'
 
+/**
+ * Day plurals.
+ *
+ * @remark
+ *
+ * The names from Intl.PluralRules.
+ */
 export interface DayPlurals {
   zero: string
   one: string
@@ -8,17 +15,32 @@ export interface DayPlurals {
   many: string
   other: string
 }
+
+/**
+ * Day periods: morning, afternoon.
+ */
 export type DayPeriods = [string, string]
+
+/**
+ * The Intl name style.
+ */
 export type NameStyle = 'narrow' | 'short' | 'long'
+
+/**
+ * The settings for locales.
+ */
 export interface I18nSettings {
+  locale: string
   dayPeriod: Record<NameStyle, DayPeriods>
   weekday: Record<NameStyle, Days>
   month: Record<NameStyle, Months>
   dayPlurals: string[] // 31 days starting at 0.
 }
 
-export type I18nSettingsOptional = Partial<I18nSettings>
+/** The days of the week */
 export type Days = [string, string, string, string, string, string, string]
+
+/** The months of the year */
 export type Months = [
   string,
   string,
@@ -106,11 +128,23 @@ function getDayPeriods(
   ]
 }
 
+/**
+ * A class holding information for locales.
+ *
+ * @remarks
+ *
+ * The class attempts to load locale info from the browser.
+ */
 export class LocaleInfo implements I18nSettings {
+  /** The locale */
   locale: string
+  /** The day period names */
   dayPeriod: Record<NameStyle, DayPeriods>
+  /** The weekday names */
   weekday: Record<NameStyle, Days>
+  /** The month names */
   month: Record<NameStyle, Months>
+  /** the plurals for days from one to thirty one */
   dayPlurals: string[]
 
   constructor(locale?: string, dayPlurals: DayPlurals = defaultNumberPlurals) {
@@ -135,17 +169,19 @@ export class LocaleInfo implements I18nSettings {
       dayPlurals || defaultNumberPlurals
     )
   }
-
-  DoFn(dayOfMonth: number): string {
-    throw new Error('Method not implemented.')
-  }
 }
 
-const localeCache: { [locale: string]: LocaleInfo } = {}
+const localeCache: { [locale: string]: I18nSettings } = {}
 
+/**
+ * Get the locale information.
+ *
+ * @param locale A populated LocalInfo
+ * @returns
+ */
 export function getLocaleInfo(
-  locale: LocaleInfo | string | undefined
-): LocaleInfo {
+  locale: I18nSettings | string | undefined
+): I18nSettings {
   if (locale === undefined) {
     locale = 'default'
   }

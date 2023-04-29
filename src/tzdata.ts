@@ -77,6 +77,8 @@ export function timezoneFromJSON(name: string, tzdata: object[]): IANATimezone {
 /**
  * Fetch a timezone.
  *
+ * @example
+ *
  * ```ts
  * import { fetchTimezone } from '@jetblack/date'
  *
@@ -108,6 +110,8 @@ export async function fetchTimezone(
 /**
  * Fetch a list of timezone names.
  *
+ * @example
+ *
  * ```ts
  * import { fetchTimezoneNames } from '@jetblack/map'
  *
@@ -137,6 +141,8 @@ export async function fetchTimezoneNames(
 /**
  * Load a timezone using dynamic import.
  *
+ * @example
+ *
  * ```ts
  * import { loadTimezone } from '@jetblack/date'
  *
@@ -162,6 +168,8 @@ export async function loadTimezone(
 
 /**
  * Load the timezone names using dynamic import.
+ *
+ * @example
  *
  * ```ts
  * import { loadTimezoneNames } from '@jetblack/map'

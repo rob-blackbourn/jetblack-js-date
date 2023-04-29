@@ -6,6 +6,8 @@ import { Timezone } from './Timezone'
 /**
  * Find the day of the year.
  *
+ * @example
+ *
  * ```js
  * const d = new Date('2020-07-12T00:00:00Z')
  * const day = dayOfYear(d, tzUtc)

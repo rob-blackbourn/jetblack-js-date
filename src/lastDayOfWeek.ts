@@ -6,7 +6,11 @@ import { Timezone } from './Timezone'
 /**
  * Find the last day of the week for a given date.
  *
+ * @remarks
+ *
  * Note: weeks start on Sunday and end on Saturday.
+ *
+ * @example
  *
  * ```js
  * const days2 = lastDayOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)

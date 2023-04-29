@@ -4,7 +4,11 @@ import { Timezone } from './Timezone'
 /**
  * Add years to a date (or subtract if negative).
  *
+ * @remarks
+ *
  * Note how surplus days for a leap year are added.
+ *
+ * @example
  *
  * ```js
  * // There is no 29 February in 2001.

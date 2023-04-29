@@ -65,6 +65,16 @@ export { lastDayOfMonth } from './lastDayOfMonth'
 export { lastDayOfWeek } from './lastDayOfWeek'
 export { lastDayOfYear } from './lastDayOfYear'
 export { leapSeconds } from './leapSeconds'
+import {
+  DayPlurals,
+  DayPeriods,
+  NameStyle,
+  I18nSettings,
+  Days,
+  Months
+} from './LocaleInfo'
+export type { DayPlurals, DayPeriods, NameStyle, I18nSettings, Days, Months }
+export { LocaleInfo, getLocaleInfo } from './LocaleInfo'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { nearestBusinessDay } from './nearestBusinessDay'

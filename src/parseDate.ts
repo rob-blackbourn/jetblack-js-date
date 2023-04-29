@@ -1,4 +1,9 @@
-import { LocaleInfo, getLocaleInfo, NameStyle } from './LocaleInfo'
+import {
+  I18nSettings,
+  LocaleInfo,
+  getLocaleInfo,
+  NameStyle
+} from './LocaleInfo'
 import { daysInMonth } from './daysInMonth'
 
 interface DateInfo {
@@ -16,7 +21,7 @@ interface DateInfo {
 interface ParseInfo {
   field: keyof DateInfo | null
   pattern: string
-  parse?: (value: string, localeInfo: LocaleInfo) => number | null
+  parse?: (value: string, localeInfo: I18nSettings) => number | null
   requiredField?: keyof DateInfo
 }
 
@@ -36,7 +41,7 @@ const escapeRegexTokens = (text: string): string =>
 function parseMonthName(
   name: string,
   style: NameStyle,
-  localeInfo: LocaleInfo
+  localeInfo: I18nSettings
 ): number | null {
   const index = localeInfo.month[style].findIndex(
     x => x.localeCompare(name, localeInfo.locale, { sensitivity: 'base' }) == 0
@@ -194,7 +199,7 @@ function applyPattern(
   text: string,
   formatPattern: string,
   formatParseInfos: ParseInfo[],
-  localeInfo: LocaleInfo
+  localeInfo: I18nSettings
 ): DateInfo | null {
   // Check if the date string matches the format. If it doesn't return null
   const matches = text.match(new RegExp(formatPattern, 'i'))
@@ -241,7 +246,7 @@ function applyPattern(
 
 function createDateParser(
   format: string
-): (value: string, localeInfo: LocaleInfo) => DateInfo | null {
+): (value: string, localeInfo: I18nSettings) => DateInfo | null {
   // Replace all the literals with @@@. Hopefully a string that won't exist in the format
   const literals: string[] = []
   let formatWithoutLiterals = format.replace(literalRegex, (_match, p1) => {
@@ -289,7 +294,7 @@ function createDateParser(
     () => literals.shift() as string
   )
 
-  return (value: string, localeInfo: LocaleInfo) =>
+  return (value: string, localeInfo: I18nSettings) =>
     applyPattern(value, formatPattern, formatParseInfos, localeInfo)
 }
 
@@ -299,7 +304,7 @@ function createDateParser(
  * If the timezone offset is absent the dates will be according to the local
  * timezone.
  *
- * ### Example
+ * @example
  *
  * ```js
  * const d = parseDate('12 March, 1998', 'dd mmm, yyyy')
@@ -347,7 +352,7 @@ function createDateParser(
 export function parseDate(
   text: string,
   format: string,
-  locale: LocaleInfo | string | undefined = undefined
+  locale: I18nSettings | string | undefined = undefined
 ): Date | null {
   const localeInfo = getLocaleInfo(locale)
 

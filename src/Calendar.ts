@@ -1,7 +1,9 @@
-import { Timezone } from "./Timezone"
+import { Timezone } from './Timezone'
 
 /**
  * The base class for calendars.
+ *
+ * @remarks
  *
  * Calendars are required when working with functions that require
  * knowledge of weekends and holidays (e.g. {@link addBusinessDays}).
@@ -14,6 +16,8 @@ import { Timezone } from "./Timezone"
  * dates.
  *
  * This is how the {@link WeekendCalendar} is defined.
+ *
+ * @example
  *
  * ```ts
  * export class WeekendCalendar extends Calendar {

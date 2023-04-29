@@ -15,6 +15,8 @@ import { padNumber } from './utils'
  * The timezone object provides accessors for the common properties of a date
  * such as {@link Timezone.year}. Here is an example of using the year.
  *
+ * @example
+ *
  * ```js
  * import { tzLocal, tzUtc } from '@jetblack/date'
  *

@@ -33,6 +33,8 @@ export enum BusinessDayConvention {
 /**
  * Adjusts a non-business day to the appropriate nearest business day.
  *
+ * @example
+ *
  * ```js
  * const d1 = new Date('2000-01-01')
  * console.log(d1)

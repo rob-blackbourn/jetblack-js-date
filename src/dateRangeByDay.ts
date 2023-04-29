@@ -6,6 +6,8 @@ import { startOfDay } from './startOfDay'
 /**
  * Creates a range of dates by day.
  *
+ * @example
+ *
  * ```js
  * const dates = dateRangeByDay(
  *   new Date('2000-01-01T12:00:00Z'), // Sets to start of day.
@@ -27,7 +29,7 @@ import { startOfDay } from './startOfDay'
  * ```
  *
  * @category Ranges
- * 
+ *
  * @param startDate The start date.
  * @param endDate The end date.
  * @param step The day step count.
