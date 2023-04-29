@@ -158,6 +158,22 @@ const parseInfoMap: Record<string, ParseInfo> = {
   Z: timezoneOffsetParseInfo
 }
 
+function isDateInfoValid(dateInfo: DateInfo): boolean {
+  return (
+    dateInfo.month >= 0 &&
+    dateInfo.month < 12 &&
+    dateInfo.day >= 1 &&
+    dateInfo.day <= daysInMonth(dateInfo.year, dateInfo.month) &&
+    dateInfo.hour >= 0 &&
+    dateInfo.hour < 24 &&
+    dateInfo.minute >= 0 &&
+    dateInfo.minute < 60 &&
+    dateInfo.second >= 0 &&
+    dateInfo.second < 60 &&
+    dateInfo.millisecond >= 0 &&
+    dateInfo.millisecond < 1000
+  )
+}
 /**
  * Parse a date string into a Javascript Date object.
  *
@@ -264,30 +280,7 @@ export function parseDate(
     dateInfo.hour = 0
   }
 
-  if (dateInfo.month < 0 || dateInfo.month > 11) {
-    return null
-  }
-
-  if (
-    dateInfo.day < 1 ||
-    dateInfo.day > daysInMonth(dateInfo.year, dateInfo.month)
-  ) {
-    return null
-  }
-
-  if (dateInfo.hour < 0 || dateInfo.hour >= 24) {
-    return null
-  }
-
-  if (dateInfo.minute < 0 || dateInfo.minute >= 60) {
-    return null
-  }
-
-  if (dateInfo.second < 0 || dateInfo.second >= 60) {
-    return null
-  }
-
-  if (dateInfo.millisecond < 0 || dateInfo.millisecond >= 1000) {
+  if (!isDateInfoValid(dateInfo)) {
     return null
   }
 
