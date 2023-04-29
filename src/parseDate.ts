@@ -43,6 +43,22 @@ function parseMonthName(
   return index === -1 ? null : index
 }
 
+function parseDecade(value: string): number {
+  const decade = +value
+  const currentYear = new Date().getFullYear()
+  const currentDecade = currentYear % 100
+  const currentCentury = currentYear - currentDecade
+  const year = currentCentury + decade
+  const yearsBetween = year - currentYear
+  if (Math.abs(yearsBetween) <= 50) {
+    return year
+  } else if (yearsBetween > 0) {
+    return year - 100
+  } else {
+    return year + 100
+  }
+}
+
 const parseMonthIndex = (value: string): number => +value - 1
 
 const emptyWordParseInfo: ParseInfo = { field: null, pattern: wordPattern }
@@ -103,33 +119,7 @@ const parseInfoMap: Record<string, ParseInfo> = {
   yy: {
     field: 'year',
     pattern: twoDigitsPattern,
-    parse: value => {
-      const decade = +value
-      const currentYear = new Date().getFullYear()
-      const currentDecade = currentYear % 100
-      const currentCentury = currentYear - currentDecade
-      const year = currentCentury + decade
-      const yearsBetween = year - currentYear
-      if (Math.abs(yearsBetween) <= 50) {
-        return year
-      } else if (yearsBetween > 0) {
-        return year - 100
-      } else {
-        return year + 100
-      }
-      if (currentYear - year > 50) {
-        // decade 98, 1998 - 1999 =  -1, 2098 - 2000 = 98, 2098 - 2050 =  48
-        // decade 02, 1902 - 1999 = -97, 2002 - 2000 =  2, 2002 - 2050 = -48
-        // decade 50, 1950 - 1999 = -49, 2050 - 2000 = 50, 2050 - 2050 =   0
-        // decade 30, 1930 - 1999 = -69, 2030 - 2000 = 30, 2030 - 2050 = -20
-        // decade 70, 1970 - 1999 = -29, 2070 - 2000 = 70, 2070 - 2050 =  20
-      }
-      return +(
-        '' +
-        (decade > 68 ? currentCentury - 1 : currentCentury) +
-        decade
-      )
-    }
+    parse: parseDecade
   },
   yyyy: { field: 'year', pattern: fourDigitsPattern },
   h: {
