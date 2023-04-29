@@ -195,7 +195,7 @@ function applyPattern(
     return null
   }
 
-  // Default to the beginning of the year.
+  // Default to the beginning of this year.
   const dateInfo: DateInfo = {
     year: new Date().getFullYear(),
     monthIndex: 0,
@@ -232,29 +232,28 @@ function applyPattern(
   return dateInfo
 }
 
-function createParser(format: string): [string, ParseInfo[]] {
-  const formatParseInfos: ParseInfo[] = []
-  const literals: string[] = []
-
+function createDateParser(
+  format: string
+): (value: string, localeInfo: LocaleInfo) => DateInfo | null {
   // Replace all the literals with @@@. Hopefully a string that won't exist in the format
-  let formatWithoutLiterals = format.replace(literalRegex, ($0, $1) => {
-    literals.push(escapeRegexTokens($1))
+  const literals: string[] = []
+  let formatWithoutLiterals = format.replace(literalRegex, (_match, p1) => {
+    literals.push(escapeRegexTokens(p1))
     return '@@@'
   })
-  const specifiedFields: { [field: string]: boolean } = {}
-  const requiredFields: { [field: string]: boolean } = {}
 
   // Change every token that we find into the correct regex
+  const formatParseInfos: ParseInfo[] = []
+  const specifiedFields: { [field: string]: boolean } = {}
+  const requiredFields: { [field: string]: boolean } = {}
   const formatRegexWithoutLiterals = escapeRegexTokens(
     formatWithoutLiterals
-  ).replace(tokenRegex, $0 => {
-    const parseInfo = parseInfoMap[$0]
+  ).replace(tokenRegex, match => {
+    const parseInfo = parseInfoMap[match]
 
     // Check if the person has specified the same field twice. This will lead to confusing results.
     if (parseInfo.field != null && parseInfo.field in specifiedFields) {
-      throw new Error(
-        `Invalid format. ${parseInfo.field} specified twice in format`
-      )
+      throw new Error(`Invalid format. Duplicate field "${parseInfo.field}"`)
     }
 
     if (parseInfo.field != null) {
@@ -267,25 +266,24 @@ function createParser(format: string): [string, ParseInfo[]] {
     }
 
     formatParseInfos.push(parseInfo)
+
     return '(' + parseInfo.pattern + ')'
   })
 
-  // Check all the required fields are present
-  Object.keys(requiredFields).forEach(field => {
-    if (!specifiedFields[field]) {
-      throw new Error(
-        `Invalid format. ${field} is required in specified format`
-      )
+  for (const field in requiredFields) {
+    if (!(field in specifiedFields)) {
+      throw new Error(`Invalid format. Missing required field "${field}"`)
     }
-  })
+  }
 
-  // Add back all the literals after
+  // Add back the literals.
   const formatRegex = formatRegexWithoutLiterals.replace(
     /@@@/g,
     () => literals.shift() as string
   )
 
-  return [formatRegex, formatParseInfos]
+  return (value: string, localeInfo: LocaleInfo) =>
+    applyPattern(value, formatRegex, formatParseInfos, localeInfo)
 }
 
 /**
@@ -303,14 +301,9 @@ export function parseDate(
 ): Date | null {
   const localeInfo = getLocaleInfo(locale)
 
-  const [formatRegex, formatParseInfos] = createParser(format)
+  const dateParser = createDateParser(format)
 
-  const dateInfo = applyPattern(
-    dateStr,
-    formatRegex,
-    formatParseInfos,
-    localeInfo
-  )
+  const dateInfo = dateParser(dateStr, localeInfo)
 
   if (dateInfo == null || !isDateInfoValid(dateInfo)) {
     return null
