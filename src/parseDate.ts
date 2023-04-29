@@ -38,8 +38,9 @@ function parseMonthName(
   style: NameStyle,
   localeInfo: LocaleInfo
 ): number | null {
-  const lowerCaseNames = localeInfo.month[style].map(v => v.toLowerCase())
-  const index = lowerCaseNames.indexOf(name.toLowerCase())
+  const index = localeInfo.month[style].findIndex(
+    x => x.localeCompare(name, localeInfo.locale, { sensitivity: 'base' }) == 0
+  )
   return index === -1 ? null : index
 }
 
@@ -61,21 +62,17 @@ function parseDecade(value: string): number {
 
 const parseMonthIndex = (value: string): number => +value - 1
 
-const emptyWordParseInfo: ParseInfo = { field: null, pattern: wordPattern }
-
-const dayPeriodParseInfo: ParseInfo = {
-  field: 'isAfternoon',
-  pattern: wordPattern,
-  parse: (value: string, localeInfo: LocaleInfo): number | null => {
-    const val = value.toLowerCase()
-    if (val === localeInfo.dayPeriod.narrow[0].toLowerCase()) {
-      return 0
-    } else if (val === localeInfo.dayPeriod.narrow[1].toLowerCase()) {
-      return 1
-    }
-    return null
+function parseDayPeriod(value: string, localeInfo: LocaleInfo): number | null {
+  const val = value.toLowerCase()
+  if (val === localeInfo.dayPeriod.narrow[0].toLowerCase()) {
+    return 0
+  } else if (val === localeInfo.dayPeriod.narrow[1].toLowerCase()) {
+    return 1
   }
+  return null
 }
+
+const emptyWordParseInfo: ParseInfo = { field: null, pattern: wordPattern }
 
 const timezoneOffsetParseInfo: ParseInfo = {
   field: 'timezoneOffset',
@@ -145,7 +142,11 @@ const parseInfoMap: Record<string, ParseInfo> = {
   },
   FF: { field: 'millisecond', pattern: twoDigitsPattern, parse: v => +v * 10 },
   FFF: { field: 'millisecond', pattern: threeDigitsPattern },
-  t: dayPeriodParseInfo,
+  t: {
+    field: 'isAfternoon',
+    pattern: wordPattern,
+    parse: parseDayPeriod
+  },
   ZZ: timezoneOffsetParseInfo,
   Z: timezoneOffsetParseInfo
 }
