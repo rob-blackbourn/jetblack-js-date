@@ -10,7 +10,7 @@ interface DateInfo {
   second: number
   millisecond: number
   isAfternoon: number
-  timezoneOffset: number
+  timezoneOffset: number | null
 }
 
 type ParseInfo = {
@@ -205,7 +205,7 @@ function applyPattern(
     second: 0,
     millisecond: 0,
     isAfternoon: 0,
-    timezoneOffset: 0
+    timezoneOffset: null
   }
 
   // For each match, call the parser function for that date part
@@ -246,7 +246,7 @@ function createDateParser(
   const formatParseInfos: ParseInfo[] = []
   const specifiedFields: { [field: string]: boolean } = {}
   const requiredFields: { [field: string]: boolean } = {}
-  const formatRegexWithoutLiterals = escapeRegexTokens(
+  const formatPatternWithoutLiterals = escapeRegexTokens(
     formatWithoutLiterals
   ).replace(tokenRegex, match => {
     const parseInfo = parseInfoMap[match]
@@ -277,13 +277,13 @@ function createDateParser(
   }
 
   // Add back the literals.
-  const formatRegex = formatRegexWithoutLiterals.replace(
+  const formatPattern = formatPatternWithoutLiterals.replace(
     /@@@/g,
     () => literals.shift() as string
   )
 
   return (value: string, localeInfo: LocaleInfo) =>
-    applyPattern(value, formatRegex, formatParseInfos, localeInfo)
+    applyPattern(value, formatPattern, formatParseInfos, localeInfo)
 }
 
 /**
@@ -309,15 +309,27 @@ export function parseDate(
     return null
   }
 
-  return new Date(
-    Date.UTC(
+  if (dateInfo.timezoneOffset == null) {
+    return new Date(
       dateInfo.year,
       dateInfo.monthIndex,
       dateInfo.day,
       dateInfo.hour,
-      dateInfo.minute - dateInfo.timezoneOffset,
+      dateInfo.minute,
       dateInfo.second,
       dateInfo.millisecond
     )
-  )
+  } else {
+    return new Date(
+      Date.UTC(
+        dateInfo.year,
+        dateInfo.monthIndex,
+        dateInfo.day,
+        dateInfo.hour,
+        dateInfo.minute - dateInfo.timezoneOffset,
+        dateInfo.second,
+        dateInfo.millisecond
+      )
+    )
+  }
 }
