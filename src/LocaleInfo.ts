@@ -85,19 +85,19 @@ function getDayPeriods(
   locale: string,
   style: 'narrow' | 'short' | 'long'
 ): DayPeriods {
-  const morning = new Intl.DateTimeFormat(locale, {
-    hour: 'numeric',
-    hour12: true,
-    dayPeriod: style
-  })
-    .formatToParts(new Date(1970, 0, 1))
-    .filter(x => x.type === 'dayPeriod')
-    .map(x => x.value)
-  const afternoon = new Intl.DateTimeFormat(locale, {
+  let options: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
     hour12: true
-  })
-    .formatToParts(new Date(1970, 0, 1, 12))
+  }
+  // if (!locale.startsWith('en')) {
+  //   options = { ...options, dayPeriod: style }
+  // }
+  const morning = new Intl.DateTimeFormat(locale, options)
+    .formatToParts(new Date(1970, 0, 1, 1))
+    .filter(x => x.type === 'dayPeriod')
+    .map(x => x.value)
+  const afternoon = new Intl.DateTimeFormat(locale, options)
+    .formatToParts(new Date(1970, 0, 1, 13))
     .filter(x => x.type === 'dayPeriod')
     .map(x => x.value)
   return [

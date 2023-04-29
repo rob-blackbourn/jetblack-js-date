@@ -49,14 +49,14 @@ const monthUpdate =
 const monthParse = (value: string): number => +value - 1
 const emptyDigits: ParseInfo = [null, twoDigitsOptional]
 const emptyWord: ParseInfo = [null, word]
-const amPm: ParseInfo = [
+const dayPeriod: ParseInfo = [
   'isPm',
   word,
   (value: string, localeInfo: LocaleInfo): number | null => {
     const val = value.toLowerCase()
-    if (val === localeInfo.dayPeriod.narrow[0]) {
+    if (val === localeInfo.dayPeriod.narrow[0].toLowerCase()) {
       return 0
-    } else if (val === localeInfo.dayPeriod.narrow[1]) {
+    } else if (val === localeInfo.dayPeriod.narrow[1].toLowerCase()) {
       return 1
     }
     return null
@@ -110,7 +110,7 @@ const parseFlags: Record<string, ParseInfo> = {
   F: ['millisecond', '\\d', (v: string): number => +v * 100],
   FF: ['millisecond', twoDigits, (v: string): number => +v * 10],
   FFF: ['millisecond', threeDigits],
-  t: amPm,
+  t: dayPeriod,
   ZZ: timezoneOffset,
   Z: timezoneOffset
 }
@@ -215,9 +215,9 @@ export function parseDate(
     }
   }
 
-  if (dateInfo.isPm === 1 && dateInfo.hour != null && +dateInfo.hour !== 12) {
+  if (dateInfo.isPm === 1 && dateInfo.hour !== 12) {
     dateInfo.hour = +dateInfo.hour + 12
-  } else if (dateInfo.isPm === 0 && +dateInfo.hour === 12) {
+  } else if (dateInfo.isPm === 0 && dateInfo.hour === 12) {
     dateInfo.hour = 0
   }
 

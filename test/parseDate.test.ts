@@ -53,6 +53,16 @@ describe('parseDate', () => {
 
   it('should parse ISO datetime', () => {
     const actual = parseDate(
+      '2000-01-01T12:35:59.999',
+      'yyyy-mm-dd[T]HH:MM:SS.FFF',
+      'en-GB'
+    )
+    const expected = new Date('2000-01-01T12:35:59.999Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
+  it('should parse ISO datetime with zulu timezone', () => {
+    const actual = parseDate(
       '2000-01-01T12:35:59.999Z',
       'yyyy-mm-dd[T]HH:MM:SS.FFFZ',
       'en-GB'
@@ -68,6 +78,16 @@ describe('parseDate', () => {
       'en-GB'
     )
     const expected = new Date('2000-01-01T11:35:59.999Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
+  it('should parse ISO datetime with timezone no colon', () => {
+    const actual = parseDate(
+      '2000-01-01T12:35:59.999-0100',
+      'yyyy-mm-dd[T]HH:MM:SS.FFFZ',
+      'en-GB'
+    )
+    const expected = new Date('2000-01-01T13:35:59.999Z')
     expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
   })
 
@@ -139,5 +159,35 @@ describe('parseDate', () => {
     const expected = new Date('2023-01-03T00:00:00.000Z')
     expect(tzUtc.monthIndex(actual as Date)).toBe(tzUtc.monthIndex(expected))
     expect(tzUtc.day(actual as Date)).toBe(tzUtc.day(expected))
+  })
+
+  it('should parse "yyyy-mm-dd hh:MM:SSt", "en"', () => {
+    const actual = parseDate(
+      '2020-02-29 10:01:40PM',
+      'yyyy-mm-dd hh:MM:SSt',
+      'en'
+    )
+    const expected = new Date('2020-02-29T22:01:40.000Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
+  it('should parse "yyyy-mm-dd hh:MM:SSt" lowercase, "en"', () => {
+    const actual = parseDate(
+      '2020-02-29 10:01:40pm',
+      'yyyy-mm-dd hh:MM:SSt',
+      'en'
+    )
+    const expected = new Date('2020-02-29T22:01:40.000Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
+  })
+
+  it('should parse "yyyy-mm-dd hh:MM:SSt", "fr"', () => {
+    const actual = parseDate(
+      '2020-02-29 10:01:40PM',
+      'yyyy-mm-dd hh:MM:SSt',
+      'fr'
+    )
+    const expected = new Date('2020-02-29T22:01:40.000Z')
+    expect(tzUtc.toISOString(actual as Date)).toBe(tzUtc.toISOString(expected))
   })
 })
