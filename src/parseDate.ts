@@ -17,7 +17,7 @@ type ParseInfo = {
   field: keyof DateInfo | null
   pattern: string
   parse?: (value: string, localeInfo: LocaleInfo) => number | null
-  requiredField?: string
+  requiredField?: keyof DateInfo
 }
 
 const literalRegex = /\[([^]*?)\]/gm
