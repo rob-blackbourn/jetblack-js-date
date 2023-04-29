@@ -182,20 +182,18 @@ function isDateInfoValid(dateInfo: DateInfo): boolean {
     dateInfo.millisecond < 1000
   )
 }
-/**
- * Parse a date string into a Javascript Date object.
- *
- * @param dateStr Date string
- * @param format Date parse format
- * @param locale The locale
- * @returns The date, or null if parsing failed.
- */
-export function parseDate(
+
+function applyPattern(
   dateStr: string,
-  format: string,
-  locale: LocaleInfo | string | undefined = undefined
-): Date | null {
-  const localeInfo = getLocaleInfo(locale)
+  formatRegex: string,
+  formatParseInfos: ParseInfo[],
+  localeInfo: LocaleInfo
+): DateInfo | null {
+  // Check if the date string matches the format. If it doesn't return null
+  const matches = dateStr.match(new RegExp(formatRegex, 'i'))
+  if (!matches || matches[0] !== matches.input) {
+    return null
+  }
 
   // Default to the beginning of the year.
   const dateInfo: DateInfo = {
@@ -209,6 +207,32 @@ export function parseDate(
     isAfternoon: 0,
     timezoneOffset: 0
   }
+
+  // For each match, call the parser function for that date part
+  for (let i = 1; i < matches.length; ++i) {
+    const { field, parse: parser } = formatParseInfos[i - 1]
+    const value = parser ? parser(matches[i], localeInfo) : +matches[i]
+
+    // If the parser can't make sense of the value, return null
+    if (value == null) {
+      return null
+    }
+
+    if (field != null) {
+      dateInfo[field] = value
+    }
+  }
+
+  if (dateInfo.isAfternoon > 0 && dateInfo.hour !== 12) {
+    dateInfo.hour = +dateInfo.hour + 12
+  } else if (dateInfo.isAfternoon < 0 && dateInfo.hour === 12) {
+    dateInfo.hour = 0
+  }
+
+  return dateInfo
+}
+
+function createParser(format: string): [string, ParseInfo[]] {
   const formatParseInfos: ParseInfo[] = []
   const literals: string[] = []
 
@@ -261,34 +285,34 @@ export function parseDate(
     () => literals.shift() as string
   )
 
-  // Check if the date string matches the format. If it doesn't return null
-  const matches = dateStr.match(new RegExp(formatRegex, 'i'))
-  if (!matches || matches[0] !== matches.input) {
-    return null
-  }
+  return [formatRegex, formatParseInfos]
+}
 
-  // For each match, call the parser function for that date part
-  for (let i = 1; i < matches.length; ++i) {
-    const { field, parse: parser } = formatParseInfos[i - 1]
-    const value = parser ? parser(matches[i], localeInfo) : +matches[i]
+/**
+ * Parse a date string into a Javascript Date object.
+ *
+ * @param dateStr Date string
+ * @param format Date parse format
+ * @param locale The locale
+ * @returns The date, or null if parsing failed.
+ */
+export function parseDate(
+  dateStr: string,
+  format: string,
+  locale: LocaleInfo | string | undefined = undefined
+): Date | null {
+  const localeInfo = getLocaleInfo(locale)
 
-    // If the parser can't make sense of the value, return null
-    if (value == null) {
-      return null
-    }
+  const [formatRegex, formatParseInfos] = createParser(format)
 
-    if (field != null) {
-      dateInfo[field] = value
-    }
-  }
+  const dateInfo = applyPattern(
+    dateStr,
+    formatRegex,
+    formatParseInfos,
+    localeInfo
+  )
 
-  if (dateInfo.isAfternoon > 0 && dateInfo.hour !== 12) {
-    dateInfo.hour = +dateInfo.hour + 12
-  } else if (dateInfo.isAfternoon < 0 && dateInfo.hour === 12) {
-    dateInfo.hour = 0
-  }
-
-  if (!isDateInfoValid(dateInfo)) {
+  if (dateInfo == null || !isDateInfoValid(dateInfo)) {
     return null
   }
 
