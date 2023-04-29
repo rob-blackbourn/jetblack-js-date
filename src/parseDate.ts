@@ -13,7 +13,7 @@ interface DateInfo {
   timezoneOffset: number | null
 }
 
-type ParseInfo = {
+interface ParseInfo {
   field: keyof DateInfo | null
   pattern: string
   parse?: (value: string, localeInfo: LocaleInfo) => number | null
@@ -61,15 +61,22 @@ function parseDecade(value: string): number {
 
 const parseMonthIndex = (value: string): number => +value - 1
 
-function parseDayPeriod(value: string, localeInfo: LocaleInfo): number {
+function parseDayPeriod(
+  value: string,
+  localeInfo: LocaleInfo,
+  style: NameStyle
+): number {
+  const dayPeriods = localeInfo.dayPeriod[style]
+  const [morning, afternoon] = dayPeriods
+
   if (
-    value.localeCompare(localeInfo.dayPeriod.narrow[0], localeInfo.locale, {
+    value.localeCompare(morning, localeInfo.locale, {
       sensitivity: 'base'
     }) === 0
   ) {
     return -1
   } else if (
-    value.localeCompare(localeInfo.dayPeriod.narrow[1], localeInfo.locale, {
+    value.localeCompare(afternoon, localeInfo.locale, {
       sensitivity: 'base'
     }) === 0
   ) {
@@ -160,7 +167,7 @@ const parseInfoMap: Record<string, ParseInfo> = {
   t: {
     field: 'isAfternoon',
     pattern: wordPattern,
-    parse: parseDayPeriod
+    parse: (value, localeInfo) => parseDayPeriod(value, localeInfo, 'narrow')
   },
   ZZ: timezoneOffsetParseInfo,
   Z: timezoneOffsetParseInfo
