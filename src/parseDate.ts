@@ -30,7 +30,7 @@ const twoDigitsPattern = '\\d{2}'
 const oneOrTwoDigitsPattern = '\\d{1,2}'
 const wordPattern = '[^\\s]+'
 
-const escapeRegex = (text: string): string =>
+const escapeRegexTokens = (text: string): string =>
   text.replace(/[|\\{()[^$+*?.-]/g, '\\$&')
 
 function parseMonthName(
@@ -47,8 +47,7 @@ function parseMonthName(
 function parseDecade(value: string): number {
   const decade = +value
   const currentYear = new Date().getFullYear()
-  const currentDecade = currentYear % 100
-  const currentCentury = currentYear - currentDecade
+  const currentCentury = currentYear - (currentYear % 100)
   const year = currentCentury + decade
   const yearsBetween = year - currentYear
   if (Math.abs(yearsBetween) <= 50) {
@@ -63,13 +62,21 @@ function parseDecade(value: string): number {
 const parseMonthIndex = (value: string): number => +value - 1
 
 function parseDayPeriod(value: string, localeInfo: LocaleInfo): number | null {
-  const val = value.toLowerCase()
-  if (val === localeInfo.dayPeriod.narrow[0].toLowerCase()) {
+  if (
+    value.localeCompare(localeInfo.dayPeriod.narrow[0], localeInfo.locale, {
+      sensitivity: 'base'
+    }) === 0
+  ) {
     return 0
-  } else if (val === localeInfo.dayPeriod.narrow[1].toLowerCase()) {
+  } else if (
+    value.localeCompare(localeInfo.dayPeriod.narrow[1], localeInfo.locale, {
+      sensitivity: 'base'
+    }) === 0
+  ) {
     return 1
+  } else {
+    return null
   }
-  return null
 }
 
 const emptyWordParseInfo: ParseInfo = { field: null, pattern: wordPattern }
@@ -183,38 +190,37 @@ export function parseDate(
 
   // Replace all the literals with @@@. Hopefully a string that won't exist in the format
   let formatWithoutLiterals = format.replace(literalRegex, ($0, $1) => {
-    literals.push(escapeRegex($1))
+    literals.push(escapeRegexTokens($1))
     return '@@@'
   })
   const specifiedFields: { [field: string]: boolean } = {}
   const requiredFields: { [field: string]: boolean } = {}
 
   // Change every token that we find into the correct regex
-  const formatRegexWithoutLiterals = escapeRegex(formatWithoutLiterals).replace(
-    tokenRegex,
-    $0 => {
-      const parseInfo = parseInfoMap[$0]
+  const formatRegexWithoutLiterals = escapeRegexTokens(
+    formatWithoutLiterals
+  ).replace(tokenRegex, $0 => {
+    const parseInfo = parseInfoMap[$0]
 
-      // Check if the person has specified the same field twice. This will lead to confusing results.
-      if (parseInfo.field != null && parseInfo.field in specifiedFields) {
-        throw new Error(
-          `Invalid format. ${parseInfo.field} specified twice in format`
-        )
-      }
-
-      if (parseInfo.field != null) {
-        specifiedFields[parseInfo.field] = true
-      }
-
-      // Check if there are any required fields. For instance, 12 hour time requires AM/PM specified
-      if (parseInfo.requiredField) {
-        requiredFields[parseInfo.requiredField] = true
-      }
-
-      formatParseInfos.push(parseInfo)
-      return '(' + parseInfo.pattern + ')'
+    // Check if the person has specified the same field twice. This will lead to confusing results.
+    if (parseInfo.field != null && parseInfo.field in specifiedFields) {
+      throw new Error(
+        `Invalid format. ${parseInfo.field} specified twice in format`
+      )
     }
-  )
+
+    if (parseInfo.field != null) {
+      specifiedFields[parseInfo.field] = true
+    }
+
+    // Check if there are any required fields. For instance, 12 hour time requires AM/PM specified
+    if (parseInfo.requiredField) {
+      requiredFields[parseInfo.requiredField] = true
+    }
+
+    formatParseInfos.push(parseInfo)
+    return '(' + parseInfo.pattern + ')'
+  })
 
   // Check all the required fields are present
   Object.keys(requiredFields).forEach(field => {
