@@ -81,6 +81,7 @@ export { startOfWeek } from './startOfWeek'
 export { startOfWeekday } from './startOfWeekday'
 export { startOfYear } from './startOfYear'
 export { subDuration } from './subDuration'
+export { parseDate } from './parseDate'
 import { TimezoneOffset } from './IANATimezone'
 export type { TimezoneOffset }
 export { IANATimezone } from './IANATimezone'

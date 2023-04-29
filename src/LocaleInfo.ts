@@ -140,3 +140,20 @@ export class LocaleInfo implements I18nSettings {
     throw new Error('Method not implemented.')
   }
 }
+
+const localeCache: { [locale: string]: LocaleInfo } = {}
+
+export function getLocaleInfo(
+  locale: LocaleInfo | string | undefined
+): LocaleInfo {
+  if (locale === undefined) {
+    locale = 'default'
+  }
+  if (typeof locale === 'string') {
+    if (!(locale in localeCache)) {
+      localeCache[locale] = new LocaleInfo(locale)
+    }
+    locale = localeCache[locale]
+  }
+  return locale
+}

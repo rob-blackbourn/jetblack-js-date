@@ -1,7 +1,7 @@
 import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
-import { LocaleInfo, NameStyle } from './LocaleInfo'
+import { LocaleInfo, getLocaleInfo } from './LocaleInfo'
 import { Timezone } from './Timezone'
 
 /** @internal  */
@@ -12,23 +12,6 @@ const token =
 const getDayOfWeek = (date: Date, tz: Timezone): number => {
   let dow = tz.weekday(date)
   return dow === 0 ? 7 : dow
-}
-
-/** @internal  */
-const localeCache: { [locale: string]: LocaleInfo } = {}
-
-/** @internal  */
-function getLocaleInfo(locale: LocaleInfo | string | undefined): LocaleInfo {
-  if (locale === undefined) {
-    locale = 'default'
-  }
-  if (typeof locale === 'string') {
-    if (!(locale in localeCache)) {
-      localeCache[locale] = new LocaleInfo(locale)
-    }
-    locale = localeCache[locale]
-  }
-  return locale
 }
 
 /**
@@ -92,6 +75,8 @@ const flags: Record<
     String(tz.day(date)).padStart(2, '0'),
   ddd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
     localeInfo.weekday.short[tz.weekday(date)],
+  dddd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
+    localeInfo.weekday.long[tz.weekday(date)],
   DD: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
     localeInfo.dayPlurals[tz.day(date) - 1],
   DDD: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
@@ -103,8 +88,6 @@ const flags: Record<
       dayName: localeInfo.weekday.short[tz.weekday(date)],
       short: true
     }),
-  dddd: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
-    localeInfo.weekday.long[tz.weekday(date)],
   DDDD: (date: Date, tz: Timezone, localeInfo: LocaleInfo) =>
     getDayName({
       y: tz.year(date),
