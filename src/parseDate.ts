@@ -9,7 +9,7 @@ type DateInfo = {
   minute: number
   second: number
   millisecond: number
-  isPm: number | null
+  isAfternoon: number | null
   timezoneOffset: number
 }
 
@@ -46,7 +46,7 @@ const parseMonthIndex = (value: string): number => +value - 1
 
 const emptyWordParseInfo: ParseInfo = [null, word]
 const dayPeriodParseInfo: ParseInfo = [
-  'isPm',
+  'isAfternoon',
   word,
   (value: string, localeInfo: LocaleInfo): number | null => {
     const val = value.toLowerCase()
@@ -73,6 +73,7 @@ const timezoneOffsetParseInfo: ParseInfo = [
     return 0
   }
 ]
+
 const parseFlags: Record<string, ParseInfo> = {
   d: ['day', twoDigitsOptional],
   dd: ['day', twoDigits],
@@ -103,8 +104,8 @@ const parseFlags: Record<string, ParseInfo> = {
     }
   ],
   yyyy: ['year', fourDigits],
-  h: ['hour', twoDigitsOptional, undefined, 'isPm'],
-  hh: ['hour', twoDigits, undefined, 'isPm'],
+  h: ['hour', twoDigitsOptional, undefined, 'isAfternoon'],
+  hh: ['hour', twoDigits, undefined, 'isAfternoon'],
   H: ['hour', twoDigitsOptional],
   HH: ['hour', twoDigits],
   M: ['minute', twoDigitsOptional],
@@ -143,7 +144,7 @@ export function parseDate(
     minute: 0,
     second: 0,
     millisecond: 0,
-    isPm: null,
+    isAfternoon: null,
     timezoneOffset: 0
   }
   const parseInfo: ParseInfo[] = []
@@ -219,9 +220,9 @@ export function parseDate(
     }
   }
 
-  if (dateInfo.isPm === 1 && dateInfo.hour !== 12) {
+  if (dateInfo.isAfternoon === 1 && dateInfo.hour !== 12) {
     dateInfo.hour = +dateInfo.hour + 12
-  } else if (dateInfo.isPm === 0 && dateInfo.hour === 12) {
+  } else if (dateInfo.isAfternoon === 0 && dateInfo.hour === 12) {
     dateInfo.hour = 0
   }
 
