@@ -191,13 +191,13 @@ function isDateInfoValid(dateInfo: DateInfo): boolean {
 }
 
 function applyPattern(
-  dateStr: string,
-  formatRegex: string,
+  text: string,
+  formatPattern: string,
   formatParseInfos: ParseInfo[],
   localeInfo: LocaleInfo
 ): DateInfo | null {
   // Check if the date string matches the format. If it doesn't return null
-  const matches = dateStr.match(new RegExp(formatRegex, 'i'))
+  const matches = text.match(new RegExp(formatPattern, 'i'))
   if (!matches || matches[0] !== matches.input) {
     return null
   }
@@ -296,13 +296,49 @@ function createDateParser(
 /**
  * Parse a date string into a Javascript Date object.
  *
- * @param dateStr Date string
+ * ```js
+ * const d = parseDate('12 March, 1998', 'dd mmm, yyyy')
+ * ```
+ *
+ * | Value | Description |
+ * | ----- | ----------- |
+ * | d       | Day of the month as digits; no leading zero for single-digit days. |
+ * | dd      | Day of the month as digits; leading zero for single-digit days. |
+ * | ddd     | Day of the week as a three-letter abbreviation. |
+ * | dddd    | Day of the week as its full name. |
+ * | DD      | Day of the month with the plural suffix. |
+ * | m       | Month as digits; no leading zero for single-digit months. |
+ * | mm      | Month as digits; leading zero for single-digit months. |
+ * | mmm     | Month as a three-letter abbreviation. |
+ * | mmmm    | Month as its full name. |
+ * | yy      | Year as last two digits; leading zero for years less than 10. |
+ * | yyyy    | Year represented by four digits. |
+ * | h       | Hours; no leading zero for single-digit hours (12-hour clock). |
+ * | hh      | Hours; leading zero for single-digit hours (12-hour clock). |
+ * | H       | Hours; no leading zero for single-digit hours (24-hour clock). |
+ * | HH      | Hours; leading zero for single-digit hours (24-hour clock). |
+ * | M       | Minutes; no leading zero for single-digit minutes. |
+ * | MM      | Minutes; leading zero for single-digit minutes. |
+ * | S       | Seconds; no leading zero for single-digit seconds. |
+ * | SS      | Seconds; leading zero for single-digit seconds. |
+ * | F       | Hundreds of milliseconds. |
+ * | FF      | Tens of milliseconds with a leading zero for single-digit values. |
+ * | FFF     | Milliseconds: zero padded. |
+ * | t       | Narrow dayPeriod from locale. |
+ * | tt      | Short dayPeriod from locale. |
+ * | ttt     | Long dayPeriod from locale. |
+ * | Z       | Timezone offset. |
+ * | [dhM]   | Literal characters. |
+ *
+ * @category Formatting
+ *
+ * @param text Date string
  * @param format Date parse format
  * @param locale The locale
  * @returns The date, or null if parsing failed.
  */
 export function parseDate(
-  dateStr: string,
+  text: string,
   format: string,
   locale: LocaleInfo | string | undefined = undefined
 ): Date | null {
@@ -310,7 +346,7 @@ export function parseDate(
 
   const dateParser = createDateParser(format)
 
-  const dateInfo = dateParser(dateStr, localeInfo)
+  const dateInfo = dateParser(text, localeInfo)
 
   if (dateInfo == null || !isDateInfoValid(dateInfo)) {
     return null
