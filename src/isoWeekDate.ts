@@ -7,6 +7,8 @@ import { Timezone } from './Timezone'
 /**
  * Find the ISO week date.
  *
+ * @example
+ *
  * ```js
  * console.log(isoWeekDate(new Date("2000-01-01T00:00:00Z")))
  * // [1999, 52, 6]

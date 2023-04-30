@@ -4,8 +4,12 @@ import { Timezone } from './Timezone'
 /**
  * Add months to a date (or subtract if negative).
  *
+ * @remarks
+ *
  * The day of the month is kept constant if possible. Where the destination
  * has less days at the end of the month, the surplus days are added.
+ *
+ * @example
  *
  * ```js
  * import { addMonths } from '@jetblack/date'

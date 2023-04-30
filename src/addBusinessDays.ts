@@ -7,7 +7,11 @@ import { calWeekends } from './WeekendCalendar'
 /**
  * Add business days to a date (or subtract if negative).
  *
+ * @remarks
+ *
  * If a calendar is not specified the weekend calendar is used.
+ *
+ * @example
  *
  * ```js
  * import { addBusinessDays } from '@jetblack/date'

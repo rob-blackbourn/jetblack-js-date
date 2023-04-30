@@ -5,6 +5,8 @@ import { Timezone } from './Timezone'
 /**
  * Find the last day of the month.
  *
+ * @example
+ *
  * ```js
  * const days2 = lastDayOfMonth(new Date('2022-03-25T00:00:00Z'), tzUtc)
  * console.log(days2.toISOString())

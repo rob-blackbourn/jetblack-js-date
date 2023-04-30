@@ -4,10 +4,20 @@ import { Timezone } from './Timezone'
 /**
  * Add days to a date (or subtract if negative)
  *
+ * @remarks
+ *
  * Daylight savings time (DST) presents an issue for date arithmetic.
  *
  * The following example adds three days to the Saturday before the clocks
  * change using the local timezone (London) and UTC (which does not have DST).
+ *
+ * When using the local timezone the "naturally correct" answer is returned.
+ * However, the elapsed time will be an hour less than when using UTC.
+ *
+ * Keeping the time change constant (as with UTC) can be useful when plotting
+ * data, or doing time series calculations (rolling averages, resampling, etc.).
+ *
+ * @example
  *
  * ```js
  * import { addDays, tzLocal, tzUtc }
@@ -21,12 +31,6 @@ import { Timezone } from './Timezone'
  * console.log(d2.toString()) // Tue Mar 28 2000 12:00:00 GMT+0100 (British Summer Time)
  * console.log(d3.toString()) // Tue Mar 28 2000 13:00:00 GMT+0100 (British Summer Time)
  * ```
- *
- * When using the local timezone the "naturally correct" answer is returned.
- * However, the elapsed time will be an hour less than when using UTC.
- *
- * Keeping the time change constant (as with UTC) can be useful when plotting
- * data, or doing time series calculations (rolling averages, resampling, etc.).
  *
  * @category Arithmetic
  *

@@ -8,6 +8,8 @@ import { Timezone } from './Timezone'
  *
  * Weeks start on Sunday and end on Saturday.
  *
+ * @example
+ *
  * ```js
  * const days1 = endOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)
  * console.log(days1.toISOString())

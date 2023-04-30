@@ -64,3 +64,17 @@ export function findLastIndex(
   }
   return -1
 }
+
+export function* range(
+  start: number,
+  stop?: number,
+  step: number = 1
+): Generator<number, void, unknown> {
+  if (typeof stop == 'undefined') {
+    stop = start
+    start = 0
+  }
+  for (let i = start; step > 0 ? i < stop : i > stop; i += step) {
+    yield i
+  }
+}

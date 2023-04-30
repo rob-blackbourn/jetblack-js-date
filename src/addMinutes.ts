@@ -3,6 +3,8 @@ import { MILLISECONDS_IN_MINUTE } from './constants'
 /**
  * Adds minutes to a date (or subtracts if negative).
  *
+ * @example
+ *
  * ```js
  * const d1 = addMinutes(new Date('2000-01-01T00:00:00.000'), 5)
  * console.log(d1.toISOString())

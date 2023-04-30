@@ -13,7 +13,6 @@ export { areInSameQuarter } from './areInSameQuarter'
 export { Calendar } from './Calendar'
 export { compareDateAsc } from './compareDateAsc'
 export { compareDateDesc } from './compareDateDesc'
-export { dateFormat } from './dateFormat'
 export { dateRangeByDay } from './dateRangeByDay'
 export { dateRangeByHour } from './dateRangeByHour'
 export { dateRangeByMinute } from './dateRangeByMinute'
@@ -50,6 +49,7 @@ export { findLastStartOfMonthIndex } from './findLastStartOfMonthIndex'
 export { findLastWeekdayIndex } from './findLastWeekdayIndex'
 export { findStartOfMonthIndex } from './findStartOfMonthIndex'
 export { findWeekdayIndex } from './findWeekdayIndex'
+export { formatDate, formatDate as dateFormat } from './formatDate'
 export { HolidayCalendar } from './HolidayCalendar'
 export { isDateAfter } from './isDateAfter'
 export { isDateBefore } from './isDateBefore'
@@ -65,6 +65,16 @@ export { lastDayOfMonth } from './lastDayOfMonth'
 export { lastDayOfWeek } from './lastDayOfWeek'
 export { lastDayOfYear } from './lastDayOfYear'
 export { leapSeconds } from './leapSeconds'
+import {
+  DayPlurals,
+  DayPeriods,
+  NameStyle,
+  I18nSettings,
+  Days,
+  Months
+} from './LocaleInfo'
+export type { DayPlurals, DayPeriods, NameStyle, I18nSettings, Days, Months }
+export { LocaleInfo, getLocaleInfo } from './LocaleInfo'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
 export { nearestBusinessDay } from './nearestBusinessDay'
@@ -81,6 +91,7 @@ export { startOfWeek } from './startOfWeek'
 export { startOfWeekday } from './startOfWeekday'
 export { startOfYear } from './startOfYear'
 export { subDuration } from './subDuration'
+export { parseDate } from './parseDate'
 import { TimezoneOffset } from './IANATimezone'
 export type { TimezoneOffset }
 export { IANATimezone } from './IANATimezone'

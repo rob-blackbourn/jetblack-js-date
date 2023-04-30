@@ -5,6 +5,13 @@ import { Timezone } from './Timezone'
 /**
  * Add a duration to a date.
  *
+ * @example
+ *
+ * ```js
+ * const duration = new Duration('P1DT3H')
+ * const date = addDuration(tzLocal.makeDate(2000, 0, 1), duration, tzLocal)
+ * ```
+ *
  * @category Arithmetic
  *
  * @param date The start date.

@@ -1,6 +1,8 @@
 /**
  * Compares two dates ascending.
  *
+ * @example
+ *
  * ```js
  * const a = [
  *   new Date('2000-07-01'),
