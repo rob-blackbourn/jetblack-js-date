@@ -27,20 +27,25 @@ export type DayPeriods = [string, string]
 export type NameStyle = 'narrow' | 'short' | 'long'
 
 /**
- * The settings for locales.
+ * The settings for internationalization.
  */
 export interface I18nSettings {
+  /** The locale name */
   locale: string
+  /** The day period names */
   dayPeriod: Record<NameStyle, DayPeriods>
+  /** The names of the days of the week */
   weekday: Record<NameStyle, Days>
+  /** The names of the months */
   month: Record<NameStyle, Months>
-  dayPlurals: string[] // 31 days starting at 0.
+  /** The plurals of the days of the month for 31 days starting at 0 */
+  dayPlurals: string[]
 }
 
-/** The days of the week */
+/** The 7 days of the week */
 export type Days = [string, string, string, string, string, string, string]
 
-/** The months of the year */
+/** The 12 months of the year */
 export type Months = [
   string,
   string,
@@ -103,6 +108,18 @@ function getDayPlurals(
   return plurals
 }
 
+/**
+ * Get the day period using Intl.DateTimeFormat.
+ *
+ * Unfortunately this is largely broken. Most locales just return
+ * "in the morning" and "in the afternoon" for all dayPeriod styles. Omitting
+ * the "dayPeriod" option, returns variations of AM and PM, which is what is
+ * done for 'narrow' and 'short'.
+ *
+ * @param locale The locale
+ * @param style The style of text to fetch
+ * @returns The day period
+ */
 function getDayPeriods(
   locale: string,
   style: 'narrow' | 'short' | 'long'
@@ -111,9 +128,14 @@ function getDayPeriods(
     hour: 'numeric',
     hour12: true
   }
-  // if (!locale.startsWith('en')) {
-  //   options = { ...options, dayPeriod: style }
-  // }
+
+  if (style === 'long') {
+    options = {
+      ...options,
+      dayPeriod: style
+    }
+  }
+
   const morning = new Intl.DateTimeFormat(locale, options)
     .formatToParts(new Date(1970, 0, 1, 1))
     .filter(x => x.type === 'dayPeriod')
@@ -124,7 +146,7 @@ function getDayPeriods(
     .map(x => x.value)
   return [
     morning.length === 1 ? morning[0] : 'AM',
-    afternoon.length === 1 ? afternoon[0] : 'AM'
+    afternoon.length === 1 ? afternoon[0] : 'PM'
   ]
 }
 
