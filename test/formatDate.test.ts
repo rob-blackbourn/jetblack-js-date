@@ -14,21 +14,13 @@ describe('formatDate', () => {
   })
 
   it('should pad d when necessary', () => {
-    expect(formatDate(new Date('2001-01-09T00:00:00Z'), 'd', tzUtc, 'en')).toBe(
-      '9'
-    )
-    expect(formatDate(new Date('2001-01-19T00:00:00Z'), 'd', tzUtc, 'en')).toBe(
-      '19'
-    )
+    expect(formatDate(new Date('2001-01-09T00:00:00Z'), 'd', tzUtc)).toBe('9')
+    expect(formatDate(new Date('2001-01-19T00:00:00Z'), 'd', tzUtc)).toBe('19')
   })
 
   it('should always pad dd when necessary', () => {
-    expect(
-      formatDate(new Date('2001-01-09T00:00:00Z'), 'dd', tzUtc, 'en')
-    ).toBe('09')
-    expect(
-      formatDate(new Date('2001-01-19T00:00:00Z'), 'dd', tzUtc, 'en')
-    ).toBe('19')
+    expect(formatDate(new Date('2001-01-09T00:00:00Z'), 'dd', tzUtc)).toBe('09')
+    expect(formatDate(new Date('2001-01-19T00:00:00Z'), 'dd', tzUtc)).toBe('19')
   })
 
   it('should get ddd', () => {
@@ -41,6 +33,12 @@ describe('formatDate', () => {
     expect(
       formatDate(new Date('2001-01-09T00:00:00Z'), 'dddd', tzUtc, 'en')
     ).toBe('Tuesday')
+  })
+
+  it('should get DDD', () => {
+    expect(
+      formatDate(new Date('2001-01-09T00:00:00Z'), 'DDD', tzUtc, 'en')
+    ).toBe('T')
   })
 
   it('should pluralize', () => {

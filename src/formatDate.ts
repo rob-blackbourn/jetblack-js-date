@@ -6,7 +6,7 @@ import { Timezone } from './Timezone'
 
 /** @internal  */
 const token =
-  /d{1,4}|D{2}|m{1,4}|yy(?:yy)?|([HhMSt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
+  /d{1,4}|D{2,3}|m{1,4}|yy(?:yy)?|([HhMSt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
 
 /** @internal */
 const getDayOfWeek = (date: Date, tz: Timezone): number => {
@@ -23,6 +23,7 @@ const flags: Record<
   ddd: (date, tz, localeInfo) => localeInfo.weekday.short[tz.weekday(date)],
   dddd: (date, tz, localeInfo) => localeInfo.weekday.long[tz.weekday(date)],
   DD: (date, tz, localeInfo) => localeInfo.dayPlurals[tz.day(date) - 1],
+  DDD: (date, tz, localeInfo) => localeInfo.weekday.narrow[tz.weekday(date)],
   m: (date, tz) => tz.monthIndex(date) + 1,
   mm: (date, tz) => String(tz.monthIndex(date) + 1).padStart(2, '0'),
   mmm: (date, tz, localeInfo) => localeInfo.month.short[tz.monthIndex(date)],
@@ -82,9 +83,10 @@ const flags: Record<
  * | ------- | ----------- |
  * | d       | Day of the month as digits; no leading zero for single-digit days. |
  * | dd      | Day of the month as digits; leading zero for single-digit days. |
- * | ddd     | Day of the week as a three-letter abbreviation. |
+ * | ddd     | Day of the week as the short representation (for en a three-letter abbreviation). |
  * | dddd    | Day of the week as its full name. |
  * | DD      | Day of the month with the plural suffix. |
+ * | DDD     | Day of the week as the narrow representation. |
  * | m       | Month as digits; no leading zero for single-digit months. |
  * | mm      | Month as digits; leading zero for single-digit months. |
  * | mmm     | Month as a three-letter abbreviation. |
