@@ -3,7 +3,8 @@ import {
   dataToTimezoneOffset,
   minDataToTimezoneOffset,
   loadTimezone,
-  loadTimezoneNames
+  loadTimezoneNames,
+  fetchTimezone
 } from '../src'
 import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
 import chicagoMinTzData from '@jetblack/tzdata/dist/latest/America/Chicago.min.json'
@@ -36,5 +37,11 @@ describe('tzdata', () => {
   it('should load timezone names with dynamic import', async () => {
     const names = await loadTimezoneNames()
     expect(names.length > 0).toBeTruthy()
+  })
+
+  it('should fetch minified tzdata with dynamic import', async () => {
+    const tzChicago = await fetchTimezone('America/Chicago')
+    const date = new Date('2000-01-01T00:00:00Z')
+    expect(tzChicago.offset(date)).toBe(-360)
   })
 })

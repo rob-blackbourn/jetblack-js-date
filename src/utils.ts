@@ -20,7 +20,16 @@ export function getClosestValues<T, I>(
       end = middle - 1
     }
   }
-  // key wasn't found
+  // Exact key wasn't found.
+
+  // Ensure the start and ends are in bounds.
+  if (end < 0 || end >= array.length) {
+    end = array.length - 1
+  }
+  if (start < 0 || start >= array.length) {
+    start = 0
+  }
+
   return [array[end], array[start]]
 }
 

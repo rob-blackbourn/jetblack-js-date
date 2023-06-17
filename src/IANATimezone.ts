@@ -53,7 +53,19 @@ export class IANATimezone extends Timezone {
       date.getTime(),
       (a, b) => b.utc - a
     )
-    return lo
+    if (lo >= hi) {
+      return lo
+    }
+
+    // If the date is outside the range, return the closest.
+    if (
+      Math.abs(lo.utc.valueOf() - date.valueOf()) <
+      Math.abs(hi.utc.valueOf() - date.valueOf())
+    ) {
+      return lo
+    } else {
+      return hi
+    }
   }
 
   #fromLocal(localDate: Date): Date {
