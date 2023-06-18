@@ -1,13 +1,36 @@
-import { formatDate, tzUtc } from '../src'
+import { IANATimezone, dataToTimezoneOffset, formatDate, tzUtc } from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('formatDate', () => {
-  it('should pass smoke test for en', () => {
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
+
+  it('should pass smoke test for chicago en', () => {
+    const d = new Date('2022-07-02T06:39:15.291Z')
+    const s = formatDate(d, 'ddd, dd mmm yyyy HH:MM:SS Z', tzChicago, 'en')
+    expect(s).toBe('Sat, 02 Jul 2022 01:39:15 America/Chicago')
+  })
+
+  it('should pass smoke test for tokyo en', () => {
+    const d = new Date('2022-07-02T06:39:15.291Z')
+    const s = formatDate(d, 'ddd, dd mmm yyyy HH:MM:SS Z', tzTokyo, 'en')
+    expect(s).toBe('Sat, 02 Jul 2022 15:39:15 Asia/Tokyo')
+  })
+
+  it('should pass smoke test for UTC en', () => {
     const d = new Date('2022-07-02T06:39:15.291Z')
     const s = formatDate(d, 'ddd, dd mmm yyyy HH:MM:SS Z', tzUtc, 'en')
     expect(s).toBe('Sat, 02 Jul 2022 06:39:15 UTC')
   })
 
-  it('should pass smoke test for fr', () => {
+  it('should pass smoke test for UTC fr', () => {
     const d = new Date('2022-07-02T06:39:15.291Z')
     const s = formatDate(d, 'ddd, dd mmm yyyy HH:MM:SS Z', tzUtc, 'fr')
     expect(s).toBe('sam., 02 juil. 2022 06:39:15 UTC')
