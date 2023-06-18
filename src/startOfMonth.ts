@@ -2,7 +2,7 @@ import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 
 /**
- * Find the start of the months for a given date.
+ * Find the start of the month for a given date.
  *
  * @category Anchors
  *

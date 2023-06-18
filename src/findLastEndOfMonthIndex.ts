@@ -1,4 +1,4 @@
-import { isEndOfMonth } from './isEndOfMonth'
+import { isLastDayOfMonth } from './isLastDayOfMonth'
 import { tzLocal } from './LocalTimezone'
 import { Timezone } from './Timezone'
 import { findLastIndex } from './utils'
@@ -14,5 +14,5 @@ export function findLastEndOfMonthIndex(
   dates: Date[],
   tz: Timezone = tzLocal
 ): number {
-  return findLastIndex(dates, date => isEndOfMonth(date, tz))
+  return findLastIndex(dates, date => isLastDayOfMonth(date, tz))
 }
