@@ -116,9 +116,7 @@ export {
   minDataToTimezoneOffset,
   timezoneFromJSON,
   fetchTimezone,
-  fetchTimezoneNames,
-  loadTimezone,
-  loadTimezoneNames
+  fetchTimezoneNames
 } from './tzdata'
 export { tzUtc } from './UTCTimezone'
 export { weekOfYear } from './weekOfYear'
