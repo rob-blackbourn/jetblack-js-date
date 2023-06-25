@@ -10,7 +10,7 @@ import { Timezone } from './Timezone'
  *
  * There is a tutorial [here](../../pages/guide/calendars.html).
  *
- * Two calendars are classes are defined: {@link WeekendCalendar} and
+ * Two calendar classes are defined: {@link WeekendCalendar} and
  * {@link HolidayCalendar}. The object {@link calWeekends} is the
  * default calendar. It simply defines Saturday and Sunday as holiday
  * dates.
