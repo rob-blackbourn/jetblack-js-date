@@ -108,8 +108,8 @@ export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
 export { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse } from './types'
-export type { DatePartRequest, DatePartResponse }
+import { DatePartResponse } from './types'
+export type { DatePartResponse }
 export {
   tzDataReviver,
   dataToTimezoneOffset,

@@ -39,6 +39,20 @@ London the clocks went back on the last Sunday in March at 2am. This means to
 calculate the time in UTC from the local time between 1am and 2am we would need
 to know if the adjustment had already been made.
 
+## Using IANA Timezones With Date
+
+Given that we know the `Date` object is a wrapper around the number of
+milliseconds since 1970, and the IANA timezone is an offset in minutes from UTC,
+we can see that adding the offset given from the UTC date and time will provide
+the date we want.
+
+The expensive part of this operation is finding the offset, as this is specific
+to a given date and time. As this library uses the native `Date` this must be
+done for each operation. To improve efficiency the `Timezone` class has the
+functions `makeDate` and `dateParts`. These functions do the offset lookup
+once. Contrast this with getting the year (`tz.year(date)`) and then the month
+(`tz.monthIndex(date)`) which would need to find the offset twice.
+
 ## What next ?
 
 {@page ./date-arithmetic.md}

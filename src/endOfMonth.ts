@@ -25,10 +25,7 @@ import { Timezone } from './Timezone'
  * @returns A date which is the last day of the month for the given year and month.
  */
 export function endOfMonth(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex } = tz.dateParts(date, {
-    year: true,
-    monthIndex: true
-  })
+  const { year, monthIndex } = tz.dateParts(date)
 
   return tz.makeDate(
     year,
