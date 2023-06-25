@@ -1,5 +1,5 @@
 import { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse } from './types'
+import { DatePartResponse } from './types'
 
 class UtcTimezone extends Timezone {
   constructor() {
@@ -20,16 +20,16 @@ class UtcTimezone extends Timezone {
     )
   }
 
-  dateParts(date: Date, request: DatePartRequest): DatePartResponse {
+  dateParts(date: Date): DatePartResponse {
     return {
-      year: request.year ? date.getUTCFullYear() : 0,
-      monthIndex: request.monthIndex ? date.getUTCMonth() : 0,
-      weekday: request.weekday ? date.getUTCDay() : 0,
-      day: request.day ? date.getUTCDate() : 0,
-      hours: request.hours ? date.getUTCHours() : 0,
-      minutes: request.minutes ? date.getUTCMinutes() : 0,
-      seconds: request.seconds ? date.getUTCSeconds() : 0,
-      milliseconds: request.milliseconds ? date.getUTCMilliseconds() : 0
+      year: date.getUTCFullYear(),
+      monthIndex: date.getUTCMonth(),
+      weekday: date.getUTCDay(),
+      day: date.getUTCDate(),
+      hours: date.getUTCHours(),
+      minutes: date.getUTCMinutes(),
+      seconds: date.getUTCSeconds(),
+      milliseconds: date.getUTCMilliseconds()
     }
   }
 

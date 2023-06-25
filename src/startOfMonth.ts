@@ -11,9 +11,6 @@ import { Timezone } from './Timezone'
  * @returns The start of the month.
  */
 export function startOfMonth(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex } = tz.dateParts(date, {
-    year: true,
-    monthIndex: true
-  })
+  const { year, monthIndex } = tz.dateParts(date)
   return tz.makeDate(year, monthIndex, 1)
 }

@@ -11,11 +11,7 @@ import { Timezone } from './Timezone'
  * @returns The start of the day.
  */
 export function startOfDay(date: Date, tz: Timezone = tzLocal): Date {
-  const { year, monthIndex, day } = tz.dateParts(date, {
-    year: true,
-    monthIndex: true,
-    day: true
-  })
+  const { year, monthIndex, day } = tz.dateParts(date)
 
   return tz.makeDate(year, monthIndex, day)
 }

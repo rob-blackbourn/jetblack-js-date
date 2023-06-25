@@ -1,6 +1,6 @@
 import { MILLISECONDS_IN_MINUTE } from './constants'
 import { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse } from './types'
+import { DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
 import { getClosestValues } from './utils'
 
@@ -105,9 +105,9 @@ export class IANATimezone extends Timezone {
     return this.#fromLocal(date)
   }
 
-  dateParts(date: Date, request: DatePartRequest): DatePartResponse {
+  dateParts(date: Date): DatePartResponse {
     const local = this.#toLocal(date)
-    return tzUtc.dateParts(local, request)
+    return tzUtc.dateParts(local)
   }
 
   offset(date: Date): number {

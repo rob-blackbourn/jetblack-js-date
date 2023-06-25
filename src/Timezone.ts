@@ -1,4 +1,4 @@
-import { DatePartRequest, DatePartResponse } from './types'
+import { DatePartResponse } from './types'
 import { padNumber } from './utils'
 
 /**
@@ -103,7 +103,7 @@ export abstract class Timezone {
    * @param request The request.
    * @returns The date parts.
    */
-  abstract dateParts(date: Date, request: DatePartRequest): DatePartResponse
+  abstract dateParts(date: Date): DatePartResponse
 
   /**
    * The signed offset in minutes from UTC for the given date.
@@ -194,15 +194,7 @@ export abstract class Timezone {
    */
   as(date: Date, tz: Timezone): Date {
     const { year, monthIndex, day, hours, minutes, seconds, milliseconds } =
-      this.dateParts(date, {
-        year: true,
-        monthIndex: true,
-        day: true,
-        hours: true,
-        minutes: true,
-        seconds: true,
-        milliseconds: true
-      })
+      this.dateParts(date)
     return tz.makeDate(
       year,
       monthIndex,
@@ -221,15 +213,7 @@ export abstract class Timezone {
    */
   toISOString(date: Date) {
     const { year, monthIndex, day, hours, minutes, seconds, milliseconds } =
-      this.dateParts(date, {
-        year: true,
-        monthIndex: true,
-        day: true,
-        hours: true,
-        minutes: true,
-        seconds: true,
-        milliseconds: true
-      })
+      this.dateParts(date)
     const offset = this.offset(date)
     const offsetSign = Math.sign(offset)
     const offsetHours = offsetSign * Math.trunc(offset / 60)

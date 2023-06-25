@@ -1,5 +1,5 @@
 import { Timezone } from './Timezone'
-import { DatePartRequest, DatePartResponse } from './types'
+import { DatePartResponse } from './types'
 
 class LocalTimezone extends Timezone {
   constructor() {
@@ -26,16 +26,16 @@ class LocalTimezone extends Timezone {
     )
   }
 
-  dateParts(date: Date, request: DatePartRequest): DatePartResponse {
+  dateParts(date: Date): DatePartResponse {
     return {
-      year: request.year ? date.getFullYear() : 0,
-      monthIndex: request.monthIndex ? date.getMonth() : 0,
-      weekday: request.weekday ? date.getDay() : 0,
-      day: request.day ? date.getDate() : 0,
-      hours: request.hours ? date.getHours() : 0,
-      minutes: request.minutes ? date.getMinutes() : 0,
-      seconds: request.seconds ? date.getSeconds() : 0,
-      milliseconds: request.milliseconds ? date.getMilliseconds() : 0
+      year: date.getFullYear(),
+      monthIndex: date.getMonth(),
+      weekday: date.getDay(),
+      day: date.getDate(),
+      hours: date.getHours(),
+      minutes: date.getMinutes(),
+      seconds: date.getSeconds(),
+      milliseconds: date.getMilliseconds()
     }
   }
 
