@@ -1,7 +1,7 @@
 {
   "name": "@jetblack/date",
   "private": false,
-  "version": "2.6.0",
+  "version": "2.7.0-alpha.0",
   "description": "Date utilities",
   "keywords": [
     "date",
@@ -10,8 +10,8 @@
     "tzdata",
     "tz"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.ems.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
   "repository": "git@github.com:rob-blackbourn/jetblack-js-date.git",
   "homepage": "https://github.com/rob-blackbourn/jetblack-js-date",
   "author": "Rob Blackbourn <rob.blackbourn@gmail.com>",
@@ -26,15 +26,12 @@
   "devDependencies": {
     "@jetblack/tzdata": "^0.4.0",
     "@knodes/typedoc-plugin-pages": "^0.22.3",
-    "@rollup/plugin-commonjs": "^17.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-typescript": "^11.1.1",
     "@types/jest": "^27.4.1",
     "http-server": "^14.1.0",
     "jest": "^27.5.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.59.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.34.1",
+    "rollup": "^3.25.2",
     "ts-jest": "^27.1.3",
     "tslib": "^2.3.1",
     "typedoc": "^0.22.13",

@@ -6,7 +6,10 @@
     "declaration": true,
     "lib": [ "es6", "DOM" ],
     "strict": true,
+    "strictNullChecks": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
