@@ -26,8 +26,8 @@ and able to prune unused class methods, so functions are preferred to classes.
 
 This may change, but the current view is that the majority of developers
 use bundlers, rather than include manual `<script>` tags. With this in
-mind the code is provided as a single bundle, as the downstream bundler
-will do the tree shaking.
+mind the code is provided as a single javascript file, as the downstream
+bundler will do the tree shaking.
 
 ## What next ?
 
