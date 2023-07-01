@@ -22,6 +22,8 @@ export { dateRangeByQuarter } from './dateRangeByQuarter'
 export { dateRangeBySecond } from './dateRangeBySecond'
 export { dateRangeByWeek } from './dateRangeByWeek'
 export { dateRangeByYear } from './dateRangeByYear'
+export { dateSchedule } from './dateSchedule'
+export type { Periodicity } from './dateSchedule'
 export { dateScheduleByDay } from './dateScheduleByDay'
 export { dateScheduleByMonth } from './dateScheduleByMonth'
 export { dateScheduleByQuarter } from './dateScheduleByQuarter'
@@ -78,7 +80,7 @@ export { lastDayOfWeek } from './lastDayOfWeek'
 export { lastDayOfWeekday } from './lastDayOfWeekday'
 export { lastDayOfYear } from './lastDayOfYear'
 export { leapSeconds } from './leapSeconds'
-import {
+export type {
   DayPlurals,
   DayPeriods,
   NameStyle,
@@ -86,7 +88,6 @@ import {
   Days,
   Months
 } from './LocaleInfo'
-export type { DayPlurals, DayPeriods, NameStyle, I18nSettings, Days, Months }
 export { LocaleInfo, getLocaleInfo } from './LocaleInfo'
 export { minDate } from './minDate'
 export { maxDate } from './maxDate'
@@ -106,8 +107,7 @@ export { startOfWeekday } from './startOfWeekday'
 export { startOfYear } from './startOfYear'
 export { subDuration } from './subDuration'
 export { parseDate } from './parseDate'
-import { TimezoneOffset } from './IANATimezone'
-export type { TimezoneOffset }
+export type { TimezoneOffset } from './IANATimezone'
 export { IANATimezone } from './IANATimezone'
 export { tzLocal } from './LocalTimezone'
 export { WeekendCalendar, calWeekends } from './WeekendCalendar'
@@ -115,8 +115,7 @@ export { startOfDay } from './startOfDay'
 export { startOfToday } from './startOfToday'
 export { startOfWeekYear } from './startOfWeekYear'
 export { Timezone } from './Timezone'
-import { DatePartResponse } from './types'
-export type { DatePartResponse }
+export type { DatePartResponse } from './types'
 export {
   tzDataReviver,
   dataToTimezoneOffset,
