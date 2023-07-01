@@ -1,8 +1,6 @@
 /**
  * Find the largest date.
  *
- * @example
- *
  * ```ts
  * import { maxDate } from '@jetblack/date'
  *

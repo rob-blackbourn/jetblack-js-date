@@ -15,8 +15,6 @@ import { padNumber } from './utils'
  * The timezone object provides accessors for the common properties of a date
  * such as {@link Timezone.year}. Here is an example of using the year.
  *
- * @example
- *
  * ```js
  * import { tzLocal, tzUtc } from '@jetblack/date'
  *
@@ -88,15 +86,20 @@ export abstract class Timezone {
   /**
    * Extract the date parts.
    *
-   * The request object sets the parts of the response to be calculated.
+   * If more than one date part is required this is the preferred way to get
+   * them, as the timezone calculation is only performed once.
    *
    * ```js
-   * // Only get the year, monthIndex and day.
-   * const { year, monthIndex, day } = tz.dateParts(date, {
-   *   year: true,
-   *   monthIndex: true,
-   *   day: true
-   * })
+   * const {
+   *   year,
+   *   monthIndex,
+   *   day,
+   *   weekday,
+   *   hours,
+   *   minutes,
+   *   seconds,
+   *   milliseconds
+   * } = tz.dateParts(date)
    * ```
    *
    * @param date The date.
@@ -115,6 +118,14 @@ export abstract class Timezone {
   /**
    * The year for the date.
    *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1)
+   * console.log(tzUtc.year(date))
+   * // returns 2000
+   * ```
+   *
    * @param date The date.
    * @returns The year.
    */
@@ -122,6 +133,14 @@ export abstract class Timezone {
 
   /**
    * The month index for the given date where 0 is January.
+   *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1)
+   * console.log(tzUtc.monthIndex(date))
+   * // returns 0
+   * ```
    *
    * @param date The date.
    * @returns The month index of the date where 0 is January.
@@ -131,6 +150,14 @@ export abstract class Timezone {
   /**
    * The day of the week for the given date where 0 is Sunday.
    *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1)
+   * console.log(tzUtc.weekday(date))
+   * // returns 6
+   * ```
+   *
    * @param date The date.
    * @returns The day of the week where 0 is Sunday.
    */
@@ -138,6 +165,14 @@ export abstract class Timezone {
 
   /**
    * The day of the month for the given date.
+   *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1)
+   * console.log(tzUtc.day(date))
+   * // returns 1
+   * ```
    *
    * @param date The date.
    * @returns The day of the month.
@@ -147,6 +182,14 @@ export abstract class Timezone {
   /**
    * The hour of the day for the given date.
    *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1, 12, 15, 30, 123)
+   * console.log(tzUtc.hours(date))
+   * // returns 12
+   * ```
+   *
    * @param date The date.
    * @returns The hour of the day.
    */
@@ -154,6 +197,14 @@ export abstract class Timezone {
 
   /**
    * The minute of the day for the given date.
+   *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1, 12, 15, 30, 123)
+   * console.log(tzUtc.minutes(date))
+   * // returns 15
+   * ```
    *
    * @param date The date.
    * @returns The minute of the day.
@@ -163,6 +214,14 @@ export abstract class Timezone {
   /**
    * The second of the day for a given date.
    *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1, 12, 15, 30, 123)
+   * console.log(tzUtc.seconds(date))
+   * // returns 30
+   * ```
+   *
    * @param date The date.
    * @returns The second of the day.
    */
@@ -170,6 +229,14 @@ export abstract class Timezone {
 
   /**
    * The millisecond of the day for a given date.
+   *
+   * ```js
+   * import { tzUtc } from '@jetblack/date'
+   *
+   * const date = tzUtc.makeDate(2000, 0, 1, 12, 15, 30, 123)
+   * console.log(tzUtc.milliseconds(date))
+   * // returns 123
+   * ```
    *
    * @param date The date.
    * @returns The milliseconds of the day.

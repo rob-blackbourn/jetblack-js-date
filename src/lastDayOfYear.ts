@@ -4,8 +4,6 @@ import { Timezone } from './Timezone'
 /**
  * Find the last day of the year.
  *
- * @example
- *
  * ```js
  * const days2 = lastDayOfYear(new Date('2022-03-25T00:00:00Z'), tzUtc)
  * console.log(days2.toISOString())

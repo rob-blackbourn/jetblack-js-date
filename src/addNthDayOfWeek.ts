@@ -5,15 +5,11 @@ import { Timezone } from './Timezone'
 /**
  * Add or subtract days of the week.
  *
- * @remarks
- *
  * If the start date lies on the specified day of the week and the strictly
  * different flag is false, the current date would be considered the first
  * day of the week.
  *
  * Note that the JavaScript Date object treats 0 as Sunday and 6 as Saturday.
- *
- * @example
  *
  * ```js
  * // Saturday 1 January 1990

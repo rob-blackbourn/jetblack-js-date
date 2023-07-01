@@ -1,8 +1,6 @@
 /**
  * Find the smallest date.
  *
- * @example
- *
  * ```ts
  * import { minDate } from '@jetblack/date'
  *

@@ -3,8 +3,6 @@ import { Timezone } from './Timezone'
 /**
  * The base class for calendars.
  *
- * @remarks
- *
  * Calendars are required when working with functions that require
  * knowledge of weekends and holidays (e.g. {@link addBusinessDays}).
  *
@@ -16,8 +14,6 @@ import { Timezone } from './Timezone'
  * dates.
  *
  * This is how the {@link WeekendCalendar} is defined.
- *
- * @example
  *
  * ```ts
  * export class WeekendCalendar extends Calendar {
@@ -46,7 +42,7 @@ export abstract class Calendar {
   #name: string
 
   /**
-   * The name of the calendar.
+   * Construct a calendar.
    *
    * @param name The calendar name.
    */
@@ -64,8 +60,8 @@ export abstract class Calendar {
   /**
    * Check if the date is a holiday.
    *
-   * @param date The date.
-   * @param tz An optional timezone. Defaults to the local timezone.
+   * @param date The date to check.
+   * @param tz The timezone.
    * @returns True if the date is a holiday, otherwise false.
    */
   abstract isHoliday(date: Date, tz: Timezone): boolean

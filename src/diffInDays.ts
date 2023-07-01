@@ -4,8 +4,6 @@ import { diffInMilliseconds } from './diffInMilliseconds'
 /**
  * Find the number of days between two dates including the fractional component.
  *
- * @example
- *
  * ```js
  * const days1 = diffInDays(
  *   new Date('2022-03-25T00:00:00Z'),

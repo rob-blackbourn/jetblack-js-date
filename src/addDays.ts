@@ -4,8 +4,6 @@ import { Timezone } from './Timezone'
 /**
  * Add days to a date (or subtract if negative)
  *
- * @remarks
- *
  * Daylight savings time (DST) presents an issue for date arithmetic.
  *
  * The following example adds three days to the Saturday before the clocks
@@ -16,8 +14,6 @@ import { Timezone } from './Timezone'
  *
  * Keeping the time change constant (as with UTC) can be useful when plotting
  * data, or doing time series calculations (rolling averages, resampling, etc.).
- *
- * @example
  *
  * ```js
  * import { addDays, tzLocal, tzUtc }

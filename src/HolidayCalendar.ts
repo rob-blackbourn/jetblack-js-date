@@ -5,8 +5,6 @@ import { WeekendCalendar } from './WeekendCalendar'
  *
  * The following constructs a holiday calendar for the US in 2020.
  *
- * @example
- *
  * ```js
  * import { HolidayCalendar } from '@jetblack/date'
  *

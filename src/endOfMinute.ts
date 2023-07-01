@@ -3,8 +3,6 @@ import { MILLISECONDS_IN_MINUTE } from './constants'
 /**
  * Return the end of the minute for the given date.
  *
- * @example
- *
  * ```js
  * const d1 = tzUtc.makeDate(2000, 1, 1)
  * const d2 = endOfMinute(d1, tzUtc)

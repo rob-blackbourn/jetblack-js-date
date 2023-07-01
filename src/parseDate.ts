@@ -304,8 +304,6 @@ function createDateParser(
  * If the timezone offset is absent the dates will be according to the local
  * timezone.
  *
- * @example
- *
  * ```js
  * const d = parseDate('12 March, 1998', 'dd mmm, yyyy')
  * ```

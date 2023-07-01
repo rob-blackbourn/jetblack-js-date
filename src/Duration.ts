@@ -3,11 +3,7 @@ const SECONDS_IN_DAY = 24 * 60 * 60
 /**
  * Represents an ISO 8601 duration.
  *
- * @remarks
- *
- * Note that durations may be negative.
- *
- * @example
+ * Here we add a day.
  *
  *  ```js
  * const duration = new Duration('P1D')
@@ -16,7 +12,7 @@ const SECONDS_IN_DAY = 24 * 60 * 60
  * // Sun Jan 02 2000 00:00:00 GMT+0000 (Greenwich Mean Time)
  * ```
  *
- * @example
+ * Note that durations may be negative.
  *
  * ```js
  * const duration = new Duration('-P1D')

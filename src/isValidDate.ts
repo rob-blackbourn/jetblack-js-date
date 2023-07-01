@@ -1,8 +1,6 @@
 /**
  * Check if a value is a valid date.
  *
- * @example
- *
  * ```js
  * > const value = new Date("foo")
  * > console.log(isValidDate(value))

@@ -1,8 +1,6 @@
 /**
  * Check if the year is a leap year.
  *
- * @example
- *
  * ```js
  * import { isLeapYear } from '@jetblack/date'
  *

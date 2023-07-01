@@ -31,9 +31,28 @@ export interface TimezoneOffset {
 /**
  * An implementation for timezones using IANA data.
  *
+ * This example gets the data from the internet.
+ *
+ * ```js
+ * import { IANATimezone, minDataToTimezoneOffset } from '@jetblack/date'
+ *
+ * const timezoneName = 'Europe/Brussels'
+ * fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}.min.json`)
+ *  .then(response => response.json())
+ *  .then(data => {
+ *    const zoneData = data.map(minDataToTimezoneOffset)
+ *    const tz = new IANATimezone(timeZoneName, zoneData)
+ *    const newYearsDay = tz.makeDate(2000, 0, 1)
+ *    // returns "2000-01-01T01:00:00Z"
+ *  })
+ *  .catch(error => console.error(error))
+ * }
+ * ```
+ *
  * @category Timezone
  */
 export class IANATimezone extends Timezone {
+  /** @ignore */
   #deltas: TimezoneOffset[]
 
   /**
@@ -47,6 +66,7 @@ export class IANATimezone extends Timezone {
     this.#deltas = deltas
   }
 
+  /** @ignore */
   #findOffset(date: Date): TimezoneOffset {
     const [lo, hi] = getClosestValues(
       this.#deltas,
@@ -68,6 +88,7 @@ export class IANATimezone extends Timezone {
     }
   }
 
+  /** @ignore */
   #fromLocal(localDate: Date): Date {
     const delta = this.#findOffset(localDate)
     const utcDate = new Date(
@@ -76,6 +97,7 @@ export class IANATimezone extends Timezone {
     return utcDate
   }
 
+  /** @ignore */
   #toLocal(utcDate: Date): Date {
     const delta = this.#findOffset(utcDate)
     const localDate = new Date(

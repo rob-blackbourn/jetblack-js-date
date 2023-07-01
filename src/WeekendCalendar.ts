@@ -35,6 +35,13 @@ export class WeekendCalendar extends Calendar {
     return this.#weekends.some(x => x === dayOfWeek)
   }
 
+  /**
+   * Check if the date is a holiday.
+   *
+   * @param date The date to check.
+   * @param tz An optional timezone. Defaults to the local timezone.
+   * @returns True if the date is a holiday, otherwise false.
+   */
   isHoliday(date: Date, tz: Timezone = tzLocal): boolean {
     return this.isWeekend(date, tz)
   }

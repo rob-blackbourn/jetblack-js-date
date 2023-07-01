@@ -4,8 +4,6 @@ import { Timezone } from './Timezone'
 /**
  * Return the end of the day for the given date.
  *
- * @example
- *
  * ```js
  * const d1 = tzUtc.makeDate(2000, 1, 1)
  * const d2 = endOfDay(d1, tzUtc)

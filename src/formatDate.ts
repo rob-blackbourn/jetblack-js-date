@@ -68,8 +68,6 @@ const flags: Record<
 /**
  * Format a date with a pattern.
  *
- * @example
- *
  * ```js
  * const d = new Date("2000-01-01")
  * const s = formatDate(d, "d-mmm-yy")
@@ -134,3 +132,8 @@ export function formatDate(
     return match.slice(1, match.length - 1)
   })
 }
+
+/**
+ * @deprecated Use {@link formatDate} instead.
+ */
+export const dateFormat = formatDate

@@ -153,8 +153,6 @@ function getDayPeriods(
 /**
  * A class holding information for locales.
  *
- * @remarks
- *
  * The class attempts to load locale info from the browser.
  */
 export class LocaleInfo implements I18nSettings {

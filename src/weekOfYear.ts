@@ -8,8 +8,6 @@ import { MILLISECONDS_IN_DAY } from './constants'
  *
  * Weeks start on 1 January of any given year.
  *
- * @example
- *
  * ```js
  * console.log(weekOfYear(new Date('1999-12-31T00:00:00Z'), tzUtc))
  * // 53

@@ -3,11 +3,7 @@ import { MILLISECONDS_IN_HOUR } from './constants'
 /**
  * Add hours to a date (or subtract if negative).
  *
- * @remarks
- *
  * Daylight savings time is handled appropriately.
- *
- * @example
  *
  * ```js
  * // The local timezone here is London.
