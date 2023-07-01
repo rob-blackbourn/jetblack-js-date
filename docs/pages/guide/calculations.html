@@ -43,10 +43,10 @@ we can see that adding the offset given from the UTC date and time will provide
 the date we want.</p>
 <p>The expensive part of this operation is finding the offset, as this is specific
 to a given date and time. As this library uses the native <code>Date</code> this must be
-done for each operation. To improve efficiency the <code>Timezone</code> class has the
-functions <code>makeDate</code> and <code>dateParts</code>. These functions do the offset lookup
-once. Contrast this with getting the year (<code>tz.year(date)</code>) and then the month
-(<code>tz.monthIndex(date)</code>) which would need to find the offset twice.</p>
+done for each operation. To improve efficiency the <a href="../../classes/Timezone.html"><code>Timezone</code></a> class has the
+functions <a href="../../classes/Timezone.html#makeDate"><code>makeDate</code></a> and <a href="../../classes/Timezone.html#dateParts"><code>dateParts</code></a>. These functions do the offset lookup
+once. Contrast this with getting the year (<a href="../../classes/Timezone.html#year"><code>tz.year(date)</code></a>) and then the month
+(<a href="../../classes/Timezone.html#monthIndex"><code>tz.monthIndex(date)</code></a>) which would need to find the offset twice.</p>
 
 <a href="#what-next-" id="what-next-" style="color: inherit; text-decoration: none;">
   <h2>What next ?</h2>

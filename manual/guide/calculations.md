@@ -48,10 +48,10 @@ the date we want.
 
 The expensive part of this operation is finding the offset, as this is specific
 to a given date and time. As this library uses the native `Date` this must be
-done for each operation. To improve efficiency the `Timezone` class has the
-functions `makeDate` and `dateParts`. These functions do the offset lookup
-once. Contrast this with getting the year (`tz.year(date)`) and then the month
-(`tz.monthIndex(date)`) which would need to find the offset twice.
+done for each operation. To improve efficiency the {@linkcode Timezone} class has the
+functions {@linkcode Timezone.makeDate | makeDate} and {@linkcode Timezone.dateParts | dateParts}. These functions do the offset lookup
+once. Contrast this with getting the year ({@linkcode Timezone.year | tz.year(date)}) and then the month
+({@linkcode Timezone.monthIndex | tz.monthIndex(date)}) which would need to find the offset twice.
 
 ## What next ?
 
