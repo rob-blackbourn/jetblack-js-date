@@ -6,6 +6,17 @@ import { range } from './utils'
 /**
  * Creates a schedule of dates by day.
  *
+ * ```js
+ * import { dateScheduleByDay, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   dateScheduleByDay(tzLocal.makeDate(2000, 0, 1), 0, 7).map(x =>
+ *     tzLocal.toISOString(x)
+ *   )
+ * )
+ * // returns (7) ['2000-01-01T00:00:00+??:??', '2000-01-02T00:00:00+??:??', '2000-01-03T00:00:00+??:??', '2000-01-04T00:00:00+??:??', '2000-01-05T00:00:00+??:??', '2000-01-06T00:00:00+??:??', '2000-01-07T00:00:00+??:??']
+ * ```
+ *
  * @category Ranges
  *
  * @param date The start date.

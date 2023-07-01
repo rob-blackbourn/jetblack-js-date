@@ -6,6 +6,17 @@ import { addYears } from './addYears'
 /**
  * Creates a schedule of dates by year.
  *
+ * ```js
+ * import { dateScheduleByYear, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   dateScheduleByYear(tzLocal.makeDate(2000, 0, 1), 0, 4).map(x =>
+ *     tzLocal.toISOString(x)
+ *   )
+ * )
+ * // returns (4) ['2000-01-01T00:00:00+00:00', '2001-01-01T00:00:00+00:00', '2002-01-01T00:00:00+00:00', '2003-01-01T00:00:00+00:00']
+ * ```
+ *
  * @category Ranges
  *
  * @param date The start date.

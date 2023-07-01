@@ -7,6 +7,17 @@ import { addMonths } from './addMonths'
 /**
  * Creates a schedule of dates by month.
  *
+ * ```js
+ * import { dateScheduleByMonth, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   dateScheduleByMonth(tzLocal.makeDate(2000, 0, 1), 0, 6).map(x =>
+ *     tzLocal.toISOString(x)
+ *   )
+ * )
+ * // returns (6) ['2000-01-01T00:00:00+??:??', '2000-02-01T00:00:00+??:??', '2000-03-01T00:00:00+??:??', '2000-04-01T00:00:00-01:00', '2000-05-01T00:00:00-01:00', '2000-06-01T00:00:00-01:00']
+ * ```
+ *
  * @category Ranges
  *
  * @param date The start date.

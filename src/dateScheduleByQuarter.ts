@@ -6,6 +6,17 @@ import { addQuarters } from './addQuarters'
 /**
  * Creates a schedule of dates by quarter.
  *
+ * ```js
+ * import { dateScheduleByQuarter, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   dateScheduleByQuarter(tzLocal.makeDate(2000, 0, 1), 0, 4).map(x =>
+ *     tzLocal.toISOString(x)
+ *   )
+ * )
+ * // returns (4) ['2000-01-01T00:00:00+00:00', '2000-04-01T00:00:00-01:00', '2000-07-01T00:00:00-01:00', '2000-10-01T00:00:00-01:00']
+ * ```
+ *
  * @category Ranges
  *
  * @param date The start date.

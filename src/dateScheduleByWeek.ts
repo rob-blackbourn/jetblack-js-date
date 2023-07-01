@@ -6,6 +6,17 @@ import { range } from './utils'
 /**
  * Creates a schedule of dates by week.
  *
+ * ```js
+ * import { dateScheduleByWeek, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   dateScheduleByWeek(tzLocal.makeDate(2000, 0, 1), 0, 4).map(x =>
+ *     tzLocal.toISOString(x)
+ *   )
+ * )
+ * // returns (4) ['2000-01-01T00:00:00+00:00', '2000-01-08T00:00:00+00:00', '2000-01-15T00:00:00+00:00', '2000-01-22T00:00:00+00:00']
+ * ```
+ *
  * @category Ranges
  *
  * @param date The start date.
