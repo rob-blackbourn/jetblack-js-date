@@ -6,6 +6,8 @@ import { Timezone } from './Timezone'
  * Add a duration to a date.
  *
  * ```js
+ * import { Duration, tzLocal } from '@jetblack/date'
+ *
  * const duration = new Duration('P1DT3H')
  * const date = addDuration(tzLocal.makeDate(2000, 0, 1), duration, tzLocal)
  * ```

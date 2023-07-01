@@ -2,6 +2,8 @@
  * Compares two dates descending.
  *
  * ```js
+ * import { compareDateDesc } from '@jetblack/date'
+ *
  * const a = [
  *   new Date('2000-07-01'),
  *   new Date('2000-05-01'),

@@ -16,7 +16,7 @@ import { Timezone } from './Timezone'
  * data, or doing time series calculations (rolling averages, resampling, etc.).
  *
  * ```js
- * import { addDays, tzLocal, tzUtc }
+ * import { addDays, tzLocal, tzUtc } from '@jetblack/date'
  *
  * // The local timezone here is London.
  * // In London on Sunday March 26 2000 the clocks go forward 1 hour.

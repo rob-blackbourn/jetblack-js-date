@@ -69,6 +69,8 @@ const flags: Record<
  * Format a date with a pattern.
  *
  * ```js
+ * import { formatDate } from '@jetblack/date'
+ *
  * const d = new Date("2000-01-01")
  * const s = formatDate(d, "d-mmm-yy")
  * console.log(s)

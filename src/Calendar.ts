@@ -16,6 +16,8 @@ import { Timezone } from './Timezone'
  * This is how the {@link WeekendCalendar} is defined.
  *
  * ```ts
+ * import { Calendar, Timezone } from '@jetblack/date'
+ *
  * export class WeekendCalendar extends Calendar {
  *   #weekends: number[]
  *
@@ -24,12 +26,12 @@ import { Timezone } from './Timezone'
  *     this.#weekends = weekends
  *   }
  *
- *   isWeekend(date: Date): boolean {
- *     const dayOfWeek = date.getDay()
+ *   isWeekend(date: Date, tz: Timezone): boolean {
+ *     const dayOfWeek = tz.weekday(date)
  *     return this.#weekends.some(x => x === dayOfWeek)
  *   }
  *
- *   isHoliday(date: Date): boolean {
+ *   isHoliday(date: Date, tz: Timezone): boolean {
  *     return this.isWeekend(date)
  *   }
  * }

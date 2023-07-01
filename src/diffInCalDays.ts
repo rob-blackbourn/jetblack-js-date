@@ -8,6 +8,8 @@ import { startOfDay } from './startOfDay'
  * Find the number of whole days between two dates, discarding any time component.
  *
  * ```js
+ * import { diffInCalDays, tzUtc } from '@jetblack/date'
+ *
  * const days1 = diffInCalDays(
  *   new Date('2022-03-25T00:00:00Z'),
  *   new Date('2022-01-25T00:00:00Z'),

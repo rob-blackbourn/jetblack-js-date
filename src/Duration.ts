@@ -6,6 +6,8 @@ const SECONDS_IN_DAY = 24 * 60 * 60
  * Here we add a day.
  *
  *  ```js
+ * import { Duration } from '@jetblack/date'
+ *
  * const duration = new Duration('P1D')
  * const d1 = addDuration(new Date('2000-01-01T00:00:00Z'), duration)
  * console.log(d1)
@@ -15,6 +17,8 @@ const SECONDS_IN_DAY = 24 * 60 * 60
  * Note that durations may be negative.
  *
  * ```js
+ * import { Duration } from '@jetblack/date'
+ *
  * const duration = new Duration('-P1D')
  * const d1 = addDuration(new Date('2000-01-01T00:00:00Z'), duration)
  * console.log(d1)

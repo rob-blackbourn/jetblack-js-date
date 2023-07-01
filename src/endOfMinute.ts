@@ -4,6 +4,8 @@ import { MILLISECONDS_IN_MINUTE } from './constants'
  * Return the end of the minute for the given date.
  *
  * ```js
+ * import { endOfMinute, tzUtc } from '@jetblack/date'
+ *
  * const d1 = tzUtc.makeDate(2000, 1, 1)
  * const d2 = endOfMinute(d1, tzUtc)
  * console.log(d2.toISOString())

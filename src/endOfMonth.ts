@@ -6,6 +6,8 @@ import { Timezone } from './Timezone'
  * Calculate the last moment of the month.
  *
  * ```js
+ * import { endOfMonth, tzUtc } from '@jetblack/date'
+ *
  * const days1 = endOfMonth(new Date('2022-03-25T00:00:00Z'), tzUtc)
  * console.log(days1.toISOString())
  * // 2022-03-31T23:59:59.999Z

@@ -5,6 +5,8 @@ import { diffInMilliseconds } from './diffInMilliseconds'
  * Find the number of days between two dates including the fractional component.
  *
  * ```js
+ * import { diffInDays, tzUtc } from '@jetblack/date'
+ *
  * const days1 = diffInDays(
  *   new Date('2022-03-25T00:00:00Z'),
  *   new Date('2022-01-25T00:00:00Z'),

@@ -4,6 +4,8 @@ import { isLeapYear } from './isLeapYear'
  * Find the number of days in a year.
  *
  * ```js
+ * import { daysInYear } from '@jetblack/date'
+ *
  * console.log(daysInYear(2000))
  * // 366
  *

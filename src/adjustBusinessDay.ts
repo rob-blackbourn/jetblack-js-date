@@ -34,6 +34,8 @@ export enum BusinessDayConvention {
  * Adjusts a non-business day to the appropriate nearest business day.
  *
  * ```js
+ * import { adjustBusinessDay, BusinessDayConvention } from '@jetblack/date'
+ *
  * const d1 = new Date('2000-01-01')
  * console.log(d1)
  * // Sat Jan 01 2000 00:00:00 GMT+0000 (Greenwich Mean Time)

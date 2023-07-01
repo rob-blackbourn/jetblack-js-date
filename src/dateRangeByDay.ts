@@ -7,6 +7,8 @@ import { startOfDay } from './startOfDay'
  * Creates a range of dates by day.
  *
  * ```js
+ * import { dateRangeByDay, tzUtc } from '@jetblack/date'
+ *
  * const dates = dateRangeByDay(
  *   new Date('2000-01-01T12:00:00Z'), // Sets to start of day.
  *   new Date('2000-01-10T12:00:00Z'),

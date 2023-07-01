@@ -7,6 +7,8 @@ import { Timezone } from './Timezone'
  * Note how surplus days for a leap year are added.
  *
  * ```js
+ * import { addYears, tzUtc } from '@jetblack/date'
+ *
  * // There is no 29 February in 2001.
  * const d1 = addYears(new Date('2000-02-29'), 1, tzUtc)
  * console.log(d1.toString())

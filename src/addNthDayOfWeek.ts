@@ -12,6 +12,8 @@ import { Timezone } from './Timezone'
  * Note that the JavaScript Date object treats 0 as Sunday and 6 as Saturday.
  *
  * ```js
+ * import { addNthDayOfWeek } from '@jetblack/date'
+ *
  * // Saturday 1 January 1990
  * const d1 = new Date('2000-01-01T00:00:00Z')
  *

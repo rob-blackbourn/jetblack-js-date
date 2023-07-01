@@ -7,6 +7,8 @@ import { Timezone } from './Timezone'
  * Find the last day of the week for a given date and first day of week.
  *
  * ```js
+ * import { endOfWeekday, lastDayOfWeekday, tzUtc } from '@jetblack/date'
+ *
  * const days2 = lastDayOfWeekday(new Date('2022-03-25T00:00:00Z'), 1, tzUtc)
  * console.log(days2.toISOString())
  * // 2022-03-27T00:00:00.000Z

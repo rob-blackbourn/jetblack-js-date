@@ -305,6 +305,8 @@ function createDateParser(
  * timezone.
  *
  * ```js
+ * import { parseDate } from '@jetblack/date'
+ *
  * const d = parseDate('12 March, 1998', 'dd mmm, yyyy')
  * ```
  *

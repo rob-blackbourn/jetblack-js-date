@@ -9,6 +9,8 @@ import { Timezone } from './Timezone'
  * Weeks start on Sunday and end on Saturday.
  *
  * ```js
+ * import { endOfWeek, tzUtc } from '@jetblack/date'
+ *
  * const days1 = endOfWeek(new Date('2022-03-25T00:00:00Z'), tzUtc)
  * console.log(days1.toISOString())
  * // 2022-03-26T23:59:59.999Z

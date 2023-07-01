@@ -6,6 +6,8 @@ import { MILLISECONDS_IN_HOUR } from './constants'
  * Daylight savings time is handled appropriately.
  *
  * ```js
+ * import { addHours } from '@jetblack/date'
+ *
  * // The local timezone here is London.
  * // In London on Sunday March 26 2000 the clocks go forward 1 hour.
  * const d1 = new Date('2000-03-26T00:00:00')

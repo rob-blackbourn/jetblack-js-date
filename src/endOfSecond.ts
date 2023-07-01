@@ -4,6 +4,8 @@ import { MILLISECONDS_IN_SECOND } from './constants'
  * Return the end of the second for the given date.
  *
  * ```js
+ * import { endOfSecond, tzUtc } from '@jetblack/date'
+ *
  * const d1 = tzUtc.makeDate(2000, 1, 1)
  * const d2 = endOfSecond(d1, tzUtc)
  * console.log(d2.toISOString())

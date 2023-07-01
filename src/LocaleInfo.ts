@@ -3,8 +3,6 @@ import { range } from './utils'
 /**
  * Day plurals.
  *
- * @remark
- *
  * The names from Intl.PluralRules.
  */
 export interface DayPlurals {
