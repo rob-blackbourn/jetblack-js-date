@@ -1,10 +1,13 @@
 import { isDateEqual } from './isDateEqual'
 import { lastDayOfQuarter } from './lastDayOfQuarter'
 import { tzLocal } from './LocalTimezone'
+import { startOfDay } from './startOfDay'
 import { Timezone } from './Timezone'
 
 /**
  * Check if the date is the last day of the quarter.
+ *
+ * Any time component is ignored.
  *
  * ```js
  * import { tzLocal, isLastDayOfQuarter } from '@jetblack/date'
@@ -29,5 +32,5 @@ export function isLastDayOfQuarter(
   tz: Timezone = tzLocal
 ): boolean {
   const end = lastDayOfQuarter(date, tz)
-  return isDateEqual(date, end)
+  return isDateEqual(startOfDay(date, tz), end)
 }

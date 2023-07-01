@@ -5,6 +5,8 @@ import { Timezone } from './Timezone'
 /**
  * Check if the date is the last day of the month.
  *
+ * The time component is ignored.
+ *
  * @category Calendars
  *
  * @param date The date to check.
