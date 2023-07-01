@@ -1,3 +1,9 @@
+## Start of Day
+
+The start of the day depends on where you are in the world. Functions
+like {@linkcode startOfDay}, {@linkcode startOfMonth}, etc. all need to know
+the timezone.
+
 ## Daylight Savings Time
 
 Daylight savings time (DST) presents an issue for date arithmetic.
@@ -38,6 +44,15 @@ However, the elapsed time will be an hour less than when using UTC.
 
 Keeping the time change constant (as with UTC) can be useful when plotting
 data, or doing time series calculations (rolling averages, resampling, etc.).
+
+## Date Schedules
+
+When generating date schedules (with {@linkcode dateRangeByDay} for example),
+the timezone is important both for the start of day, and for the daylight
+savings change.
+
+If what you really want is periods of constant milliseconds, you should use
+tzUtc as it has no DST.
 
 ## What next ?
 
