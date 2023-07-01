@@ -6,6 +6,15 @@ import { quarterOfYear } from './quarterOfYear'
 /**
  * Find the last day of the quarter.
  *
+ * ```js
+ * import { lastDayOfQuarter, tzLocal } from '@jetblack/date'
+ *
+ * console.log(
+ *   tzLocal.toISOString(lastDayOfQuarter(tzLocal.makeDate(2000, 1, 2), tzLocal))
+ * )
+ * // returns 2000-03-31T00:00:00-??:??
+ * ```
+ *
  * @category Anchors
  *
  * @param date The start date.
