@@ -74,7 +74,7 @@ export function findLastIndex(
   return -1
 }
 
-export function* range(
+export function* rangeGenerator(
   start: number,
   stop?: number,
   step: number = 1
@@ -87,3 +87,9 @@ export function* range(
     yield i
   }
 }
+
+export const range = (
+  start: number,
+  stop?: number,
+  step: number = 1
+): number[] => Array.from(rangeGenerator(start, stop, step))

@@ -1,4 +1,4 @@
-import { range } from './utils'
+import { rangeGenerator } from './utils'
 
 /**
  * Day plurals.
@@ -76,9 +76,9 @@ function getLocaleNames(
   style: NameStyle,
   locale: string
 ): string[] {
-  return Array.from(type === 'weekday' ? range(0, 7) : range(0, 12)).map(i =>
-    getLocaleName(i, type, style, locale)
-  )
+  return Array.from(
+    type === 'weekday' ? rangeGenerator(0, 7) : rangeGenerator(0, 12)
+  ).map(i => getLocaleName(i, type, style, locale))
 }
 
 const defaultNumberPlurals: DayPlurals = {
