@@ -1,4 +1,7 @@
+import { tzLocal } from './LocalTimezone'
+import { Timezone } from './Timezone'
 import { WeekendCalendar } from './WeekendCalendar'
+import { startOfDay } from './startOfDay'
 
 /**
  * A calendar class which supports weekends and an array of arbitrary dates.
@@ -37,12 +40,19 @@ export class HolidayCalendar extends WeekendCalendar {
    * @param weekends An array of weekdays which are always holidays.
    * @param holidays An array of dates which are holidays.
    */
-  constructor(name: string, weekends: number[] = [0, 6], holidays: Date[]) {
+  constructor(
+    name: string,
+    weekends: number[] = [0, 6],
+    holidays: Date[],
+    tz: Timezone = tzLocal
+  ) {
     super(name, weekends)
-    this.#holidays = new Set(holidays.map(x => x.getTime()))
+    this.#holidays = new Set(holidays.map(x => startOfDay(x, tz).getTime()))
   }
 
-  isHoliday(date: Date): boolean {
-    return this.isWeekend(date) || this.#holidays.has(date.getTime())
+  isHoliday(date: Date, tz: Timezone = tzLocal): boolean {
+    return (
+      this.isWeekend(date, tz) || this.#holidays.has(startOfDay(date).getTime())
+    )
   }
 }

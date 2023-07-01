@@ -32,6 +32,20 @@ const leapSecondDates: number[] = [
 /**
  * Find the number of leap seconds between the dates (inclusive).
  *
+ * ```js
+ * import { endOfYear, leapSeconds, tzUtc } from '@jetblack/date'
+ *
+ * const d1 = new Date('1972-01-01T00:00:00Z')
+ * const d2 = endOfYear(d1, tzUtc)
+ * // There were two leap seconds in 1972
+ * console.log(leapSeconds(d1, d2) == 2)
+ *
+ * const d3 = new Date('2000-01-01T00:00:00Z')
+ * const d4 = endOfYear(new Date('2005-01-01T00:00:00Z'), tzUtc)
+ * // There were no leap seconds in between 2000 and 2005
+ * console.log(leapSeconds(d3, d4) == 0)
+ * ```
+ *
  * @param firstDate The first date.
  * @param secondDate The second date.
  * @returns The number of leap seconds
