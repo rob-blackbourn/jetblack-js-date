@@ -11,7 +11,8 @@ module.exports = {
         title: 'Guides',
         childrenDir: 'guide',
         children: [
-          { title: 'Getting started', source: 'getting-started.md' },
+          { title: 'Getting Started', source: 'getting-started.md' },
+          { title: 'General Usage', source: 'general-usage.md' },
           { title: 'Design Choices', source: 'design-choices.md' },
           { title: 'Calculations', source: 'calculations.md' },
           { title: 'Date Arithmetic', source: 'date-arithmetic.md' },

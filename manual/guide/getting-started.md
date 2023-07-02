@@ -31,4 +31,4 @@ const todayTokyo = startOfToday(tzTokyo)
 
 ## What next ?
 
-{@page ./design-choices.md}
+{@page ./general-usage.md}

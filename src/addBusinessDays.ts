@@ -7,7 +7,7 @@ import { calWeekends } from './WeekendCalendar'
 /**
  * Add business days to a date (or subtract if negative).
  *
- * If a calendar is not specified the weekend calendar is used.
+ * If a calendar is not specified the {@linkcode calWeekends} calendar is used.
  *
  * ```js
  * import { addBusinessDays } from '@jetblack/date'
@@ -21,7 +21,7 @@ import { calWeekends } from './WeekendCalendar'
  *
  * @param date The start date.
  * @param count The number of days to add (or subtract if negative).
- * @param cal The calendar to use to identify dates which are holidays. Defaults to the weekend calendar.
+ * @param cal The calendar to use to identify dates which are holidays. Defaults to the {@linkcode calWeekends} calendar.
  * @param tz An optional timezone. Defaults to the local timezone.
  * @returns A new date adjusted by business days.
  */
