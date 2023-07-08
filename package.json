@@ -14,6 +14,7 @@
   "browser": "dist/es/index.js",
   "repository": "git@github.com:rob-blackbourn/jetblack-js-date.git",
   "homepage": "https://github.com/rob-blackbourn/jetblack-js-date",
+  "bugs": "https://github.com/rob-blackbourn/jetblack-js-date/issues",
   "author": "Rob Blackbourn <rob.blackbourn@gmail.com>",
   "license": "Apache-2.0",
   "scripts": {
