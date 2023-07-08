@@ -58,14 +58,16 @@ in local and UTC (e.g.
 This library treats dates as immutable, so it has no setters; a new date must be
 created. There are two ways of accessing the date parts:
 {@linkcode Timezone.dateParts | dateParts} which returns a simple object with
-the parts, and individual accessors  {@linkcode Timezone.monthIndex | monthIndex}.
+the parts, and individual accessors (e.g. {@linkcode Timezone.monthIndex | monthIndex}).
 
 ```js
 import { tzLocal } from '@jetblack/dates'
 
 const date = new Date()
 const { year, monthIndex, day} = tzLocal.dateParts(date)
+const y = tzLocal.year(date)
 const m = tzLocal.monthIndex(date)
+const d = tzLocal.day(date)
 ```
 
 For efficiency {@linkcode Timezone.dateParts | dateParts} should be used if more
