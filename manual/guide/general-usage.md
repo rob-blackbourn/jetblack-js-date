@@ -37,11 +37,11 @@ format. If the timezone offset is not specified the supplied timezone is used.
 ```js
 import { tzLocal, tzUtc, fetchTimezone, parseDate } from '@jetblack/date'
 
-const d1 = parseDate("1-Jul-00", "d-mmm-yy", "en", tzLocal)
-const d2 = parseDate("1-Jan-00 12:30", "d-mmm-yy HH:MM", "en", tzUtc)
+const d1 = parseDate("1-Jul-00", "d-mmm-yy", tzLocal)
+const d2 = parseDate("1-Jan-00 12:30", "d-mmm-yy HH:MM", tzUtc)
 
 const tzTokyo = await fetchTimezone('Asia/Tokyo')
-const d3 = parseDate("1-Jul-00 21:00:15.250", "d-mmm-yy HH:MM:SS.FFF", "en", tzTokyo)
+const d3 = parseDate("1-Jul-00 21:00:15.250", "d-mmm-yy HH:MM:SS.FFF", tzTokyo)
 ```
 
 
