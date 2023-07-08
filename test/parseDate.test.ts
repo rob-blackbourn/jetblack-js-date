@@ -1,4 +1,13 @@
-import { parseDate, tzUtc, tzLocal, addMinutes } from '../src'
+import {
+  IANATimezone,
+  dataToTimezoneOffset,
+  parseDate,
+  tzUtc,
+  tzLocal,
+  addMinutes
+} from '../src'
+import chicagoTzData from '@jetblack/tzdata/dist/latest/America/Chicago.json'
+import tokyoTzData from '@jetblack/tzdata/dist/latest/Asia/Tokyo.json'
 
 describe('parseDate', () => {
   it('should fail to parse leap year date', () => {
@@ -166,28 +175,28 @@ describe('parseDate', () => {
   })
 
   it('should parse "DD mmm", "en"', () => {
-    const actual = parseDate('3rd Mar', 'DD mmm', 'en')
+    const actual = parseDate('3rd Mar', 'DD mmm', tzLocal, 'en')
     const expected = tzLocal.makeDate(new Date().getFullYear(), 2, 3)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
   })
 
   it('should parse "DD mmmm", "en"', () => {
-    const actual = parseDate('22nd May', 'DD mmmm', 'en')
+    const actual = parseDate('22nd May', 'DD mmmm', tzLocal, 'en')
     const expected = tzLocal.makeDate(new Date().getFullYear(), 4, 22)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
   })
 
   it('should parse "DD mmm", "fr"', () => {
-    const actual = parseDate('11th Mars', 'DD mmm', 'fr')
+    const actual = parseDate('11th Mars', 'DD mmm', tzLocal, 'fr')
     const expected = tzLocal.makeDate(new Date().getFullYear(), 2, 11)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
   })
 
   it('should parse "DD mmmm", "fr"', () => {
-    const actual = parseDate('3rd Janvier', 'DD mmmm', 'fr')
+    const actual = parseDate('3rd Janvier', 'DD mmmm', tzLocal, 'fr')
     const expected = tzLocal.makeDate(2023, 0, 3)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
@@ -197,6 +206,7 @@ describe('parseDate', () => {
     const actual = parseDate(
       '2020-02-29 10:01:40PM',
       'yyyy-mm-dd hh:MM:SSt',
+      tzLocal,
       'en'
     )
     const expected = tzLocal.makeDate(2020, 1, 29, 22, 1, 40)
@@ -208,6 +218,7 @@ describe('parseDate', () => {
     const actual = parseDate(
       '2020-07-29 10:01:40pm',
       'yyyy-mm-dd hh:MM:SSt',
+      tzLocal,
       'en'
     )
     const expected = tzLocal.makeDate(2020, 6, 29, 22, 1, 40)
@@ -219,6 +230,7 @@ describe('parseDate', () => {
     const actual = parseDate(
       '2020-12-25 10:01:40PM',
       'yyyy-mm-dd hh:MM:SSt',
+      tzLocal,
       'fr'
     )
     const expected = tzLocal.makeDate(2020, 11, 25, 22, 1, 40)
@@ -230,10 +242,31 @@ describe('parseDate', () => {
     const actual = parseDate(
       'xxxx 2000-01-01 xxxx',
       'xxxx yyyy-mm-dd xxxx',
+      tzLocal,
       'en-GB'
     )
     const expected = tzLocal.makeDate(2000, 0, 1)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
   })
+
+  const tzChicago = new IANATimezone(
+    'America/Chicago',
+    chicagoTzData.map(dataToTimezoneOffset)
+  )
+  const tzTokyo = new IANATimezone(
+    'Asia/Tokyo',
+    tokyoTzData.map(dataToTimezoneOffset)
+  )
+
+  for (const tz of [tzUtc, tzLocal, tzChicago, tzTokyo]) {
+    describe(tz.name, () => {
+      it('should parse for different timezones', () => {
+        const actual = parseDate('1-Jul-00', 'd-mmm-yy', tz, 'en')
+        expect(actual).toBeDefined()
+        const expected = tz.makeDate(2000, 6, 1)
+        expect(tz.toISOString(actual as Date)).toBe(tz.toISOString(expected))
+      })
+    })
+  }
 })

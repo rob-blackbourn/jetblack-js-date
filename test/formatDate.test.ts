@@ -195,4 +195,16 @@ describe('formatDate', () => {
       formatDate(new Date('2001-01-09T01:02:59.003Z'), 'FFF', tzUtc, 'en')
     ).toBe('003')
   })
+
+  it('should allow custom text', () => {
+    expect(
+      formatDate(new Date('2001-01-09T00:00:00Z'), 'yyyy [yyyy]', tzUtc, 'en')
+    ).toBe('2001 yyyy')
+    expect(
+      formatDate(new Date('2001-01-09T00:00:00Z'), 'yyyy "yyyy"', tzUtc, 'en')
+    ).toBe('2001 yyyy')
+    expect(
+      formatDate(new Date('2001-01-09T00:00:00Z'), "yyyy 'yyyy'", tzUtc, 'en')
+    ).toBe('2001 yyyy')
+  })
 })

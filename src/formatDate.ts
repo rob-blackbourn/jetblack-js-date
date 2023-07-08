@@ -1,12 +1,11 @@
-import { addDays } from './addDays'
 import { isoWeekOfYear } from './isoWeekOfYear'
 import { tzLocal } from './LocalTimezone'
-import { I18nSettings, LocaleInfo, getLocaleInfo } from './LocaleInfo'
+import { I18nSettings, getLocaleInfo } from './LocaleInfo'
 import { Timezone } from './Timezone'
 
 /** @internal  */
 const token =
-  /d{1,4}|D{2,3}|m{1,4}|yy(?:yy)?|([HhMSt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'/g
+  /d{1,4}|D{2,3}|m{1,4}|yy(?:yy)?|([HhMSt])\1?|F{1,3}|W{1,2}|[opZN]|"[^"]*"|'[^']*'|\[([^]*?)\]/g
 
 /** @internal */
 const getDayOfWeek = (date: Date, tz: Timezone): number => {

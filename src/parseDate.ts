@@ -1,9 +1,12 @@
+import { tzLocal } from './LocalTimezone'
 import {
   I18nSettings,
   LocaleInfo,
   getLocaleInfo,
   NameStyle
 } from './LocaleInfo'
+import { Timezone } from './Timezone'
+import { tzUtc } from './UTCTimezone'
 import { daysInMonth } from './daysInMonth'
 
 interface DateInfo {
@@ -346,12 +349,14 @@ function createDateParser(
  *
  * @param text Date string
  * @param format Date parse format
- * @param locale The locale
+ * @param tz An optional timezone. Defaults to the local timezone.
+ * @param locale An optional locale. Defaults to the current locale.
  * @returns The date, or null if parsing failed.
  */
 export function parseDate(
   text: string,
   format: string,
+  tz: Timezone = tzLocal,
   locale: I18nSettings | string | undefined = undefined
 ): Date | null {
   const localeInfo = getLocaleInfo(locale)
@@ -365,7 +370,7 @@ export function parseDate(
   }
 
   if (dateInfo.timezoneOffset == null) {
-    return new Date(
+    return tz.makeDate(
       dateInfo.year,
       dateInfo.monthIndex,
       dateInfo.day,
@@ -375,16 +380,14 @@ export function parseDate(
       dateInfo.millisecond
     )
   } else {
-    return new Date(
-      Date.UTC(
-        dateInfo.year,
-        dateInfo.monthIndex,
-        dateInfo.day,
-        dateInfo.hour,
-        dateInfo.minute - dateInfo.timezoneOffset,
-        dateInfo.second,
-        dateInfo.millisecond
-      )
+    return tzUtc.makeDate(
+      dateInfo.year,
+      dateInfo.monthIndex,
+      dateInfo.day,
+      dateInfo.hour,
+      dateInfo.minute - dateInfo.timezoneOffset,
+      dateInfo.second,
+      dateInfo.millisecond
     )
   }
 }
