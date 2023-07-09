@@ -20,19 +20,19 @@ dates that are considered holidays.
 Here is a simple calendar.
 
 ```js
-import { HolidayCalendar } from '@jetblack/date'
+import { HolidayCalendar, tzLocal } from '@jetblack/date'
 
 const cal = new HolidayCalendar(
   'cal',
   [6, 0], // Saturday and Sunday
   [
-    new Date('2015-01-01T00:00:00Z'), // New Years Day
-    new Date('2015-04-03T00:00:00Z'), // Good Friday
-    new Date('2015-04-06T00:00:00Z'), // Easter Monday
-    new Date('2015-05-01T00:00:00Z'), // May Day
-    new Date('2015-12-25T00:00:00Z'), // Christmas day
-    new Date('2015-12-26T00:00:00Z')  // Boxing day
-  ]
+    tzLocal.makeDate(2015, 0, 1),   // New Years Day
+    tzLocal.makeDate(2015, 3, 3),   // Good Friday
+    tzLocal.makeDate(2015, 3, 6),   // Easter Monday
+    tzLocal.makeDate(2015, 4, 1),   // May Day
+    tzLocal.makeDate(2015, 11, 25), // Christmas day
+    tzLocal.makeDate(2015, 11, 26)  // Boxing day
+  ],
+  tzLocal
 )
 ```
-
