@@ -52,7 +52,8 @@ export class HolidayCalendar extends WeekendCalendar {
 
   isHoliday(date: Date, tz: Timezone = tzLocal): boolean {
     return (
-      this.isWeekend(date, tz) || this.#holidays.has(startOfDay(date).getTime())
+      this.isWeekend(date, tz) ||
+      this.#holidays.has(startOfDay(date, tz).getTime())
     )
   }
 }
