@@ -83,7 +83,8 @@ describe('addBusinessDays', () => {
             tz.makeDate(2015, 4, 1),
             tz.makeDate(2015, 11, 25),
             tz.makeDate(2015, 11, 26)
-          ]
+          ],
+          tz
         )
 
         it('should add and skip New Years day', () => {
