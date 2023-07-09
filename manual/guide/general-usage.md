@@ -44,11 +44,10 @@ const tzTokyo = await fetchTimezone('Asia/Tokyo')
 const d3 = parseDate("1-Jul-00 21:00:15.250", "d-mmm-yy HH:MM:SS.FFF", tzTokyo)
 ```
 
-
 ## Deconstructing Dates
 
 The built in date class has accessor functions to get and set the date parts
-in local and UTC (e.g. 
+in local and UTC (e.g.
 [`getMonth`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth),
 [`getUTCMonth`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCMonth),
 [`setMonth`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth),
@@ -85,8 +84,47 @@ allows passing in the IANA timezone.
 This library provides two means of displaying dates: {@linkcode Timezone.toISOString}
 and {@linkcode formatDate}. The {@linkcode Timezone.toISOString} differs from
 the built in method, in that it displays the date in the context of the provided
-timezone, rather than the local timezone to provide the correct DST offsets. The
-{@linkcode formatDate} function is a typical `d-mmm-yy` style formatter.
+timezone, rather than the local timezone. The
+{@linkcode formatDate} function is a typical pattern-style formatter.
+
+The following demonstrates some of these functions.
+
+```js
+import { formatDate, fetchTimezone } from '@jetblack/date'
+
+const tzLondon = await fetchTimezone('Europe/London')
+const tzTokyo = await fetchTimezone('Asia/Tokyo')
+const tzChicago = await fetchTimezone('America/Chicago')
+
+// Make the dates for 6:30am local time.
+const dateTokyo = tzTokyo.makeDate(2000, 0, 1, 6, 30)
+const dateLondon = tzLondon.makeDate(2000, 0, 1, 6, 30)
+const dateChicago = tzChicago.makeDate(2000, 0, 1, 6, 30)
+
+// Show with toISOString.
+console.log([
+  dateTokyo.toISOString(),
+  dateLondon.toISOString(),
+  dateChicago.toISOString()
+])
+// (3) ['1999-12-31T21:30:00.000Z', '2000-01-01T06:30:00.000Z', '2000-01-01T12:30:00.000Z']
+
+// The Timezone.toISOString shows them relative to the local timezone.
+console.log([
+  tzTokyo.toISOString(dateTokyo),
+  tzLondon.toISOString(dateLondon),
+  tzChicago.toISOString(dateChicago)
+])
+// (3) ['2000-01-01T06:30:00+09:00', '2000-01-01T06:30:00+00:00', '2000-01-01T06:30:00-06:00']
+
+// The formatDate function also handles the timezone.
+console.log([
+  formatDate(dateTokyo, 'd-mmm-yy HH:MM p', tzTokyo),
+  formatDate(dateLondon, 'd-mmm-yy HH:MM p', tzLondon),
+  formatDate(dateChicago, 'd-mmm-yy HH:MM p', tzChicago)
+])
+// (3) ['1-Jan-00 06:30 -09:00', '1-Jan-00 06:30 +00:00', '1-Jan-00 06:30 +06:00']
+```
 
 ## What next ?
 
