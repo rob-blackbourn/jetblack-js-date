@@ -32,7 +32,8 @@ describe('adjustBusinessDay', () => {
           tz.makeDate(2015, 4, 1),
           tz.makeDate(2015, 11, 25),
           tz.makeDate(2015, 11, 16)
-        ]
+        ],
+        tz
       )
 
       const decThirtyFirst = tz.makeDate(2014, 11, 31)
@@ -40,39 +41,36 @@ describe('adjustBusinessDay', () => {
       const janSecond = tz.makeDate(2015, 0, 2)
 
       it('should not require adjustment', () => {
-        expect(
-          adjustBusinessDay(
-            janFirst,
-            BusinessDayConvention.NONE,
-            true,
-            cal,
-            tz
-          ).toISOString()
-        ).toBe(janFirst.toISOString())
+        const date = adjustBusinessDay(
+          janFirst,
+          BusinessDayConvention.NONE,
+          true,
+          cal,
+          tz
+        )
+        expect(date.toISOString()).toBe(janFirst.toISOString())
       })
 
       it('should adjust following', () => {
-        expect(
-          adjustBusinessDay(
-            janFirst,
-            BusinessDayConvention.FOLLOWING,
-            true,
-            cal,
-            tz
-          ).toISOString()
-        ).toBe(janSecond.toISOString())
+        const date = adjustBusinessDay(
+          janFirst,
+          BusinessDayConvention.FOLLOWING,
+          true,
+          cal,
+          tz
+        )
+        expect(date.toISOString()).toBe(janSecond.toISOString())
       })
 
       it('should adjust preceding', () => {
-        expect(
-          adjustBusinessDay(
-            janFirst,
-            BusinessDayConvention.PRECEDING,
-            true,
-            cal,
-            tz
-          ).toISOString()
-        ).toBe(decThirtyFirst.toISOString())
+        const date = adjustBusinessDay(
+          janFirst,
+          BusinessDayConvention.PRECEDING,
+          true,
+          cal,
+          tz
+        )
+        expect(date.toISOString()).toBe(decThirtyFirst.toISOString())
       })
     })
   }
