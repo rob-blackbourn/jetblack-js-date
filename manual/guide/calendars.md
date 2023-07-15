@@ -14,8 +14,8 @@ business day functions.
 
 ## HolidayCalendar
 
-The holiday calendar is built on top of the weekend calendar. As well as weekends it takes a list of
-dates that are considered holidays.
+The holiday calendar is built on top of the weekend calendar. As well as
+weekends it takes a list of dates that are considered holidays.
 
 Here is a simple calendar.
 
@@ -39,15 +39,20 @@ const cal = new HolidayCalendar(
 
 ## Custom Calendars
 
-You can make your own calendars. The following abstract class provides a calendar
-which caches the holidays for a year.
+You can make your own calendars. A common approach is to generate holidays from
+rules. For example the first of January might always be a holiday, while the
+death of a significant individual might have only been a holiday once.
+
+The following abstract class provides a calendar which caches the holidays for a
+year. Extending classes implement the `fetchHolidays(year: number, tz: Timezone)`
+method, which returns a set of holidays for the year.
 
 ```ts
 import { WeekendCalendar, Timezone, startOfDay, tzLocal } from "@jetblack/date"; 
 
 export abstract class YearlyCalendar extends WeekendCalendar {
 
-    private holidays: Map<number, Map<number, string>> = new Map()
+    private holidays: Map<number, Set<number>> = new Map()
 
     constructor (name: string, weekends: number[] = [0, 6]) {
         super(name, weekends)
@@ -67,44 +72,61 @@ export abstract class YearlyCalendar extends WeekendCalendar {
         return yearHolidays.has(startOfDay(date, tz).getTime())
     }
 
-    protected abstract fetchHolidays(year: number, tz: Timezone): Map<number, string> 
+    protected abstract fetchHolidays(year: number, tz: Timezone): Set<number> 
 }
 ```
 
-With the above we can create a rules based calendar.
+With the above we create a rules based calendar. The following calendar is
+a financial settlement calendar called "TARGET".
+
+The holidays follow these rules:
+
+* Saturdays.
+* Sundays.
+* New Year's Day, January 1st.
+* Good Friday (since 2000).
+* Easter Monday (since 2000).
+* Labour Day, May 1st (since 2000).
+* Christmas, December 25th.
+* Day of Goodwill, December 26th (since 2000).
+* December 31st (1998, 1999, and 2001).
 
 ```ts
-import { Timezone, easter, addDays } from "@jetblack/date"
-import { YearlyCalendar } from "./YearlyCalendar"
-
 export class Target extends YearlyCalendar {
     constructor() {
-        super("TARGET", [0, 6])
+        super("TARGET", [6, 0]) // Saturdays, Sundays.
     }
 
-    protected override fetchHolidays(year: number, tz: Timezone): Map<number, string> {
-        const holidays: Map<number, string> = new Map()
+    protected override fetchHolidays(year: number, tz: Timezone): Set<number> {
+        const holidays: Set<number> = new Set()
 
-        holidays.set(tz.makeDate(year, 0, 1).getTime(), "New Year's Day")
+        // New Year's Day, January 1st.
+        holidays.add(tz.makeDate(year, 0, 1).getTime())
 
         if (year >= 2000) {
             const easterSunday = easter(year, tz)
-            holidays.set(addDays(easterSunday, -2, tz).getTime(), "Good Friday")
-            holidays.set(addDays(easterSunday, 1, tz).getTime(), "Easter Monday")
+            // Good Friday (since 2000).
+            holidays.add(addDays(easterSunday, -2, tz).getTime())
+            // Easter Monday (since 2000).
+            holidays.add(addDays(easterSunday, 1, tz).getTime())
         }
 
         if (year >= 2000) {
-            holidays.set(tz.makeDate(year, 4, 1).getTime(), "Labor Day")
+            // Labour Day, May 1st (since 2000).
+            holidays.add(tz.makeDate(year, 4, 1).getTime())
         }
 
-        holidays.set(tz.makeDate(year, 11, 25).getTime(), "Christmas Day")
+        // Christmas Day, December 25th.
+        holidays.add(tz.makeDate(year, 11, 25).getTime())
 
         if (year >= 2000) {
-            holidays.set(tz.makeDate(year, 11, 26).getTime(), "Christmas Holiday")
+            // Day of Goodwill, December 26th (since 2000).
+            holidays.add(tz.makeDate(year, 11, 26).getTime())
         }
 
         if (year === 1998 || year === 1999 || year === 2001) {
-            holidays.set(tz.makeDate(year, 11, 31).getTime(), "New Year's Eve")
+            // December 31st (1998, 1999, and 2001).
+            holidays.add(tz.makeDate(year, 11, 31).getTime())
         }
 
         return holidays
