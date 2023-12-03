@@ -48,6 +48,44 @@ export class Duration {
   /** @ignore */
   #seconds: number
 
+  /** @ignore */
+  static #argsToValues(
+    ...args: any[]
+  ): [number, number, number, number, number, number, number] {
+    if (args.length == 0) {
+      return [0, 0, 0, 0, 0, 0, 0]
+    } else if (args.length === 1) {
+      const value = args[0]
+      if (typeof value === 'string') {
+        return Duration.#fromString(value)
+      } else if (typeof value === 'number') {
+        return Duration.#fromNumber(value)
+      } else if (value instanceof Duration) {
+        return [
+          value.#years,
+          value.#months,
+          value.#weeks,
+          value.#days,
+          value.#hours,
+          value.#minutes,
+          value.#seconds
+        ]
+      } else {
+        return [NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+      }
+    } else {
+      return Duration.#fromValues(
+        args[0],
+        args[1],
+        args[2],
+        args[3],
+        args[4],
+        args[5],
+        args[6]
+      )
+    }
+  }
+
   /**
    * Constructs a duration.
    *
@@ -113,44 +151,6 @@ export class Duration {
       this.#minutes,
       this.#seconds
     ] = Duration.#argsToValues(...args)
-  }
-
-  /** @ignore */
-  static #argsToValues(
-    ...args: any[]
-  ): [number, number, number, number, number, number, number] {
-    if (args.length == 0) {
-      return [0, 0, 0, 0, 0, 0, 0]
-    } else if (args.length === 1) {
-      const value = args[0]
-      if (typeof value === 'string') {
-        return Duration.#fromString(value)
-      } else if (typeof value === 'number') {
-        return Duration.#fromNumber(value)
-      } else if (value instanceof Duration) {
-        return [
-          value.#years,
-          value.#months,
-          value.#weeks,
-          value.#days,
-          value.#hours,
-          value.#minutes,
-          value.#seconds
-        ]
-      } else {
-        return [NaN, NaN, NaN, NaN, NaN, NaN, NaN]
-      }
-    } else {
-      return Duration.#fromValues(
-        args[0],
-        args[1],
-        args[2],
-        args[3],
-        args[4],
-        args[5],
-        args[6]
-      )
-    }
   }
 
   /** @ignore */
