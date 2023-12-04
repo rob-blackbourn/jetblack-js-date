@@ -1,5 +1,108 @@
 const SECONDS_IN_DAY = 24 * 60 * 60
 
+const DURATION_PATTERN =
+  /^(?<sign>-?[+-])?P((?<years>-?[+-]?\d+([.]\d+)?)Y)?((?<months>-?[+-]?\d+([.]\d+)?)M)?((?<weeks>-?[+-]?\d+([.]\d+)?)W)?((?<days>-?[+-]?\d+([.]\d+)?)D)?(T((?<hours>-?[+-]?\d+([.]\d+)?)H)?((?<minutes>-?[+-]?\d+([.]\d+)?)M)?((?<seconds>-?[+-]?\d+([.]\d+)?)S)?)?$/
+
+/** @ignore */
+function fromValues(
+  years: number,
+  months: number,
+  weeks: number = 0,
+  days: number = 0,
+  hours: number = 0,
+  minutes: number = 0,
+  seconds: number = 0
+): [number, number, number, number, number, number, number] {
+  const totalMinutes = minutes + Math.trunc(seconds / 60)
+  const totalHours = hours + Math.trunc(totalMinutes / 60)
+  const totalDays = days + Math.trunc(totalHours / 24)
+  const totalMonths = years * 12 + months
+
+  return [
+    Math.trunc(totalMonths / 12),
+    totalMonths % 12,
+    weeks + Math.trunc(totalDays / 7),
+    totalDays % 7,
+    totalHours % 24,
+    totalMinutes % 60,
+    seconds % 60
+  ]
+}
+
+/** @ignore */
+function fromString(
+  text: string
+): [number, number, number, number, number, number, number] {
+  const match = DURATION_PATTERN.exec(text)
+  if (match == null || match.groups == null) {
+    throw new Error('Failed to parse duration')
+  }
+  const sign = match.groups.sign === '-' ? -1 : 1
+  const years = sign * parseFloat(match.groups.years || '0'),
+    months = sign * parseFloat(match.groups.months || '0'),
+    weeks = sign * parseFloat(match.groups.weeks || '0'),
+    days = sign * parseFloat(match.groups.days || '0'),
+    hours = sign * parseFloat(match.groups.hours || '0'),
+    minutes = sign * parseFloat(match.groups.minutes || '0'),
+    seconds = sign * parseFloat(match.groups.seconds || '0')
+
+  return fromValues(years, months, weeks, days, hours, minutes, seconds)
+}
+
+/** @ignore */
+function fromNumber(
+  value: number
+): [number, number, number, number, number, number, number] {
+  let dateValue = Math.trunc(value / SECONDS_IN_DAY)
+  const years = Math.trunc(dateValue / 360)
+  dateValue = dateValue % 360
+  const months = Math.trunc(dateValue / 30)
+  dateValue = dateValue % 30
+  const days = dateValue
+  let timeValue = value % SECONDS_IN_DAY
+  const hours = Math.trunc(timeValue / 60 / 60)
+  timeValue = timeValue % (60 * 60)
+  const minutes = Math.trunc(timeValue / 60)
+  const seconds = timeValue % 60
+  return [
+    years,
+    months,
+    Math.trunc(days / 7),
+    days % 7,
+    hours,
+    minutes,
+    seconds
+  ]
+}
+
+/** @ignore */
+function argsToValues(
+  ...args: any[]
+): [number, number, number, number, number, number, number] {
+  if (args.length == 0) {
+    return [0, 0, 0, 0, 0, 0, 0]
+  } else if (args.length === 1) {
+    const value = args[0]
+    if (typeof value === 'string') {
+      return fromString(value)
+    } else if (typeof value === 'number') {
+      return fromNumber(value)
+    } else {
+      return [NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+    }
+  } else {
+    return fromValues(
+      args[0],
+      args[1],
+      args[2],
+      args[3],
+      args[4],
+      args[5],
+      args[6]
+    )
+  }
+}
+
 /**
  * Represents an ISO 8601 duration.
  *
@@ -28,8 +131,6 @@ const SECONDS_IN_DAY = 24 * 60 * 60
  */
 export class Duration {
   /** @ignore */
-  static readonly #DURATION_PATTERN =
-    /^(?<sign>-?[+-])?P((?<years>-?[+-]?\d+([.]\d+)?)Y)?((?<months>-?[+-]?\d+([.]\d+)?)M)?((?<weeks>-?[+-]?\d+([.]\d+)?)W)?((?<days>-?[+-]?\d+([.]\d+)?)D)?(T((?<hours>-?[+-]?\d+([.]\d+)?)H)?((?<minutes>-?[+-]?\d+([.]\d+)?)M)?((?<seconds>-?[+-]?\d+([.]\d+)?)S)?)?$/
   /** @ignore */
   static readonly #ZERO_STRING = 'PT0S'
 
@@ -104,52 +205,25 @@ export class Duration {
   constructor(value: string | number | Duration)
 
   constructor(...args: any[]) {
-    ;[
-      this.#years,
-      this.#months,
-      this.#weeks,
-      this.#days,
-      this.#hours,
-      this.#minutes,
-      this.#seconds
-    ] = Duration.#argsToValues(...args)
-  }
-
-  /** @ignore */
-  static #argsToValues(
-    ...args: any[]
-  ): [number, number, number, number, number, number, number] {
-    if (args.length == 0) {
-      return [0, 0, 0, 0, 0, 0, 0]
-    } else if (args.length === 1) {
-      const value = args[0]
-      if (typeof value === 'string') {
-        return Duration.#fromString(value)
-      } else if (typeof value === 'number') {
-        return Duration.#fromNumber(value)
-      } else if (value instanceof Duration) {
-        return [
-          value.#years,
-          value.#months,
-          value.#weeks,
-          value.#days,
-          value.#hours,
-          value.#minutes,
-          value.#seconds
-        ]
-      } else {
-        return [NaN, NaN, NaN, NaN, NaN, NaN, NaN]
-      }
+    if (argsToValues.length === 1 && args[0] instanceof Duration) {
+      const value = args[0] as Duration
+      this.#years = value.#years
+      this.#months = value.#months
+      this.#weeks = value.#months
+      this.#days = value.#days
+      this.#hours = value.#hours
+      this.#minutes = value.#minutes
+      this.#seconds = value.#seconds
     } else {
-      return Duration.#fromValues(
-        args[0],
-        args[1],
-        args[2],
-        args[3],
-        args[4],
-        args[5],
-        args[6]
-      )
+      ;[
+        this.#years,
+        this.#months,
+        this.#weeks,
+        this.#days,
+        this.#hours,
+        this.#minutes,
+        this.#seconds
+      ] = argsToValues(...args)
     }
   }
 
@@ -385,86 +459,6 @@ export class Duration {
     const totalSeconds =
       this.#hours * 60 * 60 + this.#minutes * 60 + this.#seconds
     return totalDays * SECONDS_IN_DAY + totalSeconds
-  }
-
-  /** @ignore */
-  static #fromString(
-    text: string
-  ): [number, number, number, number, number, number, number] {
-    const match = Duration.#DURATION_PATTERN.exec(text)
-    if (match == null || match.groups == null) {
-      throw new Error('Failed to parse duration')
-    }
-    const sign = match.groups.sign === '-' ? -1 : 1
-    const years = sign * parseFloat(match.groups.years || '0'),
-      months = sign * parseFloat(match.groups.months || '0'),
-      weeks = sign * parseFloat(match.groups.weeks || '0'),
-      days = sign * parseFloat(match.groups.days || '0'),
-      hours = sign * parseFloat(match.groups.hours || '0'),
-      minutes = sign * parseFloat(match.groups.minutes || '0'),
-      seconds = sign * parseFloat(match.groups.seconds || '0')
-
-    return Duration.#fromValues(
-      years,
-      months,
-      weeks,
-      days,
-      hours,
-      minutes,
-      seconds
-    )
-  }
-
-  /** @ignore */
-  static #fromNumber(
-    value: number
-  ): [number, number, number, number, number, number, number] {
-    let dateValue = Math.trunc(value / SECONDS_IN_DAY)
-    const years = Math.trunc(dateValue / 360)
-    dateValue = dateValue % 360
-    const months = Math.trunc(dateValue / 30)
-    dateValue = dateValue % 30
-    const days = dateValue
-    let timeValue = value % SECONDS_IN_DAY
-    const hours = Math.trunc(timeValue / 60 / 60)
-    timeValue = timeValue % (60 * 60)
-    const minutes = Math.trunc(timeValue / 60)
-    const seconds = timeValue % 60
-    return [
-      years,
-      months,
-      Math.trunc(days / 7),
-      days % 7,
-      hours,
-      minutes,
-      seconds
-    ]
-  }
-
-  /** @ignore */
-  static #fromValues(
-    years: number,
-    months: number,
-    weeks: number = 0,
-    days: number = 0,
-    hours: number = 0,
-    minutes: number = 0,
-    seconds: number = 0
-  ): [number, number, number, number, number, number, number] {
-    const totalMinutes = minutes + Math.trunc(seconds / 60)
-    const totalHours = hours + Math.trunc(totalMinutes / 60)
-    const totalDays = days + Math.trunc(totalHours / 24)
-    const totalMonths = years * 12 + months
-
-    return [
-      Math.trunc(totalMonths / 12),
-      totalMonths % 12,
-      weeks + Math.trunc(totalDays / 7),
-      totalDays % 7,
-      totalHours % 24,
-      totalMinutes % 60,
-      seconds % 60
-    ]
   }
 
   [Symbol.toPrimitive](hint: string): any {
