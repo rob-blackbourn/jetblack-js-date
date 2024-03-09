@@ -35,11 +35,32 @@ let jan1 = tzUtc.makeDate(2000, 0, 1)
 jan1 = new Date(Date.UTC(2000, 0, 1))
 ```
 
+## Intl Timezone
+
+Although the browser doesn't have direct access to a timezone
+database, the information can be accessed indirectly by the Intl.DateTimeFormat
+library. As each date must be individually formatted and parsed, this
+approach may be slower than using a database.
+
+The following creates a new date for the first of January 2000 in the
+Europe/Brussels timezone.
+
+```js
+import { IntlTimezone } from '@jetblack/date'
+
+const tzBrussels = new IntlTimezone('Europe/Brussels')
+
+let jan1 = tzBrussels.makeDate(2000, 0, 1)
+
+// Equivalent to adding the offset to UTC of one hour on 2000-01-01.
+jan1 = new Date(Date.UTC(2000, 0, 1) + 1 * 60 * 60 * 1000)
+```
+
 ## IANA Timezone
 
 For detail on IANA timezones see {@page ./iana-timezones.md}.
 
-The following creates a new date for the first of January 200 in the
+The following creates a new date for the first of January 2000 in the
 Europe/Brussels timezone.
 
 ```js

@@ -78,8 +78,7 @@ The date class has several methods for displaying dates, all of which are either
 specific to the local timezone or specific to UTC. These have little flexibility; the most
 useful being [`toISOString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString).
 
-The [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) provides more flexible options, and
-allows passing in the IANA timezone.
+The [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) provides more flexible options, and allows passing in the IANA timezone.
 
 This library provides two means of displaying dates: {@linkcode Timezone.toISOString}
 and {@linkcode formatDate}. The {@linkcode Timezone.toISOString} differs from
@@ -90,11 +89,11 @@ timezone, rather than the local timezone. The
 The following demonstrates some of these functions.
 
 ```js
-import { formatDate, fetchTimezone } from '@jetblack/date'
+import { formatDate, IntlTimezone } from '@jetblack/date'
 
-const tzLondon = await fetchTimezone('Europe/London')
-const tzTokyo = await fetchTimezone('Asia/Tokyo')
-const tzChicago = await fetchTimezone('America/Chicago')
+const tzLondon = IntlTimezone('Europe/London')
+const tzTokyo = IntlTimezone('Asia/Tokyo')
+const tzChicago = IntlTimezone('America/Chicago')
 
 // Make the dates for 6:30am local time.
 const dateTokyo = tzTokyo.makeDate(2000, 0, 1, 6, 30)
