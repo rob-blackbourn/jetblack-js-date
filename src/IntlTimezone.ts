@@ -48,6 +48,19 @@ function diffMinutes(d1: DateParts, d2: DateParts): number {
   return 60 * (24 * day + hour) + min
 }
 
+/**
+ * An implementation for time zones using Intl.DateTimeFormat.
+ *
+ * ```js
+ * import { IntlTimezone } from '@jetblack/date'
+ *
+ * const tz = new IntlTimezone('Europe/Brussels')
+ * const newYearsDay = tz.makeDate(2000, 0, 1)
+ * // returns "2000-01-01T01:00:00Z"
+ * ```
+ *
+ * @category Timezone
+ */
 export class IntlTimezone extends OffsetTimezone {
   private formatDateTz: Intl.DateTimeFormat
 
@@ -68,9 +81,9 @@ export class IntlTimezone extends OffsetTimezone {
   }
 
   offset(date: Date): number {
-    return -diffMinutes(
+    return diffMinutes(
+      parseDate(this.formatDateTz.format(date)),
       parseDate(formatDateUTC.format(date)),
-      parseDate(this.formatDateTz.format(date))
     )
   }
 
