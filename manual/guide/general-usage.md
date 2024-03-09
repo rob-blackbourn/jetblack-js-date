@@ -22,12 +22,12 @@ The timezone objects used in this library have functions to construct dates
 unambiguously.
 
 ```js
-import { tzLocal, tzUtc, fetchTimezone } from '@jetblack/date'
+import { tzLocal, tzUtc, IntlTimezone } from '@jetblack/date'
 
 const d1 = tzLocal.makeDate(2000, 6, 1)
 const d2 = tzUtc.makeDate(2000, 0, 1, 12, 30)
 
-const tzTokyo = await fetchTimezone('Asia/Tokyo')
+const tzTokyo = new IntlTimezone('Asia/Tokyo')
 const d3 = tzTokyo.makeDate(2000, 6, 1, 21, 0, 15, 250)
 ```
 
