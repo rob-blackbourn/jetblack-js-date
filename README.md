@@ -11,8 +11,7 @@ This project provides utilities for working with dates and timezones.
 The JavaScript built-in [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 object is a simple offset from an epoch. It provides functions
 to resolve this into date components (days, months, years, etc.) in both the local
-timezone of the browser, and UTC. A browser currently has no access to the hosts
-timezone database.
+timezone of the browser, and UTC.
 
 This library provides two things:
 
@@ -110,3 +109,17 @@ fetch(`https://cdn.jsdelivr.net/npm/@jetblack/tzdata/dist/latest/${timezoneName}
 ```
 
 The list of all available zones is provided at `dist/latest/zones.json`.
+
+### Intl Timezones
+
+Timezone offsets can be calculated by using Intl.DateTimeFormat. This may be slower
+than fetching the database, but it is more convenient.
+
+```js
+import { IntlTimezone } from '@jetblack/date'
+
+const tzBrussels = new IntlTimezone('Europe/Brussels')
+
+const newYearsDay = tzBrussels.makeDate(2000, 1, 1).toISOString()
+// returns "2000-01-01T01:00:00Z"
+```
