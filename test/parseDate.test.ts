@@ -197,7 +197,8 @@ describe('parseDate', () => {
 
   it('should parse "DD mmmm", "fr"', () => {
     const actual = parseDate('3rd Janvier', 'DD mmmm', tzLocal, 'fr')
-    const expected = tzLocal.makeDate(2023, 0, 3)
+    const now = new Date()
+    const expected = tzLocal.makeDate(tzLocal.year(now), 0, 3)
     expect(actual).not.toBeNull()
     expect((actual as Date).toISOString()).toBe(expected.toISOString())
   })
