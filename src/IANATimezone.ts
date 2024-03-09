@@ -1,4 +1,5 @@
 import { MILLISECONDS_IN_MINUTE } from './constants'
+import { OffsetTimezone } from './OffsetTimezone'
 import { Timezone } from './Timezone'
 import { DatePartResponse } from './types'
 import { tzUtc } from './UTCTimezone'
@@ -29,7 +30,7 @@ export interface TimezoneOffset {
 }
 
 /**
- * An implementation for timezones using IANA data.
+ * An implementation for time zones using IANA data.
  *
  * This example gets the data from the internet.
  *
@@ -51,7 +52,7 @@ export interface TimezoneOffset {
  *
  * @category Timezone
  */
-export class IANATimezone extends Timezone {
+export class IANATimezone extends OffsetTimezone {
   /** @ignore */
   #deltas: TimezoneOffset[]
 
@@ -67,7 +68,7 @@ export class IANATimezone extends Timezone {
   }
 
   /** @ignore */
-  #findOffset(date: Date): TimezoneOffset {
+  private findOffset(date: Date): TimezoneOffset {
     const [lo, hi] = getClosestValues(
       this.#deltas,
       date.getTime(),
@@ -88,97 +89,13 @@ export class IANATimezone extends Timezone {
     }
   }
 
-  /** @ignore */
-  #fromLocal(localDate: Date): Date {
-    const delta = this.#findOffset(localDate)
-    const utcDate = new Date(
-      localDate.getTime() - delta.offset * MILLISECONDS_IN_MINUTE
-    )
-    return utcDate
-  }
-
-  /** @ignore */
-  #toLocal(utcDate: Date): Date {
-    const delta = this.#findOffset(utcDate)
-    const localDate = new Date(
-      utcDate.getTime() + delta.offset * MILLISECONDS_IN_MINUTE
-    )
-    return localDate
-  }
-
-  makeDate(
-    year: number,
-    monthIndex: number,
-    day?: number,
-    hours?: number,
-    minutes?: number,
-    seconds?: number,
-    milliseconds?: number
-  ): Date {
-    const date = tzUtc.makeDate(
-      year,
-      monthIndex,
-      day,
-      hours,
-      minutes,
-      seconds,
-      milliseconds
-    )
-    return this.#fromLocal(date)
-  }
-
-  dateParts(date: Date): DatePartResponse {
-    const local = this.#toLocal(date)
-    return tzUtc.dateParts(local)
-  }
-
   offset(date: Date): number {
-    const delta = this.#findOffset(date)
+    const delta = this.findOffset(date)
     return delta.offset
   }
 
-  year(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.year(local)
-  }
-
-  monthIndex(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.monthIndex(local)
-  }
-
-  weekday(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.weekday(local)
-  }
-
-  day(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.day(local)
-  }
-
-  hours(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.hours(local)
-  }
-
-  minutes(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.minutes(local)
-  }
-
-  seconds(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.seconds(local)
-  }
-
-  milliseconds(date: Date): number {
-    const local = this.#toLocal(date)
-    return tzUtc.milliseconds(local)
-  }
-
   isDaylightSavings(date: Date): boolean {
-    const delta = this.#findOffset(date)
+    const delta = this.findOffset(date)
     return delta.isDst
   }
 }

@@ -8,8 +8,7 @@ JavaScript provides
 [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 as a standard built-in object. It represents the date as the number of
 milliseconds since 1 January 1970 UTC, and provides methods to manipulate the
-date in the local and UTC timezones.The browser currently has no access to
-the host's timezone database.
+date in the local and UTC timezones.
 
 This library provides two things:
 
